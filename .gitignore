@@ -1,0 +1,14 @@
+# OMC 에이전트 세션 상태 (로컬 전용, 커밋 불필요)
+.omc/
+
+# 사용자 개인 데이터 (플러그인 외부 경로에 저장됨 — ~/.claude/plugins/business-counselor/data/)
+data/
+
+# 환경 파일
+.env
+.env.*
+*.local.json
+
+# OS 파일
+.DS_Store
+Thumbs.db

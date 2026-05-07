@@ -1,0 +1,12 @@
+{
+  "name": "business-counselor",
+  "version": "0.1.0",
+  "description": "AI 사업 카운슬러 — 사용자 맥락 기반 5단계 냉철 판독 (Phase 1: 4단계 MVP)",
+  "author": {
+    "name": "private"
+  },
+  "license": "private",
+  "commands": ["./commands/"],
+  "agents": ["./agents/bc-idea-evaluator.md"],
+  "skills": ["./skills/"]
+}
