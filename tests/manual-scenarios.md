@@ -21,7 +21,7 @@
 
 ### 기대 결과 (PASS 조건)
 - [ ] `data/profile.md` 파일 생성됨
-- [ ] frontmatter에 `id`·`schema_version: 1.1`·`last_updated`·`disclaimer` 4필드 자동 삽입
+- [ ] frontmatter에 `id`·`schema_version: 1.2`·`last_updated`·`disclaimer` 4필드 자동 삽입
 - [ ] frontmatter에 `birth_year`·`residence`·`capital_krw`·`monthly_income_krw`·`time_available_hr`·`skills`·`domain_interests`·`risk_appetite` 8개 필수 필드 채워짐
 - [ ] `data/sessions/2026-05-07_001.md` 세션 기록 생성 (Q/A 페어)
 - [ ] 외부 API 호출 0 (Phase 1 정책 준수)
@@ -125,7 +125,7 @@
 | Judge (verdict + 양측 비교) | ~150 |
 | frontmatter (6필드 + 면책 한국어) | ~250 |
 | 헤더·구분자 | ~300 |
-| **Phase 1 합계 (4단계)** | **~3,110 (한계 6,000의 52%)** |
+| **Phase 1 합계 (5단계)** | **~3,470 (한계 6,000의 58%)** |
 | **Phase 2 합계 (5단계)** | **~3,710 (한계 6,000의 62%)** |
 | **PASS/FAIL** | **PASS 추정** — Phase 1 첫 평가 시 실측 확정 |
 

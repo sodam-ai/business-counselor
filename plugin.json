@@ -1,11 +1,11 @@
 {
   "name": "business-counselor",
   "version": "0.1.0",
-  "description": "AI 사업 카운슬러 — 사용자 맥락 기반 5단계 냉철 판독 (Phase 1: 4단계 MVP)",
+  "description": "AI 사업 카운슬러 — 사업 아이디어를 5단계(13명 다관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론)로 냉철하게 판독",
   "author": {
-    "name": "private"
+    "name": "SoDam AI Studio"
   },
-  "license": "private",
+  "license": "Apache-2.0",
   "commands": ["./commands/"],
   "agents": ["./agents/bc-idea-evaluator.md"],
   "skills": ["./skills/"]

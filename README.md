@@ -28,21 +28,45 @@
 ### 사전 요구사항
 
 - [Claude Code](https://claude.ai/download) 설치 완료
+- [Git](https://git-scm.com/downloads) 설치 완료 (방법 A 선택 시. 방법 B는 불필요)
 
-### 설치 (3단계)
+### 방법 A — Git으로 설치 (권장)
+
+터미널에서 아래 명령어를 순서대로 실행합니다.  
+**주의:** `git clone` 실행 후 폴더 *안으로 들어가지 말고* 같은 위치에서 계속 실행하세요.
 
 ```bash
-# 1. 이 저장소를 다운로드
+# 1. 저장소 다운로드
 git clone https://github.com/sodam-ai/business-counselor.git
 
-# 2. 로컬 마켓플레이스 등록
-claude plugin marketplace add ./business-counselor/.claude-plugin
+# 2. 로컬 마켓플레이스 등록 (business-counselor 폴더가 있는 위치에서 실행)
+claude plugin marketplace add ./business-counselor
 
 # 3. 플러그인 설치
 claude plugin install business-counselor@local-plugins
+
+# 4. 설치 확인
+claude plugin list
 ```
 
-설치가 완료되면 Claude Code 채팅창에서 `/counsel:` 명령어를 바로 사용할 수 있습니다.
+`business-counselor@local-plugins  √ enabled` 가 보이면 설치 성공입니다.
+
+### 방법 B — ZIP으로 설치 (Git 없을 때)
+
+1. [GitHub 페이지](https://github.com/sodam-ai/business-counselor) → **Code** 버튼 → **Download ZIP**
+2. 다운로드된 ZIP 파일 압축 해제
+3. 압축 해제된 폴더 이름을 **`business-counselor`** 로 변경 (기본 이름: `business-counselor-main`)
+4. 그 폴더가 있는 위치에서 터미널을 열고 실행:
+
+```bash
+claude plugin marketplace add ./business-counselor
+claude plugin install business-counselor@local-plugins
+claude plugin list
+```
+
+`business-counselor@local-plugins  √ enabled` 가 보이면 설치 성공입니다.
+
+설치 완료 후 **Claude Code를 재시작**하면 `/counsel:` 명령어를 사용할 수 있습니다.
 
 ---
 
@@ -87,23 +111,42 @@ AI가 여러분에 대한 인터뷰를 시작합니다. 자본·시간·역량·
 - **Windows**: 시작 버튼 → "PowerShell" 검색 → 실행
 - **Mac**: Spotlight(⌘+Space) → "Terminal" 검색 → 실행
 
-### Claude Code 설치
+### 1단계: Claude Code 설치
 
 1. [claude.ai/download](https://claude.ai/download) 접속
 2. 다운로드 후 설치 실행
 3. 터미널에서 `claude` 입력 → 대화창이 열리면 설치 성공
 
-### 이 플러그인 설치 (아래 3줄을 터미널에 순서대로 붙여넣기)
+### 2단계: 플러그인 설치
+
+**Git이 있는 경우** (아래 3줄을 터미널에 순서대로 붙여넣기):
 
 ```bash
 git clone https://github.com/sodam-ai/business-counselor.git
-claude plugin marketplace add ./business-counselor/.claude-plugin
+claude plugin marketplace add ./business-counselor
 claude plugin install business-counselor@local-plugins
 ```
 
-### 첫 사용
+> Git이 없으면 [git-scm.com/downloads](https://git-scm.com/downloads)에서 설치하거나, 아래 ZIP 방법을 사용하세요.
 
-1. 터미널에서 `claude` 입력하여 대화창 열기
+**Git이 없는 경우** (ZIP 다운로드):
+
+1. [github.com/sodam-ai/business-counselor](https://github.com/sodam-ai/business-counselor) 접속
+2. 초록색 **Code** 버튼 클릭 → **Download ZIP** 클릭
+3. 다운로드된 ZIP 압축 해제
+4. 폴더 이름을 `business-counselor` 로 변경 (`-main` 이 붙어있으면 제거)
+5. 그 폴더가 있는 위치에서 터미널을 열고:
+
+```bash
+claude plugin marketplace add ./business-counselor
+claude plugin install business-counselor@local-plugins
+```
+
+**설치 확인**: 터미널에서 `claude plugin list` 입력 → `business-counselor  √ enabled` 확인
+
+### 3단계: 첫 사용
+
+1. 터미널에서 `claude` 입력 → Claude Code 실행 (설치 후 첫 실행 시 재시작 필요)
 2. `/counsel:start` 입력 → Enter
 3. AI의 질문에 자연어로 자유롭게 답변
 4. 인터뷰 완료 후 `/counsel:evaluate "내 아이디어"` 입력

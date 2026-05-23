@@ -24,7 +24,7 @@
 
 ## 항상 해 (ALWAYS DO)
 
-- **단일 호출 정책**: 한 명령 = 한 응답. `bc-idea-evaluator` 내부에서 4단계 완결
+- **단일 호출 정책**: 한 명령 = 한 응답. `bc-idea-evaluator` 내부에서 5단계 완결
 - **frontmatter 6필드 자동 삽입**: 모든 새 파일에
   `disclaimer` + `success_criteria` + `consistency_score` + `model_id` + `temperature` + `debate_mode: single-call`
 - **스키마 버전 명시**: `schema_version: "1.2"` (모든 출력 파일)

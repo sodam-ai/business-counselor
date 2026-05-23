@@ -10,14 +10,14 @@
 ## Phase 1: MVP (목표 1~2주)
 
 ### 목표
-사용자 본인 프로필을 인터뷰로 누적하고, 사용자가 가져온 아이디어를 **4단계(13명 다관점·Lean Canvas·Mom Test·적대 토론)**로 냉철하게 판독할 수 있다. **단일 호출 내부에서 모든 단계 수행 (API 분리 호출 0)**. 13명 = 페르소나 v5 1:1 매칭 (시니어 개발자·보안·비개발자·QA·DevOps·AI·디자이너·UX·PM·경영진·**변호사**·비용·**전문 투자자**). Pre-mortem은 Phase 2에서 5단계로 확장.
+사용자 본인 프로필을 인터뷰로 누적하고, 사용자가 가져온 아이디어를 **5단계(13명 다관점·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론)**로 냉철하게 판독할 수 있다. **단일 호출 내부에서 모든 단계 수행 (API 분리 호출 0)**. 13명 = 페르소나 v5 1:1 매칭 (시니어 개발자·보안·비개발자·QA·DevOps·AI·디자이너·UX·PM·경영진·**변호사**·비용·**전문 투자자**).
 
 ### 기능
 - [ ] 플러그인 골격 (`plugin.json`, `commands/`, `skills/`, `agents/`, `templates/`)
 - [ ] AGENTS.md 미러 (플러그인 폴더 내, 사용자 홈/프로젝트 루트 설치 금지)
 - [ ] 명령 `/counsel:start` — 첫 인터뷰 시작 + profile.md 생성
 - [ ] 명령 `/counsel:resume` — 다음 세션 이어서 + 부족 영역 자동 우선 질문
-- [ ] 명령 `/counsel:evaluate "<idea>"` — 가져온 아이디어 판독 (**4단계: 13명 다관점·Lean Canvas·Mom Test·적대 토론**, 단일 호출)
+- [ ] 명령 `/counsel:evaluate "<idea>"` — 가져온 아이디어 판독 (**5단계: 13명 다관점·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론**, 단일 호출)
 - [ ] 명령 `/counsel:list` — 과거 평가 목록
 - [ ] 명령 `/counsel:show <id>` — 특정 평가 재조회
 - [ ] 스킬 `13-personas/SKILL.md` — 13명 다관점 점수 체계 (페르소나 v5 1:1 매칭, v1.2 신규명. 기존 `13-perspectives/SKILL.md`는 폐기)
@@ -25,7 +25,7 @@
 - [ ] 스킬 `mom-test/SKILL.md` — 검증 질문 생성 (과거 행동 기반)
 - [ ] **스킬 `adversarial-debate/SKILL.md` — Bull/Bear/Judge 단일 호출 내부 토론 가이드 (v1.1 신규)**
 - [ ] **스킬 `goal-driven/SKILL.md` — success_criteria 작성·consistency_score placeholder 가이드 (v1.1 신규)**
-- [ ] 서브에이전트 `bc-idea-evaluator` — **단일** 컨텍스트 격리 판독 워커. 시스템 프롬프트에 4단계 출력 강제. **bull/bear/judge 별도 서브에이전트 분리 금지**
+- [ ] 서브에이전트 `bc-idea-evaluator` — **단일** 컨텍스트 격리 판독 워커. 시스템 프롬프트에 5단계 출력 강제. **bull/bear/judge 별도 서브에이전트 분리 금지**
 - [ ] 모든 출력 frontmatter에 자동 삽입: `disclaimer`·`success_criteria`·`consistency_score`(Phase 1 placeholder)·`model_id`·`temperature`·`debate_mode: single-call` (린터 검증)
 
 ### 데이터
@@ -43,12 +43,12 @@
 - 기존 hook(SessionStart·UserPromptSubmit·PreToolUse) 절대 수정·간섭 금지
 - CLAUDE.md·MEMORY.md·user_persona*.md 절대 수정 금지
 - **API 호출 최소화 — 한 명령 = 한 응답 원칙 (v1.1)**
-- **단일 호출 내 4단계(Phase 1)·5단계(Phase 2+) 강제. Bull/Bear/Judge 별도 서브에이전트 분리 호출 금지 (v1.1)**
+- **단일 호출 내 5단계 강제 (Phase 1·2 공통). Pre-mortem 개수: Phase 1=3개, Phase 2+=5개. Bull/Bear/Judge 별도 서브에이전트 분리 호출 금지 (v1.1)**
 - **외부 API 호출 0 (Phase 1·2 정책). Phase 3부터 사용자 명시 호출 시만 활성**
 
 ### "진짜 제품" 체크리스트
 - [ ] 실제 파일 생성 (목업 데이터 X) — profile.md·sessions/·evaluated/ 모두 디스크 기록
-- [ ] 실제 **4단계** 분석 (하드코딩된 응답 X) — Claude API로 생성. 13명 다관점(페르소나 v5)·Lean Canvas·Mom Test·적대 토론 모두 단일 응답 안에서.
+- [ ] 실제 **5단계** 분석 (하드코딩된 응답 X) — Claude API로 생성. 13명 다관점(페르소나 v5)·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론 모두 단일 응답 안에서.
 - [ ] **Bull/Bear/Judge 3섹션 명시 분리 출력** (v1.1)
 - [ ] **success_criteria + consistency_score frontmatter 자동 삽입** (Phase 1 consistency는 placeholder OK)
 - [ ] **별도 서브에이전트 호출 0 (단일 호출 정책 검증 — `bc-idea-evaluator` 1회만 호출)**
@@ -70,7 +70,7 @@ Phase 1 범위 (v1.1):
 - 명령: /counsel:start, /counsel:resume, /counsel:evaluate, /counsel:list, /counsel:show
 - 스킬: 13-personas, lean-canvas, mom-test, adversarial-debate, goal-driven
 - 서브에이전트: bc-idea-evaluator (단 1개 — bull/bear/judge 별도 분리 X)
-- 데이터: Profile, InterviewSession, EvaluatedIdea (4단계 = 13명 다관점·Lean Canvas·Mom Test·적대 토론)
+- 데이터: Profile, InterviewSession, EvaluatedIdea (5단계 = 13명 다관점·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론)
 
 반드시 지켜야 할 것 (v1.1 강화):
 - 04_PROJECT_SPEC.md의 "절대 하지 마" 목록 준수
@@ -81,7 +81,7 @@ Phase 1 범위 (v1.1):
 - 모든 출력 frontmatter에 자동 삽입: disclaimer + success_criteria + consistency_score(placeholder) + model_id + temperature + debate_mode: single-call
 - 외부 API 호출 0 (Phase 1)
 - API 호출 최소화 — 한 명령 = 한 응답 원칙
-- 단일 호출 내부에서 4단계(13명 다관점→Lean Canvas→Mom Test→적대 토론) 모두 출력
+- 단일 호출 내부에서 5단계(13명 다관점→Lean Canvas→Mom Test→Pre-mortem 3개→적대 토론) 모두 출력
 - 적대 토론은 Bull/Bear/Judge 3섹션 명시 분리 (단일 응답 안에서)
 - 별도 서브에이전트 호출 0 (bc-idea-evaluator만 1회)
 - 출력 토큰 < 6,000 (긴 결과 방지)
@@ -93,7 +93,7 @@ Phase 1 범위 (v1.1):
 
 ### 완료 기준 (v1.1 정량화)
 - 사용자가 `/counsel:start`로 인터뷰 → profile.md 작성 완료 (인터뷰 30~40분 범위)
-- 사용자가 임의 아이디어로 `/counsel:evaluate` 실행 → **4단계 결과(Bull/Bear/Judge 3섹션 포함)** + 면책 + success_criteria + consistency_score(placeholder) frontmatter 출력
+- 사용자가 임의 아이디어로 `/counsel:evaluate` 실행 → **5단계 결과(Pre-mortem 3개·Bull/Bear/Judge 3섹션 포함)** + 면책 + success_criteria + consistency_score(placeholder) frontmatter 출력
 - `tests/manual-scenarios.md`의 **5건 시나리오 모두 PASS** (시나리오 1~5)
 - 기존 환경(bkit, everything-claude-code 등)에 영향 0 확인 (시나리오 5)
 - **API 호출 최소화 정책 준수 검증** — 한 `/counsel:evaluate` 호출 시 추가 서브에이전트 호출 0건
@@ -107,7 +107,7 @@ Phase 1 범위 (v1.1):
 - Phase 1이 안정적으로 동작 (5건 이상 평가 누적, profile.md 1차 완성)
 
 ### 목표
-AI가 누적된 프로필을 기반으로 사용자에게 맞는 사업 아이디어 N개를 먼저 제안하고, Pre-mortem 프레임을 추가해 **5단계로 완성**한다. consistency_score 실측 시작.
+AI가 누적된 프로필을 기반으로 사용자에게 맞는 사업 아이디어 N개를 먼저 제안하고, Pre-mortem 시나리오를 **3개→5개로 확장**한다. consistency_score 실측 시작.
 
 ### 기능
 - [ ] 명령 `/counsel:recommend [N=5]` — 누적 프로필 기반 N개 아이디어 + 각 Lean Canvas (단일 호출)
@@ -176,8 +176,8 @@ deep-research 플러그인을 서브에이전트로 호출해 시장규모·경�
 
 | Phase | 핵심 기능 | 기능 코드 | 예상 기간 | 외부 의존성 | 상태 |
 |-------|----------|----------|---------|-----------|------|
-| Phase 1 (MVP) | 인터뷰 + 판독 (**4단계**: 13명 다관점·Lean Canvas·Mom Test·**적대 토론**) | A + C + 적대토론 + Goal-Driven | 1~2주 | 없음 (단일 호출) | 시작 전 |
-| Phase 2 | 추천 + **5단계 완성**(Pre-mortem 추가) + 결정로그 + consistency_score 실측 | B + Pre-mortem + DecisionLog | +1~2주 | 없음 | Phase 1 완료 후 |
+| Phase 1 (MVP) | 인터뷰 + 판독 (**5단계**: 13명 다관점·Lean Canvas·Mom Test·**Pre-mortem 3개**·적대 토론) | A + C + 적대토론 + Goal-Driven | 1~2주 | 없음 (단일 호출) | 구현 완료 |
+| Phase 2 | 추천 + Pre-mortem **5개 확장** + 결정로그 + consistency_score 실측 | B + Pre-mortem + DecisionLog | +1~2주 | 없음 | Phase 1 완료 후 |
 | Phase 3 | 외부 리서치 + 재방문 + 통계 (**default 비활성, 사용자 명시 호출 시만**) | D + Followup + Stats | +2~3주 | deep-research 또는 WebSearch (선택) | Phase 2 완료 후 |
 
 ### 권장 일정

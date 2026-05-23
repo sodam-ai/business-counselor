@@ -118,7 +118,7 @@
 
 ### Phase 1 MVP 완료 기준 (정량화 — Karpathy Goal-Driven)
 - [ ] `/counsel:start`로 인터뷰 시작·답변·profile.md 생성·세션 종료 후 재시작 정상 동작 (인터뷰 30~40분 범위)
-- [ ] `/counsel:evaluate "<임의 아이디어>"` 입력 시 **4단계**(13관점·Lean Canvas·Mom Test·**적대 토론**. Pre-mortem은 Phase 2) 출력 정상
+- [ ] `/counsel:evaluate "<임의 아이디어>"` 입력 시 **5단계**(13관점·Lean Canvas·Mom Test·**Pre-mortem 3개**·적대 토론) 출력 정상
 - [ ] 적대 토론 출력 시 **Bull / Bear / Judge 3섹션 명시 분리** (단일 호출 내부)
 - [ ] 모든 출력 파일에 `disclaimer`·`success_criteria`·`consistency_score` 3개 frontmatter 필드 자동 삽입 (consistency_score는 Phase 1 placeholder OK)
 - [ ] 명령 5개 모두 `/counsel:` 네임스페이스 (다른 플러그인과 충돌 0)
