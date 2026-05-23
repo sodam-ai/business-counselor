@@ -104,7 +104,7 @@ business-counselor/
 - [ ] **success_criteria 자동 매칭 규칙 (v1.2)**: 13명 평가 점수 분포(특히 #4 QA·#9 PM·#10 경영진)·사용자 자본·시간·도메인에 따라 카탈로그 5개 중 1~2개 자동 선택. 카탈로그: ① 고객 인터뷰 ≥10명/+30일 ② MVP POC 100% 핵심 1기능/+60일 ③ LOI ≥3건/+45일 ④ 유료 사용자 ≥1명 또는 매출 10만원/+90일 ⑤ 시장 리서치 ≥3출처+통계 1개/+14일
 - [ ] 슬래시 명령 모두 `/counsel:` 네임스페이스 (예: `/counsel:start`)
 - [ ] 서브에이전트 모두 `bc-` prefix
-- [ ] **5단계(13관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 적용 시 각 단계 명시적 섹션 분리** (v1.1, Phase 1은 4단계: Pre-mortem 제외)
+- [ ] **5단계(13관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 각 단계 명시적 섹션 분리** (v1.1, Phase 1 포함 5단계. Pre-mortem: Phase 1=3개, Phase 2+=5개)
 - [ ] **적대 토론은 Bull/Bear/Judge 3섹션 명시 분리 — 단일 호출 안에서** (v1.1)
 - [ ] verdict 출력 시 `confidence` 점수(0~100) + `success_criteria` (Karpathy verify 조건) 함께 표시
 - [ ] 외부 호출 시 PII 마스킹 (Phase 3) 후 송신
@@ -114,7 +114,7 @@ business-counselor/
 - [ ] 사용자가 모호한 입력 시 보강 질문 1~2개 (자동 가정 금지)
 - [ ] decisions.jsonl 새 줄 추가 시 timestamp ISO 8601 형식
 - [ ] frontmatter `schema_version` 명시 (변경 시 마이그레이션 작성. 현재 1.2)
-- [ ] **API 호출 최소화 — 한 명령 = 한 응답 원칙. `/counsel:evaluate`는 `bc-idea-evaluator` 1회 호출만으로 4단계(Phase 1)·5단계(Phase 2+) 완성** (v1.1)
+- [ ] **API 호출 최소화 — 한 명령 = 한 응답 원칙. `/counsel:evaluate`는 `bc-idea-evaluator` 1회 호출만으로 5단계 완성 (Phase 1·2 공통. Pre-mortem: Phase 1=3개, Phase 2+=5개)** (v1.1)
 - [ ] **출력 토큰 < 6,000 유지 (v1.1)**
 - [ ] **Phase 3 외부 호출 전 사용자 confirmation 단계 (예: "정말 외부 검색하시겠습니까? 비용 발생")** (v1.1)
 
@@ -157,7 +157,7 @@ business-counselor/
 
 ## 5단계 적용 순서 (v1.2) — **단일 호출 내부에서 모두 수행**
 
-> Phase 1은 4단계(Pre-mortem 제외). Phase 2부터 5단계 완성. 모든 단계가 **단일 `bc-idea-evaluator` 호출 안에서** 한 응답으로 출력. 별도 서브에이전트 호출 0.
+> Phase 1은 5단계(Pre-mortem 3개 포함). Phase 2부터 Pre-mortem 5개로 확장. 모든 단계가 **단일 `bc-idea-evaluator` 호출 안에서** 한 응답으로 출력. 별도 서브에이전트 호출 0.
 
 1. **§ 1. 13명 다관점 평가 (페르소나 v5 1:1 매칭)**: 13명 전문가 시점 1~5점 + 한 줄 코멘트. #11 변호사 + #13 투자자 도메인 키워드 자동 강조.
 2. **§ 2. Lean Canvas**: 9블록 채우기 (Problem→Customer→UVP→Solution→Channels→Revenue→Cost→Metrics→Unfair Advantage)

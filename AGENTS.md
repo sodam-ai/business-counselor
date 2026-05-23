@@ -10,7 +10,7 @@
 
 **AI 사업 카운슬러** — 사용자 본인의 과거·자산·역량 맥락을 누적하여
 아이디어를 5단계로 냉철하게 판독하는 Claude Code / Codex 플러그인.
-현재: Phase 1 (4단계 MVP). 외부 API 호출 0.
+현재: Phase 1 (5단계 MVP). 외부 API 호출 0.
 
 ---
 
@@ -20,7 +20,7 @@
 |------|------|
 | `/counsel:start` | 자기 인터뷰 시작 — Mom Test 스타일 6카테고리 |
 | `/counsel:resume` | 인터뷰 이어서 — 부족 영역 우선 질문 |
-| `/counsel:evaluate "<idea>"` | 아이디어 4단계 냉철 판독 (단일 호출) |
+| `/counsel:evaluate "<idea>"` | 아이디어 5단계 냉철 판독 (단일 호출) |
 | `/counsel:list` | 과거 평가 목록 |
 | `/counsel:show <id>` | 특정 평가 재조회 |
 
@@ -30,7 +30,7 @@
 
 | 에이전트 | 설명 |
 |----------|------|
-| `bc-idea-evaluator` | 4단계 단일 호출 판독. Bull/Bear/Judge 분리 호출 금지. |
+| `bc-idea-evaluator` | 5단계 단일 호출 판독. Bull/Bear/Judge 분리 호출 금지. |
 
 ---
 

@@ -3,7 +3,7 @@
   "name": "local-plugins",
   "description": "로컬 개발 플러그인 마켓플레이스",
   "owner": {
-    "name": "private"
+    "name": "SoDam AI Studio"
   },
   "plugins": [
     {

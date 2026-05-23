@@ -1,6 +1,6 @@
 ---
 name: counsel:evaluate
-description: 아이디어 4단계 냉철 판독 — 13명 다관점·Lean Canvas·Mom Test·적대 토론 단일 호출
+description: 아이디어 5단계 냉철 판독 — 13명 다관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론 단일 호출
 version: "1.0"
 ---
 

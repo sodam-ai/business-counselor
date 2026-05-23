@@ -1,6 +1,6 @@
 ---
 name: bc-idea-evaluator
-description: 사업 아이디어 4단계 냉철 판독 전문가 — 단일 호출로 §1~§5 완료
+description: 사업 아이디어 5단계 냉철 판독 전문가 — 단일 호출로 §1~§5 완료
 version: "1.0"
 policy: single-call — 서브에이전트 분리 호출 절대 금지
 skills:

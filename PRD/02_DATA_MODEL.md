@@ -123,7 +123,7 @@ AI가 사용자 프로필 기반 추천한 사업 아이디어. Phase 2부터.
 | **debate_mode** | **토론 모드 (분리 호출 금지)** | "single-call" | **O (v1.1+)** |
 | **success_criteria** | **Karpathy Goal-Driven — 이 verdict가 맞으려면 측정값** | {metric: "고객 인터뷰 수", threshold: ">=10", deadline: "2026-06-07"} | **O (v1.1+)** |
 | **consistency_score** | **N=3회 평가 분포 표준편차 (Phase 1=placeholder, Phase 2부터 측정)** | 0.12 (낮을수록 일관적) | **O (v1.1+)** |
-| **model_id** | **재현성용 모델 식별자** | "claude-opus-4-7" | **O (v1.1+)** |
+| **model_id** | **재현성용 모델 식별자** | "claude-sonnet-4-6" | **O (v1.1+)** |
 | **temperature** | **재현성용 샘플링 온도** | 0.2 | **O (v1.1+)** |
 | verdict | go / iterate / no-go | iterate | O |
 | confidence | 0~100 | 65 | O |
@@ -175,7 +175,7 @@ Append-only JSON Lines. 1줄 = 1 결정.
 id: <엔티티 ID>
 schema_version: 1.2
 timestamp: 2026-05-07T14:32:00
-model_id: claude-opus-4-7         # v1.1+ 재현성용
+model_id: claude-sonnet-4-6       # v1.1+ 재현성용
 temperature: 0.2                  # v1.1+ 재현성용
 debate_mode: single-call          # v1.1+ Bull/Bear/Judge 분리 호출 금지
 disclaimer: |
