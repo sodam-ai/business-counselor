@@ -28,21 +28,45 @@ All results are automatically saved to `~/.claude/plugins/business-counselor/dat
 ### Prerequisites
 
 - [Claude Code](https://claude.ai/download) installed
+- [Git](https://git-scm.com/downloads) installed (Method A only. Method B does not require Git)
 
-### Install (3 steps)
+### Method A — Install with Git (Recommended)
+
+Run the following commands in your terminal in order.  
+**Important:** After `git clone`, do NOT enter the cloned folder — run the next commands from the same location.
 
 ```bash
-# 1. Clone this repository
+# 1. Download the repository
 git clone https://github.com/sodam-ai/business-counselor.git
 
-# 2. Register local marketplace
-claude plugin marketplace add ./business-counselor/.claude-plugin
+# 2. Register local marketplace (run from the folder that contains business-counselor/)
+claude plugin marketplace add ./business-counselor
 
 # 3. Install plugin
 claude plugin install business-counselor@local-plugins
+
+# 4. Verify installation
+claude plugin list
 ```
 
-Once installed, `/counsel:` commands are available in Claude Code chat.
+Installation is successful when you see `business-counselor@local-plugins  √ enabled`.
+
+### Method B — Install via ZIP (No Git Required)
+
+1. Go to the [GitHub page](https://github.com/sodam-ai/business-counselor) → click **Code** → **Download ZIP**
+2. Extract the downloaded ZIP file
+3. Rename the extracted folder to **`business-counselor`** (default name is `business-counselor-main`)
+4. Open a terminal in the folder that contains `business-counselor/` and run:
+
+```bash
+claude plugin marketplace add ./business-counselor
+claude plugin install business-counselor@local-plugins
+claude plugin list
+```
+
+Installation is successful when you see `business-counselor@local-plugins  √ enabled`.
+
+After installation, **restart Claude Code** to activate `/counsel:` commands.
 
 ---
 
@@ -87,23 +111,42 @@ A terminal is a text-based window for sending commands to your computer.
 - **Windows**: Start → search "PowerShell" → Open
 - **Mac**: Spotlight (⌘+Space) → search "Terminal" → Open
 
-### Install Claude Code
+### Step 1: Install Claude Code
 
 1. Go to [claude.ai/download](https://claude.ai/download)
 2. Download and run the installer
 3. Type `claude` in terminal → a chat window opens — installation successful
 
-### Install This Plugin (paste these 3 lines into terminal in order)
+### Step 2: Install This Plugin
+
+**If you have Git** (paste these 3 lines into terminal in order):
 
 ```bash
 git clone https://github.com/sodam-ai/business-counselor.git
-claude plugin marketplace add ./business-counselor/.claude-plugin
+claude plugin marketplace add ./business-counselor
 claude plugin install business-counselor@local-plugins
 ```
 
-### First Use
+> No Git? Install it from [git-scm.com/downloads](https://git-scm.com/downloads), or use the ZIP method below.
 
-1. Type `claude` in terminal to open chat
+**If you don't have Git** (ZIP download):
+
+1. Go to [github.com/sodam-ai/business-counselor](https://github.com/sodam-ai/business-counselor)
+2. Click the green **Code** button → **Download ZIP**
+3. Extract the ZIP file
+4. Rename the folder to `business-counselor` (remove `-main` if present)
+5. Open a terminal in the folder that contains `business-counselor/` and run:
+
+```bash
+claude plugin marketplace add ./business-counselor
+claude plugin install business-counselor@local-plugins
+```
+
+**Verify installation**: Type `claude plugin list` → confirm `business-counselor  √ enabled`
+
+### Step 3: First Use
+
+1. Type `claude` in terminal → restart Claude Code if this is the first run after install
 2. Type `/counsel:start` → Enter
 3. Answer AI's questions in plain language
 4. After interview, type `/counsel:evaluate "my idea"`
