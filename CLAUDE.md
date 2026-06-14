@@ -28,7 +28,7 @@
 - **frontmatter 6필드 자동 삽입**: 모든 새 파일에
   `disclaimer` + `success_criteria` + `consistency_score` + `model_id` + `temperature` + `debate_mode: single-call`
 - **스키마 버전 명시**: `schema_version: "1.2"` (모든 출력 파일)
-- **출력 토큰 < 6,000**: 긴 결과 방지 (13명 한 줄 코멘트, 각 섹션 압축)
+- **출력 분량(깊이 우선)**: 브레비티는 「한눈 요약」 카드 담당, §1~§5 본문은 깊이 보존(중복만 정리). `<6,000` 토큰은 가이드(강제 아님)
 - **Mom Test 준수**: 인터뷰 질문은 과거 행동 기반 100%, 가설 기반 0건
 - **모호 입력 처리**: 보강 질문 최대 2개 후 명확화 후 진행
 - **환경 무결성 확인**: 배포 전 시나리오 5(tests/manual-scenarios.md) PASS 필수

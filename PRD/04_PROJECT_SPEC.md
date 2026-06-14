@@ -115,7 +115,7 @@ business-counselor/
 - [ ] decisions.jsonl 새 줄 추가 시 timestamp ISO 8601 형식
 - [ ] frontmatter `schema_version` 명시 (변경 시 마이그레이션 작성. 현재 1.2)
 - [ ] **API 호출 최소화 — 한 명령 = 한 응답 원칙. `/counsel:evaluate`는 `bc-idea-evaluator` 1회 호출만으로 5단계 완성 (Phase 1·2 공통. Pre-mortem: Phase 1=3개, Phase 2+=5개)** (v1.1)
-- [ ] **출력 토큰 < 6,000 유지 (v1.1)**
+- [ ] **출력 분량: 깊이 우선 — 브레비티는 「한눈 요약」 카드, `<6,000`은 강제 아닌 가이드 (v0.2.0)**
 - [ ] **Phase 3 외부 호출 전 사용자 confirmation 단계 (예: "정말 외부 검색하시겠습니까? 비용 발생")** (v1.1)
 
 ---
@@ -204,8 +204,9 @@ Bull → Bear → Judge 순서로 같은 응답 안에 §섹션 분리 출력. �
 # tests/manual-scenarios.md의 5건 시나리오를 순서대로 진행
 # 각 시나리오 결과 PASS/FAIL 기록
 
-# 3. 면책 frontmatter 린터
-bash tests/frontmatter-linter.sh data/
+# 3. 면책 frontmatter 린터 (파일 유형별 검증)
+bash tests/frontmatter-linter.sh data/                       # Git Bash
+powershell -File tests\frontmatter-linter.ps1 data\          # Windows 네이티브 (둘 중 택1)
 
 # 4. 회귀 매트릭스
 # Phase 2 진입 전 Phase 1 시나리오 5건 PASS 확인
@@ -251,7 +252,7 @@ bash tests/frontmatter-linter.sh data/
 - [ ] PII 마스킹 함수 unit test PASS인지 (Phase 3)
 - [ ] **단일 호출 정책 위반 0인지 — `bc-idea-evaluator`·`bc-idea-generator` 코드 안에서 추가 서브에이전트 호출 grep 0** (v1.1)
 - [ ] **`bc-bull-advocate`·`bc-bear-critic`·`bc-devil-judge` 같은 별도 서브에이전트 파일 부재** (v1.1 — agents/ 디렉토리 ls)
-- [ ] **출력 토큰 < 6,000 유지 (v1.1 — manual-scenarios.md 시나리오 4 검증)**
+- [ ] **출력 분량 깊이 우선 — `<6,000`은 가이드(강제 아님), 과도한 장황함만 점검 (v0.2.0)**
 - [ ] **Phase 3 외부 호출 사용자 confirmation 단계 존재 (v1.1 — 코드 grep)**
 
 ---

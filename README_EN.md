@@ -1,62 +1,114 @@
 # AI Business Counselor (business-counselor)
 
-> **Claude Code Plugin** · v0.1.0 · Phase 1 MVP  
-> Enter your business idea and AI instantly delivers a 5-stage cold analysis from 13 expert perspectives.
+> **Claude Code Plugin** · v0.2.0 · Phase 1 MVP
+> Enter a business idea and AI instantly delivers a **5-stage cold analysis** from 13 expert perspectives.
 
 **No coding required.** Just type commands in the Claude Code chat window.
 
+> 🇺🇸 English · 🇰🇷 [한국어 README](./README.md) (primary)
+
 ---
 
-## Key Features
+## ⚡ Quick Start (3 lines)
 
-A single input triggers a **one-call, 5-stage analysis** — no multiple API calls.
+If [Claude Code](https://claude.ai/download) is already installed, in your terminal:
+
+```bash
+git clone https://github.com/sodam-ai/business-counselor.git
+claude plugin marketplace add ./business-counselor
+claude plugin install business-counselor@local-plugins
+```
+
+→ Restart Claude Code → type `/counsel:evaluate "my idea in one line"`. Done.
+
+New to this? Follow the **[Installation](#-installation)** and **[Guide for Non-Developers](#-guide-for-non-developers-even-if-youre-new-to-computers)** below step by step.
+
+---
+
+## 🤔 What is this?
+
+When a business idea strikes, this tool makes **13 experts coldly assess "will this actually work?"**
+
+- Alone, it's easy to fall into "this seems great!" self-confidence bias.
+- This tool exposes weaknesses via **13 expert lenses (developer, security, legal, investor, …) + adversarial debate (pro vs con vs judge).**
+- The result is a one-line verdict: **go / iterate / no-go.**
+
+It's not a separate app or website — it runs **inside Claude Code via commands**. All results are stored **on your local machine only** (zero external transmission).
+
+---
+
+## ✨ Key Features
+
+A single input triggers a **one-call analysis**.
+
+**Top "At-a-Glance Summary" card** (always shown) — verdict, confidence, strength, blocker, next action:
+
+```
+## At-a-Glance Summary
+- Verdict: ⛔ no-go  ·  Confidence: 78/100
+- Strength: ...
+- Blocker: ...
+- Next action: ...
+```
+
+Below it, the **5-stage detail** (only when you want it — see [Default/Full mode](#defaultcard--fulldetail-mode)):
 
 | Stage | Name | Description |
 |-------|------|-------------|
-| § 1 | **13-Persona Evaluation** | 13 experts (developer, security, lawyer, investor, etc.) each score 1–5 |
-| § 2 | **Lean Canvas** | Auto-generates 9-block business model (problem, customer, revenue, etc.) |
-| § 3 | **Mom Test Questions** | 5 evidence-based customer interview questions |
-| § 4 | **Pre-mortem** | Top 3 failure causes assuming the project has already failed |
-| § 5 | **Adversarial Debate** | Bull (optimist) · Bear (pessimist) · Judge (ruling) → go / iterate / no-go verdict |
+| § 1 | **13-Persona Evaluation** | 13 experts (dev, security, legal, investor, …) score 1–5 + ⚠️ risk flags |
+| §1 add-on | **🗣 Target Customer's Voice** | The actual paying customer's 1st-person reaction (would I buy, dealbreaker, alternative) |
+| § 2 | **Lean Canvas** | Auto-generated 9-block business model (problem, customer, revenue, …) |
+| § 3 | **Mom Test Questions** | 5 past-behavior-based customer interview questions |
+| § 4 | **Pre-mortem** | Top 3 failure causes + probability + mitigation, assuming it already failed |
+| § 5 | **Adversarial Debate** | Bull (pro) · Bear (con) · Judge (ruling) → go / iterate / no-go |
 
-All results are automatically saved to `~/.claude/plugins/business-counselor/data/`.
+All results auto-save to `~/.claude/plugins/business-counselor/data/`.
 
 ---
 
-## Installation
+## 📦 Prerequisites / Required Software
 
-### Prerequisites
+| Requirement | Purpose | Download |
+|-------------|---------|----------|
+| **Claude Code** | The program this plugin runs in (required) | [claude.ai/download](https://claude.ai/download) |
+| **Git** | Needed for Method A (Method B doesn't need it) | [git-scm.com/downloads](https://git-scm.com/downloads) |
 
-- [Claude Code](https://claude.ai/download) installed
-- [Git](https://git-scm.com/downloads) installed (Method A only. Method B does not require Git)
+- OS: Windows / macOS both supported
+- Internet: only needed during install (zero external transmission while in use)
+- No signup / API key / payment needed (uses Claude Code's own login)
+
+---
+
+## 🔧 Installation
+
+> **Note:** After `git clone`, do NOT enter the cloned folder — run the next commands from the location where the folder is visible.
 
 ### Method A — Install with Git (Recommended)
 
-Run the following commands in your terminal in order.  
-**Important:** After `git clone`, do NOT enter the cloned folder — run the next commands from the same location.
+Paste one line at a time into your terminal:
 
 ```bash
 # 1. Download the repository
 git clone https://github.com/sodam-ai/business-counselor.git
 
-# 2. Register local marketplace (run from the folder that contains business-counselor/)
+# 2. Register local marketplace (from where the folder is visible)
 claude plugin marketplace add ./business-counselor
 
-# 3. Install plugin
+# 3. Install the plugin
 claude plugin install business-counselor@local-plugins
 
-# 4. Verify installation
+# 4. Verify
 claude plugin list
 ```
 
-Installation is successful when you see `business-counselor@local-plugins  √ enabled`.
+→ Success when you see `business-counselor@local-plugins  √ enabled`.
 
-### Method B — Install via ZIP (No Git Required)
+### Method B — Install via ZIP (No Git)
 
-1. Go to the [GitHub page](https://github.com/sodam-ai/business-counselor) → click **Code** → **Download ZIP**
-2. Extract the downloaded ZIP file
-3. Rename the extracted folder to **`business-counselor`** (default name is `business-counselor-main`)
-4. Open a terminal in the folder that contains `business-counselor/` and run:
+1. [GitHub page](https://github.com/sodam-ai/business-counselor) → green **Code** → **Download ZIP**
+2. Extract the ZIP
+3. Rename the folder to **`business-counselor`** (remove `-main` if present)
+4. Open a terminal where the folder is visible and run:
 
 ```bash
 claude plugin marketplace add ./business-counselor
@@ -64,162 +116,139 @@ claude plugin install business-counselor@local-plugins
 claude plugin list
 ```
 
-Installation is successful when you see `business-counselor@local-plugins  √ enabled`.
-
-After installation, **restart Claude Code** to activate `/counsel:` commands.
+**Restart Claude Code** after install to activate `/counsel:` commands.
 
 ---
 
-## Usage
+## 🚀 Usage (Quick First Run)
 
-### First-time Setup
+### Step 1 — (Optional) Interview about you
 
 ```
 /counsel:start
 ```
 
-AI conducts a short interview about you — capital, time, skills, domain interests (~12 questions). Answer in plain language. This context personalizes all future analyses.
+Answer ~12 questions (capital, time, skills, interests) in plain language (1–2 at a time, ~30–40 min). This personalizes future analyses. (You can skip and evaluate directly — it uses general criteria.)
 
-### Analyze an Idea
+### Step 2 — Analyze an idea
 
 ```
-/counsel:evaluate "AI-powered real estate matching platform"
+/counsel:evaluate "an AI service that analyzes real estate listings"
 ```
 
-Wrap your idea in quotes. If the idea is vague, AI asks 1–2 clarifying questions first.
+Wrap the idea in quotes. If vague, AI asks 1–2 clarifying questions first. The result appears as a top **"At-a-Glance Summary" card**.
 
-### All Commands
+### Default (card) / Full (detail) mode
+
+- **Default**: `/counsel:evaluate "idea"` → **summary card only** (fast, short).
+- **Full**: `/counsel:evaluate "idea" full` → **full §1–§5 detail** generated & saved.
+- Re-view saved full analysis: `/counsel:show <id>`
+
+---
+
+## 📋 All Commands
 
 | Command | Description |
 |---------|-------------|
-| `/counsel:start` | Start your AI interview (first time only) |
-| `/counsel:evaluate "idea"` | 5-stage cold analysis |
-| `/counsel:list` | View all past analyses |
-| `/counsel:resume` | Continue/update your interview |
-| `/counsel:show <id>` | Re-view a specific analysis |
+| `/counsel:help` | Usage, commands & glossary on one screen |
+| `/counsel:start` | Start the AI interview about you (first time) |
+| `/counsel:resume` | Continue the interview (fill missing info) |
+| `/counsel:evaluate "idea"` | Analyze — default is the summary card |
+| `/counsel:evaluate "idea" full` | Analyze — full §1–§5 detail |
+| `/counsel:list` | List past analyses (id · verdict · confidence) |
+| `/counsel:show <id>` | Re-view a specific full analysis |
+
+> Stuck? Type `/counsel:help` first.
 
 ---
 
-## Guide for Non-Developers
+## ⚙️ How It Works / Workflow
 
-> For those who have never written code.
-
-### What is a "terminal"?
-
-A terminal is a text-based window for sending commands to your computer.
-
-- **Windows**: Start → search "PowerShell" → Open
-- **Mac**: Spotlight (⌘+Space) → search "Terminal" → Open
-
-### Step 1: Install Claude Code
-
-1. Go to [claude.ai/download](https://claude.ai/download)
-2. Download and run the installer
-3. Type `claude` in terminal → a chat window opens — installation successful
-
-### Step 2: Install This Plugin
-
-**If you have Git** (paste these 3 lines into terminal in order):
-
-```bash
-git clone https://github.com/sodam-ai/business-counselor.git
-claude plugin marketplace add ./business-counselor
-claude plugin install business-counselor@local-plugins
+```
+[once]   /counsel:start  →  answer interview  →  save your profile (profile.md)
+                                  │
+[each time]  /counsel:evaluate "idea"
+            │
+            ├─ if vague → AI asks 1–2 clarifying questions → answer
+            │
+            ▼
+        In a single call, AI internally runs:
+        13-persona → target customer's voice → Lean Canvas → Mom Test → Pre-mortem → adversarial debate
+            │
+            ▼
+        Screen: "At-a-Glance Summary" card (verdict · confidence · strength · blocker · next)
+        Saved : result file (.md)  →  /counsel:list to list, /counsel:show to re-view
 ```
 
-> No Git? Install it from [git-scm.com/downloads](https://git-scm.com/downloads), or use the ZIP method below.
-
-**If you don't have Git** (ZIP download):
-
-1. Go to [github.com/sodam-ai/business-counselor](https://github.com/sodam-ai/business-counselor)
-2. Click the green **Code** button → **Download ZIP**
-3. Extract the ZIP file
-4. Rename the folder to `business-counselor` (remove `-main` if present)
-5. Open a terminal in the folder that contains `business-counselor/` and run:
-
-```bash
-claude plugin marketplace add ./business-counselor
-claude plugin install business-counselor@local-plugins
-```
-
-**Verify installation**: Type `claude plugin list` → confirm `business-counselor  √ enabled`
-
-### Step 3: First Use
-
-1. Type `claude` in terminal → restart Claude Code if this is the first run after install
-2. Type `/counsel:start` → Enter
-3. Answer AI's questions in plain language
-4. After interview, type `/counsel:evaluate "my idea"`
+- **Single call**: one command = one analysis (zero extra calls). Fast & cost-saving.
+- **Cold mode**: blocks positivity bias and surfaces weaknesses/risks first. Legal/investment risks flagged with ⚠️.
 
 ---
 
-## Folder Structure
+## 📁 File & Doc Locations
 
+**Plugin folder** (where you installed):
 ```
 business-counselor/
-├── plugin.json                  ← Plugin manifest
-├── CLAUDE.md                    ← AI behavior rules
-├── AGENTS.md                    ← AI agent entry point
-├── CHANGELOG.md                 ← Change history
-│
-├── commands/                    ← Command files (5)
-│   ├── counsel-start.md
-│   ├── counsel-resume.md
-│   ├── counsel-evaluate.md
-│   ├── counsel-list.md
-│   └── counsel-show.md
-│
-├── skills/                      ← AI analysis skills (5)
-│   ├── 13-personas/SKILL.md
-│   ├── lean-canvas/SKILL.md
-│   ├── mom-test/SKILL.md
-│   ├── adversarial-debate/SKILL.md
-│   └── goal-driven/SKILL.md
-│
-├── agents/
-│   └── bc-idea-evaluator.md     ← Core analysis agent
-│
-├── templates/                   ← Output templates
-├── tests/                       ← Linter & scenario tests
-└── PRD/                         ← Product planning docs
+├── plugin.json          ← Plugin manifest
+├── CLAUDE.md            ← AI behavior rules
+├── AGENTS.md            ← AI agent entry point
+├── CHANGELOG.md         ← Change history
+├── commands/            ← 6 commands (start·resume·evaluate·list·show·help)
+├── skills/              ← analysis skills (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven)
+├── agents/              ← bc-idea-evaluator (core analysis engine)
+├── templates/           ← output templates
+├── tests/               ← linters & scenarios
+└── PRD/                 ← planning docs (01_PRD·02_DATA_MODEL·03_PHASES·04_PROJECT_SPEC)
 ```
 
-**Data location** (auto-created after install):
+**Your data** (auto-created after install, local only):
 ```
 ~/.claude/plugins/business-counselor/data/
 ├── profile.md           ← Your profile (interview result)
-├── sessions/            ← Interview conversation logs
+├── sessions/            ← Interview logs
 └── ideas/evaluated/     ← Idea analysis results
 ```
+> `~` is your home folder. On Windows usually `C:\Users\(you)\.claude\...`.
 
 ---
 
-## Operations Notes
+## 🆘 Troubleshooting
 
-### Data Security
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `/counsel:` commands not showing | Not restarted after install | **Quit and relaunch Claude Code** |
+| `plugin list` shows no enabled | Missing register/install | Re-run `marketplace add ./business-counselor` → `install ...@local-plugins` |
+| `claude: command not found` | Claude Code missing/path | Install from [claude.ai/download](https://claude.ai/download), restart |
+| `git: command not found` | Git missing | Install [git-scm.com](https://git-scm.com/downloads) or use ZIP (Method B) |
+| Evaluation takes 5–8 min | Deep analysis is naturally slow | Normal. For speed, use **default (card) mode** |
+| Result is just a short card | Default is card mode | Full: `/counsel:evaluate "..." full` or `/counsel:show <id>` |
+| Errors like `uv: command not found` | **Unrelated to this plugin** | Ignore (another tool's notice) |
+| Evaluated without profile | Interview skipped | Uses general criteria. For tailored, run `/counsel:start` first |
 
-- Your profile and analysis results are stored **on your local machine only**
-- No data is sent to external servers (Phase 1 & 2 policy)
+> Still stuck? Type `/counsel:help` to see current usage.
+
+---
+
+## 🔒 Operations / Security Notes
+
+### Data security
+- Your profile and analyses are stored **on your local machine only**.
+- Not sent to external servers (Phase 1 & 2 policy). The analysis engine has file read/write only (no internet calls).
 - Data path: `~/.claude/plugins/business-counselor/data/`
 
-### Legal Disclaimer
+### Legal disclaimer
+This tool does **NOT** constitute: investment advisory (Korean Capital Markets Act Art. 6(5)) · business consulting · tax/legal advisory.
+**All outputs are reference opinions only.** Consult qualified professionals (lawyers, accountants, financial advisors) before significant decisions.
 
-This tool does NOT constitute:
-
-- Investment advisory services (Korean Capital Markets Act Art. 6(5))
-- Business consulting · Tax advisory · Legal advisory
-
-**All analysis outputs are reference opinions only.** Consult qualified professionals (lawyers, accountants, financial advisors) before making significant decisions.
-
-### Known Limitations (Phase 1)
-
-- No external research (live market data) → planned for Phase 3
-- No auto idea generation → planned for Phase 2
-- `consistency_score` (repeated evaluation consistency) not yet implemented → Phase 2
+### Known limitations (Phase 1)
+- No external market research (live data) → Phase 3
+- No auto idea generation (`/counsel:recommend`) → Phase 2
+- Repeated-evaluation consistency score (`consistency_score`) not measured → Phase 2
 
 ---
 
-## License
+## 📄 License
 
 Apache License 2.0 · Copyright 2026 SoDam AI Studio
 
@@ -227,4 +256,4 @@ See the [LICENSE](./LICENSE) file for details.
 
 ---
 
-[한국어 README](./README.md)
+🇰🇷 [한국어 README](./README.md) (primary) · Change history: [CHANGELOG.md](./CHANGELOG.md)

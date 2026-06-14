@@ -23,6 +23,7 @@
 | `/counsel:evaluate "<idea>"` | 아이디어 5단계 냉철 판독 (단일 호출) |
 | `/counsel:list` | 과거 평가 목록 |
 | `/counsel:show <id>` | 특정 평가 재조회 |
+| `/counsel:help` | 사용법 한 장 — 명령·흐름·용어 풀이 |
 
 ---
 
