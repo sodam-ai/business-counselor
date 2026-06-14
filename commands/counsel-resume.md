@@ -42,6 +42,7 @@ version: "1.0"
 - 이미 완료된 카테고리: **재질문 0건 강제**
 - 누락 카테고리만 우선순위 순으로 질문
 - 가설 기반 질문 절대 금지 ("만약 ~" 형식)
+- **페이싱**: 질문은 **한 번에 1~2개씩** 제시하고 답변을 받은 뒤 다음으로 (한꺼번에 나열 금지)
 - 총 추가 질문 최대 6개 (누락 카테고리 수 × 2)
 
 ## profile.md 갱신 규칙
@@ -63,9 +64,12 @@ profile_updates:
 ```yaml
 ---
 session_id: session-{YYYY-MM-DD}-{NNN}
+schema_version: "1.2"
 profile_id: profile-main
 timestamp: {YYYY-MM-DDTHH:MM:SS}
 updated_fields: [{갱신된 필드명 목록}]
+disclaimer: |
+  본 세션 기록은 본인이 직접 작성하며, Phase 1에서 외부로 전송되지 않습니다.
 ---
 ```
 본문: 이번 세션 추가 Q/A 페어 기록

@@ -60,6 +60,7 @@ version: "1.0"
 ```
 호출 형식:
 아이디어: {명확화된 아이디어 원문}
+모드: {입력에 "전체"·"상세"·"full"·"detail"·--full 있으면 "전체", 없으면 "기본(카드)"}
 프로필 컨텍스트: {~/.claude/plugins/business-counselor/data/profile.md 전체 내용 또는 "(프로필 없음)"}
 ```
 
@@ -83,7 +84,7 @@ bc-idea-evaluator 응답을 `~/.claude/plugins/business-counselor/data/ideas/eva
 ```
 
 - `YYYY-MM-DD`: 오늘 날짜
-- `NNN`: 당일 순번 (001부터, 기존 파일 수 + 1)
+- `NNN`: 당일 순번 — **그날 `evaluated/`의 기존 `eval-NNN` 중 가장 큰 번호 + 1** (파일 없으면 001). ⚠️ "파일 *수* + 1" 금지(중간 삭제 시 충돌·덮어쓰기 발생)
 - 예: `2026-05-08_eval-001.md`
 
 ### ID 규칙
@@ -101,11 +102,11 @@ bc-idea-evaluator가 출력한 전체 내용 (frontmatter + §1~§5 본문) 그�
 
 ---
 
-## 출력 토큰 제한
+## 출력 분량 (깊이 우선)
 
-bc-idea-evaluator 응답 포함 전체 출력: **< 6,000 토큰 강제**
-
-초과 감지 시: 각 섹션 1~2줄 압축 버전으로 재요청.
+브레비티는 「한눈 요약」 카드가 담당한다. §1~§5 본문은 **분석 깊이·근거를 깎지 말 것.**
+줄이는 대상은 불필요한 반복·중복뿐(특히 frontmatter bull/bear와 §5 본문 중복).
+`< 6,000 토큰`은 강제가 아닌 가이드(과도한 장황함만 방지). 깊이와 충돌하면 깊이 우선.
 
 ---
 
@@ -117,6 +118,9 @@ bc-idea-evaluator 응답 포함 전체 출력: **< 6,000 토큰 강제**
 ID: eval-{YYYY-MM-DD}-{NNN}
 verdict: {go|iterate|no-go}  |  confidence: {N}
 
+전체 상세(13명·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 보기:
+  - 기본(카드)으로 봤으면 → /counsel:evaluate "아이디어" 전체  (전체 생성)
+  - 전체 모드로 봤으면   → /counsel:show eval-{...}  (저장된 전체 열람)
 과거 평가 목록: /counsel:list
 이 평가 다시 보기: /counsel:show eval-{YYYY-MM-DD}-{NNN}
 ```
