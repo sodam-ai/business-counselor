@@ -1,6 +1,15 @@
 # OMC 에이전트 세션 상태 (로컬 전용, 커밋 불필요)
 .omc/
 
+# 다른 플러그인 부산물 (ai-pair-programming·omc 등, 커밋 불필요)
+.complexity-log.md
+.pair-programming-session.md
+.plugin-config/
+.todos-report.md/
+
+# 검증 결과 로그 (로컬 기록용)
+tests/results/
+
 # 사용자 개인 데이터 (플러그인 외부 경로에 저장됨 — ~/.claude/plugins/business-counselor/data/)
 data/
 

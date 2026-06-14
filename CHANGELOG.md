@@ -4,6 +4,68 @@
 
 ---
 
+## [플러그인] v0.2.0 — 2026-06-15 (UX/사용성 고도화 — 핵심 경로 E2E 검증 후)
+
+### 검증 (Verified)
+- **E2E 시나리오 4(핵심 경로) 실측 통과**: `/counsel:evaluate` 실제 실행 → §1~§5 + frontmatter 정상, 린터 PASS. v0.1.1 수정(§4 확률+완화책·#11/#13 ⚠️·단일호출·verdict 강제하향·NNN·환각태깅) 전부 실동작 확인.
+- **실측 발견**: 출력 ~11,900자(≈6~8k 토큰)로 PRD `<6,000` 목표 초과 → 본 버전에서 압축 규칙으로 대응.
+
+### 추가 (Added)
+- **「한눈 요약」 카드**: 평가 출력 맨 위 TL;DR(판정 ✅/⚠️/⛔·확신도·강점·막힌곳·다음행동). 색·기호 단독 의존 금지(텍스트 라벨 병기=접근성). `agents/bc-idea-evaluator.md`·`templates/evaluation.template.md` 반영.
+- **`/counsel:help` 명령**: 명령 5개·추천 흐름·전문용어 풀이를 한 장에(비개발자 온보딩·접근성). 용어집을 매 평가 인라인 대신 help에 모아 토큰 절약. AGENTS.md·README 2종 등록.
+- **「타겟 고객의 한마디」(§1 부록)**: 13명 전문가 패널과 별개로, 실제 '돈 낼 고객' 1인칭 예상 반응(첫반응·거부이유·현재대안·지갑여는조건)을 §1 표 아래 추가. 13행 표·5단계·페르소나 1:1 정합 무수정(부록 형태). §3 Mom Test와 "가설↔검증"으로 연결해 중복 회피. agents·template·help 반영.
+
+### 고도화 (Improved)
+- **출력 분량 원칙(깊이 우선)**: 브레비티는 「한눈 요약」 카드가 담당 → §1~§5 본문은 분석 깊이 보존. 줄이는 건 불필요한 반복·중복(특히 frontmatter bull/bear ↔ §5 본문)뿐. `<6,000` 토큰은 강제 → **가이드로 강등**(깊이와 충돌 시 깊이 우선). ※ 초기 "줄 수 하드캡" 방침은 분석 정확도 저하 우려로 철회(사용자 피드백 반영).
+
+### 고도화 (Improved, 추가)
+- **화면/저장 분리(점진적 공개)**: 깊은 §1~§5는 파일에 그대로 저장하되, **화면 응답은 「한눈 요약」 카드 + show 안내까지만** 출력. 실사용자가 5쪽을 강제로 읽지 않게 함 — 압축이 아니라 *안 보여줄 뿐*이라 깊이 손실 0. 사용자 피드백("출력이 너무 길다") 반영.
+- **2단계 기본/전체 모드**: 기본 `/counsel:evaluate`=「한눈 요약」 카드만 생성(빠름·짧음), `"...전체"`/`--full`=§1~§5 전체 생성. 두 모드 모두 13관점·적대토론 **내부 추론 필수**(verdict 품질 유지). 속도·길이 동시 해결. 사용자 피드백('전체는 선택에 따라 작성') 반영. frontmatter `mode: summary|full` 기록.
+
+### 미검증 (Pending)
+- 한눈 요약·압축의 실제 토큰 절감 효과는 다음 `/counsel:evaluate` 실행에서 재확인 필요(빌드≠작동).
+- 시나리오 1(인터뷰→profile)·2(resume)·5(환경 무결성) 실 E2E 미완.
+
+### 스키마/버전
+- schema_version 1.2 유지. 플러그인 0.1.1 → 0.2.0 (신규 명령 추가 = minor).
+
+---
+
+## [플러그인] v0.1.1 — 2026-06-15 (Phase 1 안정화 + 기존 기능 고도화)
+
+### 수정 (Fixed) — 정합성 결함 6건
+- **린터 과잉 검증 버그**: `frontmatter-linter.sh`가 모든 .md에 6필드를 요구해 `/counsel:start` 직후 profile.md·세션 파일이 FAIL하던 문제 → 파일 유형별 검증(모든 파일=disclaimer+schema_version, evaluated/generated=6필드)으로 수정. 02_DATA_MODEL.md 정합.
+- **세션 파일 면책 누락**: counsel-start·counsel-resume 세션 frontmatter에 `disclaimer`+`schema_version` 추가 ("면책 없는 파일 생성 금지" 규칙 위반 해소).
+- **marketplace.json 라이선스 불일치**: `private` → `Apache-2.0` / `SoDam AI Studio` (plugin.json·LICENSE·README와 일치).
+- **도구 부산물 추적 위험**: .gitignore에 .complexity-log.md·.pair-programming-session.md·.plugin-config/·.todos-report.md/·tests/results/ 추가.
+- **NNN 순번 충돌 버그**: `counsel-evaluate`·에이전트 저장 규칙이 순번을 "파일 *수* + 1"로 계산 → 중간 파일 삭제 시 기존 파일 덮어쓰기 충돌 → **"기존 최대 순번 + 1"**로 수정.
+
+### 고도화 (Improved) — 기존 기능 강화
+- **에이전트 frontmatter 표준화 + 기술적 강제**: `bc-idea-evaluator`에 `tools: Read, Write, Glob`·`model: sonnet` 지정. Task·WebFetch/WebSearch 도구 부재로 "단일 호출·외부 API 0"이 프롬프트 약속 → 런타임 불변식으로 격상. 비표준 `skills:`·`policy:` 필드는 본문으로 이동(자기완결화).
+- **§4 Pre-mortem 정보량 강화**: 각 실패 시나리오에 확률(상/중/하)+완화책 추가 (02_DATA_MODEL.md `{cause, prob, mitigation}` 정합). `evaluation.template.md` 동반 갱신. 토큰 예산표 §4 ~200→~360, 합계 ~3,160(<6,000).
+- **환각 억제 규칙 명시**: 출처 없는 수치 `(추정·미검증)` 태깅 강제, §1 점수-프로필 사실 근거 연결.
+- **재현성 정직화**: `model_id`는 `model: sonnet` 고정으로 기록값=실제 일치, `temperature`는 "선언적 메타(런타임 미강제)"임을 명시.
+- **인터뷰 페이싱**: counsel-start·counsel-resume에 "질문 한 번에 1~2개씩, 답변 후 다음" 규칙 추가 (12문항 일괄 나열 방지 → 시나리오 1 UX 리스크 해소).
+- **도메인 경고 가시화**: 13-personas·에이전트 §1 — 자본시장법/투자 키워드 감지 시 #11/#13 행에 ⚠️ + 표 아래 경고 1줄을 *출력에 노출* (기존엔 "강조"가 출력에 안 보임 → 법무·투자 안전 실효화).
+
+### 추가 (Added)
+- **tests/frontmatter-linter.ps1**: PowerShell 린터(Windows 네이티브, Git Bash 불필요). bash 린터와 동일 규칙.
+- **tests/results-template.md**: 시나리오 5건 검증 결과 기록 템플릿.
+- **.gitattributes**: `*.sh text eol=lf` (Windows CRLF 셰뱅 깨짐 방지).
+
+### 검증
+- 린터 2종(bash·PowerShell) 실측 PASS — 정상 PASS(exit 0)·필드 누락 FAIL(exit 1)·빈/없는 디렉토리 INFO(exit 0). 파일 유형별 분기 동작 확인(profile·세션은 base 필드만으로 PASS).
+- 정적 정합성: §4 포맷 = 에이전트 ⟷ 템플릿 ⟷ 데이터모델 일치.
+- git diff: 전역 환경 파일(CLAUDE.md·MEMORY.md·user_persona*.md·hook) 무손상.
+
+### 미완료 (Pending)
+- 수동 시나리오 5건 실 E2E (사용자가 플러그인 설치 후 `/counsel:*` 실행 — `tests/results-template.md`로 기록).
+
+### 스키마
+- schema_version 1.2 유지(변경 없음). 플러그인 버전 0.1.0 → 0.1.1.
+
+---
+
 ## [플러그인] v0.1.0 — 2026-05-08 (Phase 1 구현 완료)
 
 ### 구현 (Added)

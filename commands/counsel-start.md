@@ -25,6 +25,7 @@ version: "1.0"
 - **과거 행동 기반 100%**: "지난 N년 동안 실제로 ~한 적 있나요?" 형식만 허용
 - **6카테고리 순서**: 생애사 → 자본 → 시간 → 역량 → 관심도메인 → 리스크성향
 - **카테고리당 약 2개 질문**, 총 12개 (30~40분 목표)
+- **페이싱**: 질문은 **한 번에 1~2개씩** 제시하고 답변을 받은 뒤 다음으로. 12개를 한꺼번에 나열 금지(사용자 피로·대화 흐름 붕괴 방지)
 - 답변이 모호하면 같은 카테고리에서 1회 추가 질문 허용 (카테고리당 최대 3개)
 
 ## 6카테고리 질문 가이드
@@ -72,9 +73,12 @@ disclaimer: |
 ```yaml
 ---
 session_id: session-{YYYY-MM-DD}-001
+schema_version: "1.2"
 profile_id: profile-main
 timestamp: {YYYY-MM-DDTHH:MM:SS}
 updated_fields: [birth_year, residence, capital_krw, ...]
+disclaimer: |
+  본 세션 기록은 본인이 직접 작성하며, Phase 1에서 외부로 전송되지 않습니다.
 ---
 ```
 본문: 이번 세션 Q/A 페어 전체 기록

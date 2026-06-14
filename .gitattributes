@@ -1,0 +1,5 @@
+# 셸 스크립트는 항상 LF (Windows CRLF 변환 시 셰뱅 깨짐 방지)
+*.sh text eol=lf
+
+# 기타 텍스트는 git 자동 처리
+* text=auto
