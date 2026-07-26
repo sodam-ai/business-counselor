@@ -27,10 +27,10 @@ powershell -File tests\frontmatter-linter.ps1 $env:USERPROFILE\.claude\plugins\b
 
 | # | 시나리오 | 명령 | PASS/FAIL | 메모 |
 |---|---------|------|-----------|------|
-| 1 | 첫 인터뷰 (Cold start) | `/business-counselor:counsel-start` | ☐ | profile.md·sessions/ 생성, frontmatter(disclaimer 포함) |
-| 2 | 이어서 (Resume) | `/business-counselor:counsel-resume` | ☐ | 재질문 0건, last_updated 갱신 |
-| 3 | 모호 아이디어 | `/business-counselor:counsel-evaluate "AI로 뭔가 해보고 싶어"` | ☐ | 보강질문 1~2개, 자동가정 0 |
-| 4 | 명확 아이디어 5단계 (핵심) | `/business-counselor:counsel-evaluate "..."` | ☐ | 한눈 요약 카드·§1~§5 분리·§4 확률+완화책·verdict·면책·분량(깊이우선)·단일호출 |
+| 1 | 첫 인터뷰 (Cold start) | `/business-counselor:start` | ☐ | profile.md·sessions/ 생성, frontmatter(disclaimer 포함) |
+| 2 | 이어서 (Resume) | `/business-counselor:resume` | ☐ | 재질문 0건, last_updated 갱신 |
+| 3 | 모호 아이디어 | `/business-counselor:evaluate "AI로 뭔가 해보고 싶어"` | ☐ | 보강질문 1~2개, 자동가정 0 |
+| 4 | 명확 아이디어 5단계 (핵심) | `/business-counselor:evaluate "..."` | ☐ | 한눈 요약 카드·§1~§5 분리·§4 확률+완화책·verdict·면책·분량(깊이우선)·단일호출 |
 | 5 | 환경 무결성 | (아래 스냅샷) | ☐ | CLAUDE.md·MEMORY.md·persona·hook diff 0 |
 
 ---
@@ -56,7 +56,7 @@ Get-ChildItem $env:APPDATA\claude-code\projects\C--Users-PC\memory\*.md | Get-Fi
 - [ ] `MEMORY.md`·`user_persona*.md` 변경 0
 - [ ] `settings.json`(SessionStart·UserPromptSubmit hook) 변경 0
 - [ ] AGENTS.md가 홈/프로젝트 루트에 생성되지 않음 (플러그인 폴더 내에만)
-- [ ] `/business-counselor:counsel-*` 5개·`bc-idea-evaluator` 이름 충돌 0
+- [ ] `/business-counselor:*` 5개·`bc-idea-evaluator` 이름 충돌 0
 
 ---
 

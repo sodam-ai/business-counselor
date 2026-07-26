@@ -14,7 +14,7 @@
 - 사용자가 처음 사용
 
 ### 절차
-1. Claude Code에서 `/business-counselor:counsel-start` 입력
+1. Claude Code에서 `/business-counselor:start` 입력
 2. AI가 Mom Test 스타일 질문 6 카테고리(생애사·자본·시간·역량·관심도메인·리스크성향) 시작
 3. 사용자가 12개 질문에 답변 (각 카테고리 2개 평균)
 4. AI가 답변 누적 후 `profile.md` 생성
@@ -41,7 +41,7 @@
 - profile.md 존재, 일부 필드는 누락
 
 ### 절차
-1. `/business-counselor:counsel-resume` 입력
+1. `/business-counselor:resume` 입력
 2. AI가 profile.md 읽고 부족 영역(예: `past_business`·`risk_appetite` 모호) 자동 감지
 3. 해당 영역만 우선 질문
 4. 새 답변으로 profile.md 갱신
@@ -65,7 +65,7 @@
 - profile.md 1차 완성 (시나리오 1·2 통과)
 
 ### 절차
-1. `/business-counselor:counsel-evaluate "AI로 뭔가 사업 해보고 싶어"` 입력 (모호 입력)
+1. `/business-counselor:evaluate "AI로 뭔가 사업 해보고 싶어"` 입력 (모호 입력)
 2. AI가 모호 감지 → 보강 질문 1~2개 ("어느 도메인의 AI?", "B2C/B2B?")
 3. 사용자 답변 받고 명확화 후 5단계 평가 진행
 
@@ -87,7 +87,7 @@
 - profile.md 1차 완성
 
 ### 절차
-1. `/business-counselor:counsel-evaluate "AI로 한국 부동산 매물 자동 분석 + 투자 가치 점수화 SaaS"` 입력
+1. `/business-counselor:evaluate "AI로 한국 부동산 매물 자동 분석 + 투자 가치 점수화 SaaS"` 입력
 2. AI가 단일 호출에서 5단계 적대 토론 수행
 3. 결과 출력 + `data/ideas/evaluated/2026-05-07_eval-001.md` 저장
 
@@ -140,7 +140,7 @@
 
 ### 절차
 1. 플러그인 설치 후 사용자 환경 스냅샷 1차: `git status`·`ls ~/.claude/`·`cat ~/.claude/CLAUDE.md`·`cat ~/.claude/projects/<project>/memory/MEMORY.md`
-2. `/business-counselor:counsel-start` 1회 + `/business-counselor:counsel-evaluate` 1회 + `/business-counselor:counsel-list` 1회 실행
+2. `/business-counselor:start` 1회 + `/business-counselor:evaluate` 1회 + `/business-counselor:list` 1회 실행
 3. 환경 스냅샷 2차 (동일 명령들)
 4. 1차 vs 2차 비교
 
@@ -153,14 +153,14 @@
 - [ ] AGENTS.md가 사용자 홈 루트(`C:\Users\PC\AGENTS.md`)에 생성되지 않음
 - [ ] AGENTS.md가 임의 프로젝트 루트(`D:\AI_Dev_Work\...\AGENTS.md`)에 생성되지 않음
 - [ ] AGENTS.md가 플러그인 폴더 안에만 존재 (`~/.claude/plugins/business-counselor/AGENTS.md`)
-- [ ] 슬래시 명령 충돌 0 — `/business-counselor:counsel-*` 5개가 다른 플러그인 명령과 겹치지 않음
+- [ ] 슬래시 명령 충돌 0 — `/business-counselor:*` 5개가 다른 플러그인 명령과 겹치지 않음
 - [ ] 서브에이전트 이름 충돌 0 — `bc-idea-evaluator` 등이 기존 에이전트와 겹치지 않음
 - [ ] 페르소나 hook 정상 동작 (다음 세션에서 user_persona_min.md 자동 주입 정상)
 
 ### FAIL 시 액션
 - CLAUDE.md/MEMORY.md/persona 변경 발견 → 즉시 롤백, 원인 분석, DO NOT 강화
 - AGENTS.md 글로벌 생성 → 플러그인 install 스크립트 점검
-- 명령·에이전트 충돌 → `bc-` prefix(에이전트)·`/business-counselor:counsel-*`(명령) 접두사 유지 확인
+- 명령·에이전트 충돌 → `bc-` prefix(에이전트)·`/business-counselor:*`(명령) 접두사 유지 확인
 
 ---
 
@@ -176,8 +176,8 @@
 ## Phase 2 진입 전 회귀 매트릭스
 
 위 5건 그대로 재실행 + 다음 추가:
-- [ ] `/business-counselor:counsel-recommend 5` 정상 동작
-- [ ] `/business-counselor:counsel-decide <id> go` decisions.jsonl 1줄 추가
+- [ ] `/business-counselor:recommend 5` 정상 동작
+- [ ] `/business-counselor:decide <id> go` decisions.jsonl 1줄 추가
 - [ ] Pre-mortem 5개 강제 (Phase 1의 3개 → 5개)
 - [ ] generated/*.md 파일 생성
 
@@ -186,7 +186,7 @@
 ## Phase 3 진입 전 회귀 매트릭스
 
 위 + Phase 2 추가 + 다음:
-- [ ] `/business-counselor:counsel-research <topic>` 명시 호출 시만 외부 API 활성
+- [ ] `/business-counselor:research <topic>` 명시 호출 시만 외부 API 활성
 - [ ] WebSearch 폴백 동작 (deep-research 미설치 환경)
 - [ ] PII 마스킹 unit test PASS (capital_krw·birth_year·residence 키워드 자동 제거)
 - [ ] external_calls.jsonl 로그 기록

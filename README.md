@@ -18,7 +18,7 @@ claude plugin marketplace add sodam-ai/business-counselor
 claude plugin install business-counselor@business-counselor-marketplace
 ```
 
-→ Claude Code 재시작 → 채팅창에 `/business-counselor:counsel-evaluate "내 아이디어 한 줄"` 입력. 끝.
+→ Claude Code 재시작 → 채팅창에 `/business-counselor:evaluate "내 아이디어 한 줄"` 입력. 끝.
 
 처음이라 위 명령이 막막하면 아래 **[설치 방법](#-설치-방법)**과 **[사용 방법](#beginner-guide)**을 그대로 따라 하세요.
 
@@ -128,7 +128,7 @@ claude plugin install business-counselor@business-counselor-marketplace
 claude plugin list
 ```
 
-**설치 후 Claude Code를 재시작**하면 `/business-counselor:counsel-*` 명령을 쓸 수 있습니다.
+**설치 후 Claude Code를 재시작**하면 `/business-counselor:*` 명령을 쓸 수 있습니다.
 
 ---
 
@@ -138,7 +138,7 @@ claude plugin list
 ### 1단계 — (선택) 나에 대한 인터뷰
 
 ```
-/business-counselor:counsel-start
+/business-counselor:start
 ```
 
 자본·시간·역량·관심 분야 등 약 12개 질문에 자연어로 답하면 됩니다(한 번에 1~2개씩, 약 30~40분). 이 정보로 이후 분석이 **내 상황에 맞춰** 더 정확해집니다. (건너뛰고 바로 평가해도 됩니다 — 일반 기준으로 평가됩니다.)
@@ -146,7 +146,7 @@ claude plugin list
 ### 2단계 — 아이디어 분석
 
 ```
-/business-counselor:counsel-evaluate "AI로 부동산 매물 분석해주는 서비스"
+/business-counselor:evaluate "AI로 부동산 매물 분석해주는 서비스"
 ```
 
 아이디어를 큰따옴표 안에 입력. 모호하면 AI가 보강 질문 1~2개를 먼저 합니다. 결과는 맨 위 **「한눈 요약」 카드**로 나옵니다.
@@ -154,9 +154,9 @@ claude plugin list
 <a id="mode-guide"></a>
 ### 기본(카드) / 전체(상세) 모드
 
-- **기본**: `/business-counselor:counsel-evaluate "아이디어"` → **「한눈 요약」 카드만** (빠르고 짧음).
-- **전체**: `/business-counselor:counsel-evaluate "아이디어" 전체` → **§1~§5 상세 분석 전부** 생성·저장. (아래 [기본/전체 모드](#mode-guide) 참고)
-- 이미 저장된 전체 분석 다시 보기: `/business-counselor:counsel-show <id>`
+- **기본**: `/business-counselor:evaluate "아이디어"` → **「한눈 요약」 카드만** (빠르고 짧음).
+- **전체**: `/business-counselor:evaluate "아이디어" 전체` → **§1~§5 상세 분석 전부** 생성·저장. (아래 [기본/전체 모드](#mode-guide) 참고)
+- 이미 저장된 전체 분석 다시 보기: `/business-counselor:show <id>`
 
 ---
 
@@ -164,24 +164,24 @@ claude plugin list
 
 | 명령어 | 설명 |
 |--------|------|
-| `/business-counselor:counsel-help` | 사용법·명령·용어를 한 화면에 요약 |
-| `/business-counselor:counsel-start` | 나에 대한 AI 인터뷰 시작 (처음 한 번) |
-| `/business-counselor:counsel-resume` | 인터뷰 이어서 하기 (빠진 정보 보완) |
-| `/business-counselor:counsel-evaluate "아이디어"` | 아이디어 분석 — 기본은 한눈 요약 카드 |
-| `/business-counselor:counsel-evaluate "아이디어" 전체` | 아이디어 분석 — §1~§5 전체 상세 |
-| `/business-counselor:counsel-list` | 지금까지 분석한 목록 (id·판정·확신도) |
-| `/business-counselor:counsel-show <id>` | 특정 분석 전체 다시 보기 |
+| `/business-counselor:help` | 사용법·명령·용어를 한 화면에 요약 |
+| `/business-counselor:start` | 나에 대한 AI 인터뷰 시작 (처음 한 번) |
+| `/business-counselor:resume` | 인터뷰 이어서 하기 (빠진 정보 보완) |
+| `/business-counselor:evaluate "아이디어"` | 아이디어 분석 — 기본은 한눈 요약 카드 |
+| `/business-counselor:evaluate "아이디어" 전체` | 아이디어 분석 — §1~§5 전체 상세 |
+| `/business-counselor:list` | 지금까지 분석한 목록 (id·판정·확신도) |
+| `/business-counselor:show <id>` | 특정 분석 전체 다시 보기 |
 
-> 막히면 언제든 `/business-counselor:counsel-help` 를 먼저 입력하세요.
+> 막히면 언제든 `/business-counselor:help` 를 먼저 입력하세요.
 
 ---
 
 ## ⚙️ 작동 방법 / 워크플로우
 
 ```
-[처음 1회]  /business-counselor:counsel-start  →  인터뷰 답변  →  내 프로필(profile.md) 저장
+[처음 1회]  /business-counselor:start  →  인터뷰 답변  →  내 프로필(profile.md) 저장
                                    │
-[매번]  /business-counselor:counsel-evaluate "아이디어"
+[매번]  /business-counselor:evaluate "아이디어"
             │
             ├─ 모호하면 → AI가 보강 질문 1~2개 → 답변
             │
@@ -191,7 +191,7 @@ claude plugin list
             │
             ▼
         화면: 「한눈 요약」 카드 (판정·확신도·강점·막힌곳·다음행동)
-        저장: 결과 파일(.md)  →  /business-counselor:counsel-list 로 목록, /business-counselor:counsel-show 로 다시 보기
+        저장: 결과 파일(.md)  →  /business-counselor:list 로 목록, /business-counselor:show 로 다시 보기
 ```
 
 - **단일 호출**: 한 명령 = 한 번의 분석(추가 호출 0). 빠르고 비용 절약.
@@ -231,16 +231,16 @@ business-counselor/
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
-| `/business-counselor:counsel-*` 명령이 안 보임 | 설치 후 미재시작 | **Claude Code를 껐다 다시 실행** |
+| `/business-counselor:*` 명령이 안 보임 | 설치 후 미재시작 | **Claude Code를 껐다 다시 실행** |
 | `plugin list`에 enabled 안 뜸 | 등록/설치 누락 | `marketplace add sodam-ai/business-counselor` → `install ...@business-counselor-marketplace` 다시 실행 |
 | `claude: command not found` | Claude Code 미설치/경로 | [claude.ai/download](https://claude.ai/download)에서 설치 후 재시작 |
 | `git: command not found` | Git 미설치 | [git-scm.com](https://git-scm.com/downloads) 설치 또는 ZIP 방법(B) 사용 |
 | 평가가 5~8분 걸림 | 깊은 분석은 원래 오래 걸림 | 정상입니다. 빠르게 원하면 **기본(카드) 모드** 사용 |
-| 결과가 카드만 짧게 나옴 | 기본이 카드 모드 | 전체는 `/business-counselor:counsel-evaluate "..." 전체` 또는 `/business-counselor:counsel-show <id>` |
+| 결과가 카드만 짧게 나옴 | 기본이 카드 모드 | 전체는 `/business-counselor:evaluate "..." 전체` 또는 `/business-counselor:show <id>` |
 | 다른 플러그인의 `uv: command not found` 등 오류 | **이 플러그인과 무관** | 무시해도 됩니다 (다른 도구의 알림) |
-| 프로필 없이 평가됨 | 인터뷰 미진행 | 일반 기준으로 평가됩니다. 맞춤 원하면 `/business-counselor:counsel-start` 먼저 |
+| 프로필 없이 평가됨 | 인터뷰 미진행 | 일반 기준으로 평가됩니다. 맞춤 원하면 `/business-counselor:start` 먼저 |
 
-> 그래도 안 되면 `/business-counselor:counsel-help` 를 입력해 현재 사용법을 확인하세요.
+> 그래도 안 되면 `/business-counselor:help` 를 입력해 현재 사용법을 확인하세요.
 
 ---
 
@@ -257,7 +257,7 @@ business-counselor/
 
 ### 알려진 제한사항 (Phase 1)
 - 외부 시장 리서치(실시간 데이터) 미지원 → Phase 3 예정
-- 아이디어 자동 생성(`/business-counselor:counsel-recommend`) 미지원 → Phase 2 예정
+- 아이디어 자동 생성(`/business-counselor:recommend`) 미지원 → Phase 2 예정
 - 반복 평가 일관성 점수(`consistency_score`) 미측정 → Phase 2 예정
 
 ---

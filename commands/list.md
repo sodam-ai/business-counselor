@@ -1,10 +1,10 @@
 ---
-name: business-counselor:counsel-list
+name: business-counselor:list
 description: 과거 평가 목록 조회 — id·verdict·confidence 테이블
 version: "1.0"
 ---
 
-# /business-counselor:counsel-list
+# /business-counselor:list
 
 ## 목적
 
@@ -47,13 +47,13 @@ ID·날짜·아이디어 요약·판정·신뢰도를 테이블로 출력한다.
 평가 기록이 없습니다.
 
 아이디어 평가를 시작하려면:
-  /business-counselor:counsel-evaluate "아이디어 내용"
+  /business-counselor:evaluate "아이디어 내용"
 ```
 
 ## 상세 조회 안내
 
 특정 평가의 전체 내용을 보려면:
 ```
-/business-counselor:counsel-show {ID}
-예: /business-counselor:counsel-show eval-2026-05-08-001
+/business-counselor:show {ID}
+예: /business-counselor:show eval-2026-05-08-001
 ```

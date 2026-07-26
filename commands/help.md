@@ -1,10 +1,10 @@
 ---
-name: business-counselor:counsel-help
+name: business-counselor:help
 description: business-counselor 사용법 한 장 — 명령 목록·추천 흐름·용어 풀이
 version: "1.0"
 ---
 
-# /business-counselor:counsel-help
+# /business-counselor:help
 
 ## 목적
 
@@ -19,18 +19,18 @@ version: "1.0"
 AI 사업 카운슬러 — 사용법 한 장
 
 [추천 흐름]
-1) /business-counselor:counsel-start                 나에 대한 인터뷰 (처음 한 번) → profile.md 생성
-2) /business-counselor:counsel-evaluate "아이디어"   아이디어 5단계 냉철 판독 → 결과 저장
-3) /business-counselor:counsel-list                  지금까지 판독 목록 보기
-4) /business-counselor:counsel-show <id>             특정 판독 다시 보기
-   /business-counselor:counsel-resume                인터뷰 이어서(정보 보완)
+1) /business-counselor:start                 나에 대한 인터뷰 (처음 한 번) → profile.md 생성
+2) /business-counselor:evaluate "아이디어"   아이디어 5단계 냉철 판독 → 결과 저장
+3) /business-counselor:list                  지금까지 판독 목록 보기
+4) /business-counselor:show <id>             특정 판독 다시 보기
+   /business-counselor:resume                인터뷰 이어서(정보 보완)
 
 [명령 5개]
-- /business-counselor:counsel-start                  자기 인터뷰 시작 (Mom Test 6분야, 약 30~40분)
-- /business-counselor:counsel-resume                 빠진 항목만 추가 질문해 프로필 보완
-- /business-counselor:counsel-evaluate "<아이디어>"  13관점·Lean Canvas·Mom Test·Pre-mortem·적대토론 단일 판독
-- /business-counselor:counsel-list                   판독 기록 목록 (id·판정·확신도)
-- /business-counselor:counsel-show <id>              해당 판독 전체 다시 보기
+- /business-counselor:start                  자기 인터뷰 시작 (Mom Test 6분야, 약 30~40분)
+- /business-counselor:resume                 빠진 항목만 추가 질문해 프로필 보완
+- /business-counselor:evaluate "<아이디어>"  13관점·Lean Canvas·Mom Test·Pre-mortem·적대토론 단일 판독
+- /business-counselor:list                   판독 기록 목록 (id·판정·확신도)
+- /business-counselor:show <id>              해당 판독 전체 다시 보기
 
 [용어 풀이 — 어려운 말 한 줄 설명]
 - 13명 다관점     개발·보안·법무·투자자 등 전문가 13명 시점으로 1~5점 평가

@@ -4,6 +4,37 @@
 
 ---
 
+## [플러그인] v0.3.0 — 2026-07-27 (명령 이름 간소화 — `counsel-` 접두어 제거)
+
+### 배경
+`/business-counselor:counsel-evaluate`처럼 플러그인 이름(`business-counselor`)과 명령 접두어
+(`counsel-`)가 의미상 중복돼 명령이 불필요하게 길다는 사용자 피드백. 플러그인 네임스페이스
+자체가 이미 `business-counselor:`이므로 `counsel-`은 정보량 없이 글자 수만 늘리고 있었음.
+
+### 변경 (Changed) — Breaking
+- 명령 파일 6개 rename: `counsel-start.md`→`start.md`, `counsel-resume.md`→`resume.md`,
+  `counsel-evaluate.md`→`evaluate.md`, `counsel-list.md`→`list.md`, `counsel-show.md`→`show.md`,
+  `counsel-help.md`→`help.md`
+- 새 명령: `/business-counselor:start`·`/business-counselor:resume`·`/business-counselor:evaluate`·
+  `/business-counselor:list`·`/business-counselor:show`·`/business-counselor:help`
+  (구 `/business-counselor:counsel-*` 형태는 더 이상 동작하지 않음 — 파일명이 곧 라우팅이므로)
+- 네임스페이스 가드레일 재정의: `/business-counselor:counsel-*` → `/business-counselor:*`
+  (모든 PRD·README·AGENTS.md·CLAUDE.md·에이전트·스킬·테스트 문서 19개 파일 동기화)
+- Phase 2/3 계획 명령명도 동일 규칙으로 통일(아직 미구현, 문서만): `counsel-recommend`→`recommend`,
+  `counsel-decide`→`decide`, `counsel-research`→`research`, `counsel-followup`→`followup`,
+  `counsel-stats`→`stats`
+
+### 스키마/버전
+- schema_version 1.2 유지(데이터 스키마 무변경). 플러그인 0.2.2 → 0.3.0(minor) — 명령 표면(public
+  interface) 변경이라 patch가 아닌 minor로 격상. `claude plugin update`가 버전 미변경 시 재동기화하지
+  않는 특성(v0.2.2에서 확인)상, 기존 설치 사용자가 새 명령을 받으려면 이 버전 상승이 필수.
+
+### 주의 (기존 설치 사용자)
+- 기존에 `/business-counselor:counsel-*` 형태를 북마크·메모해둔 경우 전부 무효화됨. 업데이트 후
+  `/business-counselor:help`로 새 명령 목록 확인 권장.
+
+---
+
 ## [플러그인] v0.2.2 — 2026-07-27 (명령 네임스페이스 표기 정정 — 실 E2E에서 발견된 치명 결함)
 
 ### 배경
