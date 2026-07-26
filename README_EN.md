@@ -14,9 +14,8 @@
 If [Claude Code](https://claude.ai/download) is already installed, in your terminal:
 
 ```bash
-git clone https://github.com/sodam-ai/business-counselor.git
-claude plugin marketplace add ./business-counselor
-claude plugin install business-counselor@local-plugins
+claude plugin marketplace add sodam-ai/business-counselor
+claude plugin install business-counselor@business-counselor-marketplace
 ```
 
 → Restart Claude Code → type `/counsel:evaluate "my idea in one line"`. Done.
@@ -81,29 +80,42 @@ All results auto-save to `~/.claude/plugins/business-counselor/data/`.
 
 ## 🔧 Installation
 
-> **Note:** After `git clone`, do NOT enter the cloned folder — run the next commands from the location where the folder is visible.
-
-### Method A — Install with Git (Recommended)
+### Method A — Install directly from GitHub (Recommended, no clone needed)
 
 Paste one line at a time into your terminal:
+
+```bash
+# 1. Register the marketplace (references the GitHub repo directly — no clone needed)
+claude plugin marketplace add sodam-ai/business-counselor
+
+# 2. Install the plugin
+claude plugin install business-counselor@business-counselor-marketplace
+
+# 3. Verify
+claude plugin list
+```
+
+→ Success when you see `business-counselor@business-counselor-marketplace  √ enabled`.
+
+### Method B — Clone with Git (when editing the code directly)
+
+> **Note:** After `git clone`, do NOT enter the cloned folder — run the next commands from the location where the folder is visible.
 
 ```bash
 # 1. Download the repository
 git clone https://github.com/sodam-ai/business-counselor.git
 
-# 2. Register local marketplace (from where the folder is visible)
+# 2. Register marketplace from the local path (from where the folder is visible)
 claude plugin marketplace add ./business-counselor
 
 # 3. Install the plugin
-claude plugin install business-counselor@local-plugins
+claude plugin install business-counselor@business-counselor-marketplace
 
 # 4. Verify
 claude plugin list
 ```
 
-→ Success when you see `business-counselor@local-plugins  √ enabled`.
-
-### Method B — Install via ZIP (No Git)
+### Method C — Install via ZIP (No Git)
 
 1. [GitHub page](https://github.com/sodam-ai/business-counselor) → green **Code** → **Download ZIP**
 2. Extract the ZIP
@@ -112,7 +124,7 @@ claude plugin list
 
 ```bash
 claude plugin marketplace add ./business-counselor
-claude plugin install business-counselor@local-plugins
+claude plugin install business-counselor@business-counselor-marketplace
 claude plugin list
 ```
 
@@ -220,7 +232,7 @@ business-counselor/
 | Symptom | Cause | Fix |
 |---------|-------|-----|
 | `/counsel:` commands not showing | Not restarted after install | **Quit and relaunch Claude Code** |
-| `plugin list` shows no enabled | Missing register/install | Re-run `marketplace add ./business-counselor` → `install ...@local-plugins` |
+| `plugin list` shows no enabled | Missing register/install | Re-run `marketplace add sodam-ai/business-counselor` → `install ...@business-counselor-marketplace` |
 | `claude: command not found` | Claude Code missing/path | Install from [claude.ai/download](https://claude.ai/download), restart |
 | `git: command not found` | Git missing | Install [git-scm.com](https://git-scm.com/downloads) or use ZIP (Method B) |
 | Evaluation takes 5–8 min | Deep analysis is naturally slow | Normal. For speed, use **default (card) mode** |
