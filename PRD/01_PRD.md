@@ -49,24 +49,24 @@
 ### 사용자 시나리오
 
 **시나리오 1 — 첫 사용 (인터뷰)**
-1. 사용자가 Claude Code에서 `/counsel:start` 입력
+1. 사용자가 Claude Code에서 `/business-counselor:counsel-start` 입력
 2. AI가 Mom Test 스타일 질문 던짐 ("지난 1년 동안 가장 시간을 많이 쓴 일은?")
 3. 사용자 답변 → `~/.claude/plugins/business-counselor/data/profile.md`에 누적
 4. 30~40분 인터뷰 후 프로필 1차 완성
 
 **시나리오 2 — 아이디어 가져오기 (판독)**
-1. 사용자가 `/counsel:evaluate "AI로 한국 부동산 매물 자동 분석"` 입력
+1. 사용자가 `/business-counselor:counsel-evaluate "AI로 한국 부동산 매물 자동 분석"` 입력
 2. AI가 누적 프로필 + 4프레임 적용
 3. 13명 다관점(페르소나 v5) 점수표·Lean Canvas·Mom Test 검증 질문·Pre-mortem 위험 시나리오·Bull/Bear/Judge 적대 토론·go/no-go 권고 출력
 4. 결과는 `data/ideas/evaluated/2026-05-07_eval-001.md`에 저장
 
 **시나리오 3 — 추천 받기 (Phase 2)**
-1. 사용자가 `/counsel:recommend 5` 입력
+1. 사용자가 `/business-counselor:counsel-recommend 5` 입력
 2. AI가 누적 프로필 기반 사업 아이디어 5개 + 각 Lean Canvas 출력
-3. 사용자가 마음에 드는 1~2개에 대해 `/counsel:evaluate <id>`로 심층 판독
+3. 사용자가 마음에 드는 1~2개에 대해 `/business-counselor:counsel-evaluate <id>`로 심층 판독
 
 **시나리오 4 — 재방문 (Phase 3)**
-1. 3개월 뒤 `/counsel:followup eval-001` 입력
+1. 3개월 뒤 `/business-counselor:counsel-followup eval-001` 입력
 2. AI가 deep-research로 시장 변화 수집 + 과거 판독과 비교
 3. 결정 갱신(go→drop, drop→reconsider 등) → `decisions.jsonl`에 추가
 
@@ -76,17 +76,17 @@
 
 | 기능 | 설명 | 우선순위 | 복잡도 |
 |------|------|----------|--------|
-| A. 자기 인터뷰 & 프로필 누적 (`/counsel:start`, `/counsel:resume`) | Mom Test 스타일 질문으로 과거·현재·자산·역량·관심사·리스크 성향 누적 | P1 (MVP) | 간단 |
-| C. 가져온 아이디어 냉철 판독 (`/counsel:evaluate`) | 5단계(13명 다관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 적용 후 점수·위험·go/no-go | P1 (MVP) | 보통 |
+| A. 자기 인터뷰 & 프로필 누적 (`/business-counselor:counsel-start`, `/business-counselor:counsel-resume`) | Mom Test 스타일 질문으로 과거·현재·자산·역량·관심사·리스크 성향 누적 | P1 (MVP) | 간단 |
+| C. 가져온 아이디어 냉철 판독 (`/business-counselor:counsel-evaluate`) | 5단계(13명 다관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 적용 후 점수·위험·go/no-go | P1 (MVP) | 보통 |
 | **단일 호출 적대 토론 (Bull/Bear/Judge)** | 별도 서브에이전트 분리 호출 0 — 한 응답 안에서 3관점 강제. API 절약 + 양측 증거 동시 평가 | **P1 (MVP)** | 보통 |
 | **Goal-Driven 성공 기준·일관성 점수** | 모든 verdict에 `success_criteria` + `consistency_score` frontmatter 자동 삽입 | **P1 (MVP)** | 간단 |
 | 면책 조항 자동 삽입 | 모든 출력 frontmatter에 disclaimer 자동 추가 | P1 (MVP) | 간단 |
-| B. AI 사업 아이디어 추천 (`/counsel:recommend`) | 누적 프로필 기반 N개 아이디어 + 각 Lean Canvas | P2 | 보통 |
-| 결정 로그 (`/counsel:list`, `/counsel:show`) | 과거 추천·판독 검색·재참조 | P2 | 간단 |
+| B. AI 사업 아이디어 추천 (`/business-counselor:counsel-recommend`) | 누적 프로필 기반 N개 아이디어 + 각 Lean Canvas | P2 | 보통 |
+| 결정 로그 (`/business-counselor:counsel-list`, `/business-counselor:counsel-show`) | 과거 추천·판독 검색·재참조 | P2 | 간단 |
 | Pre-mortem 프레임 정교화 | "이 사업이 망한다면 왜?" 시나리오 5개 자동 생성 (Phase 1은 3개 OK) | P2 | 보통 |
-| D. 외부 시장 리서치 (`/counsel:research`) | deep-research 또는 WebSearch 호출. **사용자 명시 호출 시만 활성** (default 비활성) | P3 | 복잡 |
-| 재방문 (`/counsel:followup`) | 과거 아이디어 시장 변화 반영 재평가 | P3 | 보통 |
-| 결정 통계 (`/counsel:stats`) | go/drop 비율·명중률 패턴 요약 | P3 | 간단 |
+| D. 외부 시장 리서치 (`/business-counselor:counsel-research`) | deep-research 또는 WebSearch 호출. **사용자 명시 호출 시만 활성** (default 비활성) | P3 | 복잡 |
+| 재방문 (`/business-counselor:counsel-followup`) | 과거 아이디어 시장 변화 반영 재평가 | P3 | 보통 |
+| 결정 통계 (`/business-counselor:counsel-stats`) | go/drop 비율·명중률 패턴 요약 | P3 | 간단 |
 
 ---
 
@@ -94,15 +94,15 @@
 
 ### 핵심 흐름 — 인터뷰 → 판독
 ```
-/counsel:start → AI 질문 → 사용자 답 → profile.md 누적 → /counsel:evaluate <아이디어>
+/business-counselor:counsel-start → AI 질문 → 사용자 답 → profile.md 누적 → /business-counselor:counsel-evaluate <아이디어>
    → 4프레임 분석 → 점수·위험·go/no-go → evaluated/*.md 저장 → 면책 조항 출력
 ```
 
 ### 상세 흐름 (Phase 1 기준)
 
-1. **인터뷰 시작 (`/counsel:start`)**: 처음이면 빈 profile.md 생성. AI가 Mom Test 스타일 6개 카테고리(생애사·자본·시간·역량·관심도메인·리스크 성향) 질문 시작
-2. **누적 (`/counsel:resume`)**: 다음 세션에서 이어서. 부족 영역 자동 감지하여 우선 질문
-3. **아이디어 입력 (`/counsel:evaluate "<idea>"`)**: 한 줄 또는 paragraph 입력. 모호하면 AI가 보강 질문 1~2개
+1. **인터뷰 시작 (`/business-counselor:counsel-start`)**: 처음이면 빈 profile.md 생성. AI가 Mom Test 스타일 6개 카테고리(생애사·자본·시간·역량·관심도메인·리스크 성향) 질문 시작
+2. **누적 (`/business-counselor:counsel-resume`)**: 다음 세션에서 이어서. 부족 영역 자동 감지하여 우선 질문
+3. **아이디어 입력 (`/business-counselor:counsel-evaluate "<idea>"`)**: 한 줄 또는 paragraph 입력. 모호하면 AI가 보강 질문 1~2개
 4. **분석**: 5단계 자동 적용 — **단일 호출 내부에서 모두 수행 (별도 API 호출 0)**
    - § 1. 13명 다관점 (페르소나 v5 1:1 매칭): 시니어 개발자·보안·비개발자·QA·DevOps·AI·디자이너·UX·PM·경영진·변호사·비용·전문 투자자 각 1~5점 + 한 줄 코멘트. #11 변호사 + #13 투자자는 도메인 키워드 자동 강조.
    - § 2. Lean Canvas: 9블록
@@ -110,18 +110,18 @@
    - § 4. Pre-mortem: "1년 후 망했다면 이유" (Phase 1은 3개 OK, Phase 2부터 5개 강제)
    - § 5. **적대 토론**: Bull(긍정 가능성 최대화) → Bear(실패 시나리오 발굴) → Judge(양측 증거 종합 후 최종 verdict)
 5. **출력**: evaluated/*.md (5단계 섹션 + verdict + confidence + success_criteria + consistency_score + disclaimer frontmatter)
-6. **결정 기록**: 사용자가 선택 시 `/counsel:decide <id> <go|drop|iterate>` → decisions.jsonl 1줄 추가
+6. **결정 기록**: 사용자가 선택 시 `/business-counselor:counsel-decide <id> <go|drop|iterate>` → decisions.jsonl 1줄 추가
 
 ---
 
 ## 5. 성공 기준
 
 ### Phase 1 MVP 완료 기준 (정량화 — Karpathy Goal-Driven)
-- [ ] `/counsel:start`로 인터뷰 시작·답변·profile.md 생성·세션 종료 후 재시작 정상 동작 (인터뷰 30~40분 범위)
-- [ ] `/counsel:evaluate "<임의 아이디어>"` 입력 시 **5단계**(13관점·Lean Canvas·Mom Test·**Pre-mortem 3개**·적대 토론) 출력 정상
+- [ ] `/business-counselor:counsel-start`로 인터뷰 시작·답변·profile.md 생성·세션 종료 후 재시작 정상 동작 (인터뷰 30~40분 범위)
+- [ ] `/business-counselor:counsel-evaluate "<임의 아이디어>"` 입력 시 **5단계**(13관점·Lean Canvas·Mom Test·**Pre-mortem 3개**·적대 토론) 출력 정상
 - [ ] 적대 토론 출력 시 **Bull / Bear / Judge 3섹션 명시 분리** (단일 호출 내부)
 - [ ] 모든 출력 파일에 `disclaimer`·`success_criteria`·`consistency_score` 3개 frontmatter 필드 자동 삽입 (consistency_score는 Phase 1 placeholder OK)
-- [ ] 명령 5개 모두 `/counsel:` 네임스페이스 (다른 플러그인과 충돌 0)
+- [ ] 명령 5개 모두 `/business-counselor:counsel-*` 네임스페이스 (다른 플러그인과 충돌 0)
 - [ ] 서브에이전트 1개(`bc-idea-evaluator`) 전용 (Phase 1은 단일 — bull/bear/judge 별도 분리 X). `bc-` prefix 강제
 - [ ] AGENTS.md는 플러그인 폴더 안에만 존재 (사용자 홈/프로젝트 루트에 새 AGENTS.md 생성 금지)
 - [ ] 기존 hook(SessionStart·UserPromptSubmit) 절대 수정·간섭 안 함
@@ -131,14 +131,14 @@
 - [ ] 수동 테스트 시나리오 5건 모두 PASS (`tests/manual-scenarios.md`)
 
 ### Phase 2 추가 기준
-- [ ] `/counsel:recommend 5` → 5개 아이디어 + 각 Lean Canvas 정상 출력
+- [ ] `/business-counselor:counsel-recommend 5` → 5개 아이디어 + 각 Lean Canvas 정상 출력
 - [ ] generated→evaluate→decide 한 사이클 완전 동작
 - [ ] Pre-mortem 프레임 추가로 4/4 완성
 
 ### Phase 3 추가 기준
 - [ ] deep-research 미설치 시 WebSearch 폴백 정상
 - [ ] research 캐시·TTL(7일) 동작
-- [ ] `/counsel:followup` 시 과거 판독과 변경점 명확 표시
+- [ ] `/business-counselor:counsel-followup` 시 과거 판독과 변경점 명확 표시
 
 ---
 
@@ -158,7 +158,7 @@
 - **다국어 UI** — 이유: 한국어만. 사용자 언어 한국어
 - **백업/복구 자동화** — 이유: Git 또는 OS 백업으로 충분. Phase 4+ 검토
 - **별도 호출 멀티 에이전트 (Bull/Bear/Judge 분리 호출)** — 이유: API 비용 절약. 단일 호출 내부 토론으로 대체. `bc-bull-advocate`·`bc-bear-critic`·`bc-devil-judge` 별도 서브에이전트 만들지 X
-- **default 활성 외부 API 호출** — 이유: API 절약 정책. Phase 3 외부 호출은 사용자가 `/counsel:research` 명시 입력 시만 활성. 자동 백그라운드 호출 0
+- **default 활성 외부 API 호출** — 이유: API 절약 정책. Phase 3 외부 호출은 사용자가 `/business-counselor:counsel-research` 명시 입력 시만 활성. 자동 백그라운드 호출 0
 
 ---
 

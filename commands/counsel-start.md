@@ -1,10 +1,10 @@
 ---
-name: counsel:start
+name: business-counselor:counsel-start
 description: 자기 인터뷰 시작 — Mom Test 스타일 6카테고리 인터뷰 후 profile.md 생성
 version: "1.0"
 ---
 
-# /counsel:start
+# /business-counselor:counsel-start
 
 ## 목적
 
@@ -15,7 +15,7 @@ version: "1.0"
 
 ```
 1. ~/.claude/plugins/business-counselor/data/profile.md 존재 여부 확인
-   - 있으면: "이미 프로필이 있습니다. /counsel:resume 로 보완하거나 계속 진행하세요." 출력 후 중단
+   - 있으면: "이미 프로필이 있습니다. /business-counselor:counsel-resume 로 보완하거나 계속 진행하세요." 출력 후 중단
    - 없으면: 아래 인터뷰 시작
 ```
 
@@ -90,6 +90,6 @@ disclaimer: |
 세션 기록: ~/.claude/plugins/business-counselor/data/sessions/{YYYY-MM-DD}_001.md
 
 다음 단계:
-- 아이디어가 있으면: /counsel:evaluate "아이디어 내용"
-- 프로필 보완이 필요하면: /counsel:resume
+- 아이디어가 있으면: /business-counselor:counsel-evaluate "아이디어 내용"
+- 프로필 보완이 필요하면: /business-counselor:counsel-resume
 ```

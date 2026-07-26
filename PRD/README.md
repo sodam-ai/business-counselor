@@ -30,17 +30,17 @@
 [03_PHASES.md의 "Phase 1 시작 프롬프트"](./03_PHASES.md#phase-1-시작-프롬프트-복사해서-바로-사용)를 복사해서 Claude Code에 붙여넣으세요.
 
 핵심:
-- 명령: `/counsel:start`, `/counsel:resume`, `/counsel:evaluate`, `/counsel:list`, `/counsel:show`
+- 명령: `/business-counselor:counsel-start`, `/business-counselor:counsel-resume`, `/business-counselor:counsel-evaluate`, `/business-counselor:counsel-list`, `/business-counselor:counsel-show`
 - 데이터: `~/.claude/plugins/business-counselor/data/`
 - 외부 호출 0
 
 ### Phase 2 (+1~2주, 추천)
-- 명령 추가: `/counsel:recommend`, `/counsel:decide`
+- 명령 추가: `/business-counselor:counsel-recommend`, `/business-counselor:counsel-decide`
 - 4프레임 완성 (Pre-mortem 추가)
 - DecisionLog 활성
 
 ### Phase 3 (+2~3주, 외부 리서치)
-- 명령 추가: `/counsel:research`, `/counsel:followup`, `/counsel:stats`
+- 명령 추가: `/business-counselor:counsel-research`, `/business-counselor:counsel-followup`, `/business-counselor:counsel-stats`
 - deep-research 또는 WebSearch 폴백 사용
 
 ---
@@ -55,14 +55,14 @@
 
 | 규칙 | 이유 |
 |------|------|
-| 모든 명령 `/counsel:` 네임스페이스 | 다른 플러그인과 충돌 방지 |
+| 모든 명령 `/business-counselor:counsel-*` 네임스페이스 | 다른 플러그인과 충돌 방지 |
 | 모든 서브에이전트 `bc-` prefix | 동일 |
 | AGENTS.md는 플러그인 폴더 안에만 | 의도치 않은 글로벌 인식 차단 |
 | 기존 hook·CLAUDE.md·MEMORY.md·user_persona*.md 절대 수정 X | 사용자 환경 보존 |
 | 모든 출력 frontmatter에 disclaimer + success_criteria + consistency_score + model_id + temperature + debate_mode 자동 삽입 | 자본시장법 면책 + Karpathy Goal-Driven Execution + 재현성 |
 | Phase 1·2에서 외부 송신 0 / Phase 3는 사용자 명시 호출 시만 | 로컬 보관 + API 절약 정책 |
 | **단일 호출 5단계 강제 — Bull/Bear/Judge 분리 호출 금지** (v1.1) | API 비용 1/3 + 양측 증거 동시 평가 |
-| **`/counsel:evaluate` 호출 시 추가 서브에이전트 호출 0** (v1.1) | 한 명령 = 한 응답 원칙 |
+| **`/business-counselor:counsel-evaluate` 호출 시 추가 서브에이전트 호출 0** (v1.1) | 한 명령 = 한 응답 원칙 |
 
 ---
 

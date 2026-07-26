@@ -15,11 +15,11 @@
 ### 기능
 - [ ] 플러그인 골격 (`plugin.json`, `commands/`, `skills/`, `agents/`, `templates/`)
 - [ ] AGENTS.md 미러 (플러그인 폴더 내, 사용자 홈/프로젝트 루트 설치 금지)
-- [ ] 명령 `/counsel:start` — 첫 인터뷰 시작 + profile.md 생성
-- [ ] 명령 `/counsel:resume` — 다음 세션 이어서 + 부족 영역 자동 우선 질문
-- [ ] 명령 `/counsel:evaluate "<idea>"` — 가져온 아이디어 판독 (**5단계: 13명 다관점·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론**, 단일 호출)
-- [ ] 명령 `/counsel:list` — 과거 평가 목록
-- [ ] 명령 `/counsel:show <id>` — 특정 평가 재조회
+- [ ] 명령 `/business-counselor:counsel-start` — 첫 인터뷰 시작 + profile.md 생성
+- [ ] 명령 `/business-counselor:counsel-resume` — 다음 세션 이어서 + 부족 영역 자동 우선 질문
+- [ ] 명령 `/business-counselor:counsel-evaluate "<idea>"` — 가져온 아이디어 판독 (**5단계: 13명 다관점·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론**, 단일 호출)
+- [ ] 명령 `/business-counselor:counsel-list` — 과거 평가 목록
+- [ ] 명령 `/business-counselor:counsel-show <id>` — 특정 평가 재조회
 - [ ] 스킬 `13-personas/SKILL.md` — 13명 다관점 점수 체계 (페르소나 v5 1:1 매칭, v1.2 신규명. 기존 `13-perspectives/SKILL.md`는 폐기)
 - [ ] 스킬 `lean-canvas/SKILL.md` — 9블록 채우기 가이드
 - [ ] 스킬 `mom-test/SKILL.md` — 검증 질문 생성 (과거 행동 기반)
@@ -37,7 +37,7 @@
 - **불필요** — Claude Code 자체 인증 사용. 플러그인 자체 로그인 없음
 
 ### 가드레일 (필수 준수)
-- 모든 슬래시 명령은 `/counsel:` 네임스페이스 강제
+- 모든 슬래시 명령은 `/business-counselor:counsel-*` 네임스페이스 강제
 - 모든 서브에이전트는 `bc-` prefix 강제
 - AGENTS.md는 플러그인 폴더 안에만 (글로벌 인식 차단)
 - 기존 hook(SessionStart·UserPromptSubmit·PreToolUse) 절대 수정·간섭 금지
@@ -67,14 +67,14 @@
 
 Phase 1 범위 (v1.1):
 - 플러그인 골격 (plugin.json + AGENTS.md 미러 + commands/ + skills/ + agents/)
-- 명령: /counsel:start, /counsel:resume, /counsel:evaluate, /counsel:list, /counsel:show
+- 명령: /business-counselor:counsel-start, /business-counselor:counsel-resume, /business-counselor:counsel-evaluate, /business-counselor:counsel-list, /business-counselor:counsel-show
 - 스킬: 13-personas, lean-canvas, mom-test, adversarial-debate, goal-driven
 - 서브에이전트: bc-idea-evaluator (단 1개 — bull/bear/judge 별도 분리 X)
 - 데이터: Profile, InterviewSession, EvaluatedIdea (5단계 = 13명 다관점·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론)
 
 반드시 지켜야 할 것 (v1.1 강화):
 - 04_PROJECT_SPEC.md의 "절대 하지 마" 목록 준수
-- 모든 명령 /counsel: 네임스페이스
+- 모든 명령 /business-counselor:counsel-* 네임스페이스
 - 모든 서브에이전트 bc- prefix
 - AGENTS.md는 플러그인 폴더 안에만
 - 기존 hook·CLAUDE.md·MEMORY.md·user_persona*.md 절대 수정 금지
@@ -92,11 +92,11 @@ Phase 1 범위 (v1.1):
 ```
 
 ### 완료 기준 (v1.1 정량화)
-- 사용자가 `/counsel:start`로 인터뷰 → profile.md 작성 완료 (인터뷰 30~40분 범위)
-- 사용자가 임의 아이디어로 `/counsel:evaluate` 실행 → **5단계 결과(Pre-mortem 3개·Bull/Bear/Judge 3섹션 포함)** + 면책 + success_criteria + consistency_score(placeholder) frontmatter 출력
+- 사용자가 `/business-counselor:counsel-start`로 인터뷰 → profile.md 작성 완료 (인터뷰 30~40분 범위)
+- 사용자가 임의 아이디어로 `/business-counselor:counsel-evaluate` 실행 → **5단계 결과(Pre-mortem 3개·Bull/Bear/Judge 3섹션 포함)** + 면책 + success_criteria + consistency_score(placeholder) frontmatter 출력
 - `tests/manual-scenarios.md`의 **5건 시나리오 모두 PASS** (시나리오 1~5)
 - 기존 환경(bkit, everything-claude-code 등)에 영향 0 확인 (시나리오 5)
-- **API 호출 최소화 정책 준수 검증** — 한 `/counsel:evaluate` 호출 시 추가 서브에이전트 호출 0건
+- **API 호출 최소화 정책 준수 검증** — 한 `/business-counselor:counsel-evaluate` 호출 시 추가 서브에이전트 호출 0건
 - 출력 분량: 깊이 우선 (`<6,000`은 가이드 — v0.2.0)
 
 ---
@@ -110,12 +110,12 @@ Phase 1 범위 (v1.1):
 AI가 누적된 프로필을 기반으로 사용자에게 맞는 사업 아이디어 N개를 먼저 제안하고, Pre-mortem 시나리오를 **3개→5개로 확장**한다. consistency_score 실측 시작.
 
 ### 기능
-- [ ] 명령 `/counsel:recommend [N=5]` — 누적 프로필 기반 N개 아이디어 + 각 Lean Canvas (단일 호출)
-- [ ] 명령 `/counsel:decide <id> <go|drop|iterate|defer>` — 결정 기록 → decisions.jsonl
+- [ ] 명령 `/business-counselor:counsel-recommend [N=5]` — 누적 프로필 기반 N개 아이디어 + 각 Lean Canvas (단일 호출)
+- [ ] 명령 `/business-counselor:counsel-decide <id> <go|drop|iterate|defer>` — 결정 기록 → decisions.jsonl
 - [ ] 스킬 `pre-mortem/SKILL.md` — "1년 후 망했다면 이유 5가지" 시나리오 생성 (단일 호출 내 통합)
 - [ ] 서브에이전트 `bc-idea-generator` — 추천 격리 워커 (단일 — generator 내부에서도 분리 호출 X)
 - [ ] 13명 다관점 점수 체계 정교화 (1~5점 가이드라인, 페르소나 v5 #11 변호사·#13 투자자 도메인 자동 강조 규칙 포함)
-- [ ] 과거 추천·판독 교차 참조 (`/counsel:show`에 관련 항목 표시)
+- [ ] 과거 추천·판독 교차 참조 (`/business-counselor:counsel-show`에 관련 항목 표시)
 - [ ] **consistency_score 실측 — N=3회 자동 재평가 후 표준편차 기록 (v1.1 후속)**
 - [ ] **success_criteria 도메인별 카탈로그 작성 (v1.1 후속)**
 
@@ -144,9 +144,9 @@ AI가 누적된 프로필을 기반으로 사용자에게 맞는 사업 아이�
 deep-research 플러그인을 서브에이전트로 호출해 시장규모·경쟁사·트렌드를 자동 수집하고, 과거 평가를 시간이 지난 후 재방문하여 시장 변화를 반영한다.
 
 ### 기능
-- [ ] 명령 `/counsel:research <topic>` — deep-research 서브에이전트 호출
-- [ ] 명령 `/counsel:followup <eval-id>` — 과거 평가 재방문 + 시장 변화 비교
-- [ ] 명령 `/counsel:stats` — go/drop 비율·명중률·도메인 패턴 요약
+- [ ] 명령 `/business-counselor:counsel-research <topic>` — deep-research 서브에이전트 호출
+- [ ] 명령 `/business-counselor:counsel-followup <eval-id>` — 과거 평가 재방문 + 시장 변화 비교
+- [ ] 명령 `/business-counselor:counsel-stats` — go/drop 비율·명중률·도메인 패턴 요약
 - [ ] 서브에이전트 `bc-market-researcher` — deep-research 래퍼
 - [ ] research/*.md TTL(7일) 만료 처리
 - [ ] 추천·판독에 자동 증거 첨부 (관련 research/*.md 링크)
@@ -157,7 +157,7 @@ deep-research 플러그인을 서브에이전트로 호출해 시장규모·경�
 - MarketResearch (research/*.md, TTL 7일)
 
 ### 주의사항 — 외부 송신 발생 (Phase 3 전용 / v1.1 강화)
-- **default 비활성** — 사용자가 `/counsel:research` 명시 입력 시만 활성. 자동 백그라운드 호출 0.
+- **default 비활성** — 사용자가 `/business-counselor:counsel-research` 명시 입력 시만 활성. 자동 백그라운드 호출 0.
 - 첫 외부 호출 시 사용자 confirmation 단계 강제 (예: "정말 외부 검색하시겠습니까? 비용 발생").
 - deep-research / WebSearch 호출 = 외부 API 사용 (비용·로그 발생 가능)
 - PII 마스킹 필수 (capital_krw·birth_year·residence·skills 등 직접 송신 금지)

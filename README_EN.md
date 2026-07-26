@@ -18,7 +18,7 @@ claude plugin marketplace add sodam-ai/business-counselor
 claude plugin install business-counselor@business-counselor-marketplace
 ```
 
-→ Restart Claude Code → type `/counsel:evaluate "my idea in one line"`. Done.
+→ Restart Claude Code → type `/business-counselor:counsel-evaluate "my idea in one line"`. Done.
 
 New to this? Follow the **[Installation](#-installation)** and **[Usage](#beginner-guide)** below step by step.
 
@@ -128,7 +128,7 @@ claude plugin install business-counselor@business-counselor-marketplace
 claude plugin list
 ```
 
-**Restart Claude Code** after install to activate `/counsel:` commands.
+**Restart Claude Code** after install to activate `/business-counselor:counsel-*` commands.
 
 ---
 
@@ -138,7 +138,7 @@ claude plugin list
 ### Step 1 — (Optional) Interview about you
 
 ```
-/counsel:start
+/business-counselor:counsel-start
 ```
 
 Answer ~12 questions (capital, time, skills, interests) in plain language (1–2 at a time, ~30–40 min). This personalizes future analyses. (You can skip and evaluate directly — it uses general criteria.)
@@ -146,7 +146,7 @@ Answer ~12 questions (capital, time, skills, interests) in plain language (1–2
 ### Step 2 — Analyze an idea
 
 ```
-/counsel:evaluate "an AI service that analyzes real estate listings"
+/business-counselor:counsel-evaluate "an AI service that analyzes real estate listings"
 ```
 
 Wrap the idea in quotes. If vague, AI asks 1–2 clarifying questions first. The result appears as a top **"At-a-Glance Summary" card**.
@@ -154,9 +154,9 @@ Wrap the idea in quotes. If vague, AI asks 1–2 clarifying questions first. The
 <a id="mode-guide"></a>
 ### Default (card) / Full (detail) mode
 
-- **Default**: `/counsel:evaluate "idea"` → **summary card only** (fast, short).
-- **Full**: `/counsel:evaluate "idea" full` → **full §1–§5 detail** generated & saved. (see [Default/Full mode](#mode-guide) below)
-- Re-view saved full analysis: `/counsel:show <id>`
+- **Default**: `/business-counselor:counsel-evaluate "idea"` → **summary card only** (fast, short).
+- **Full**: `/business-counselor:counsel-evaluate "idea" full` → **full §1–§5 detail** generated & saved. (see [Default/Full mode](#mode-guide) below)
+- Re-view saved full analysis: `/business-counselor:counsel-show <id>`
 
 ---
 
@@ -164,24 +164,24 @@ Wrap the idea in quotes. If vague, AI asks 1–2 clarifying questions first. The
 
 | Command | Description |
 |---------|-------------|
-| `/counsel:help` | Usage, commands & glossary on one screen |
-| `/counsel:start` | Start the AI interview about you (first time) |
-| `/counsel:resume` | Continue the interview (fill missing info) |
-| `/counsel:evaluate "idea"` | Analyze — default is the summary card |
-| `/counsel:evaluate "idea" full` | Analyze — full §1–§5 detail |
-| `/counsel:list` | List past analyses (id · verdict · confidence) |
-| `/counsel:show <id>` | Re-view a specific full analysis |
+| `/business-counselor:counsel-help` | Usage, commands & glossary on one screen |
+| `/business-counselor:counsel-start` | Start the AI interview about you (first time) |
+| `/business-counselor:counsel-resume` | Continue the interview (fill missing info) |
+| `/business-counselor:counsel-evaluate "idea"` | Analyze — default is the summary card |
+| `/business-counselor:counsel-evaluate "idea" full` | Analyze — full §1–§5 detail |
+| `/business-counselor:counsel-list` | List past analyses (id · verdict · confidence) |
+| `/business-counselor:counsel-show <id>` | Re-view a specific full analysis |
 
-> Stuck? Type `/counsel:help` first.
+> Stuck? Type `/business-counselor:counsel-help` first.
 
 ---
 
 ## ⚙️ How It Works / Workflow
 
 ```
-[once]   /counsel:start  →  answer interview  →  save your profile (profile.md)
+[once]   /business-counselor:counsel-start  →  answer interview  →  save your profile (profile.md)
                                   │
-[each time]  /counsel:evaluate "idea"
+[each time]  /business-counselor:counsel-evaluate "idea"
             │
             ├─ if vague → AI asks 1–2 clarifying questions → answer
             │
@@ -191,7 +191,7 @@ Wrap the idea in quotes. If vague, AI asks 1–2 clarifying questions first. The
             │
             ▼
         Screen: "At-a-Glance Summary" card (verdict · confidence · strength · blocker · next)
-        Saved : result file (.md)  →  /counsel:list to list, /counsel:show to re-view
+        Saved : result file (.md)  →  /business-counselor:counsel-list to list, /business-counselor:counsel-show to re-view
 ```
 
 - **Single call**: one command = one analysis (zero extra calls). Fast & cost-saving.
@@ -231,16 +231,16 @@ business-counselor/
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| `/counsel:` commands not showing | Not restarted after install | **Quit and relaunch Claude Code** |
+| `/business-counselor:counsel-*` commands not showing | Not restarted after install | **Quit and relaunch Claude Code** |
 | `plugin list` shows no enabled | Missing register/install | Re-run `marketplace add sodam-ai/business-counselor` → `install ...@business-counselor-marketplace` |
 | `claude: command not found` | Claude Code missing/path | Install from [claude.ai/download](https://claude.ai/download), restart |
 | `git: command not found` | Git missing | Install [git-scm.com](https://git-scm.com/downloads) or use ZIP (Method B) |
 | Evaluation takes 5–8 min | Deep analysis is naturally slow | Normal. For speed, use **default (card) mode** |
-| Result is just a short card | Default is card mode | Full: `/counsel:evaluate "..." full` or `/counsel:show <id>` |
+| Result is just a short card | Default is card mode | Full: `/business-counselor:counsel-evaluate "..." full` or `/business-counselor:counsel-show <id>` |
 | Errors like `uv: command not found` | **Unrelated to this plugin** | Ignore (another tool's notice) |
-| Evaluated without profile | Interview skipped | Uses general criteria. For tailored, run `/counsel:start` first |
+| Evaluated without profile | Interview skipped | Uses general criteria. For tailored, run `/business-counselor:counsel-start` first |
 
-> Still stuck? Type `/counsel:help` to see current usage.
+> Still stuck? Type `/business-counselor:counsel-help` to see current usage.
 
 ---
 
@@ -257,7 +257,7 @@ This tool does **NOT** constitute: investment advisory (Korean Capital Markets A
 
 ### Known limitations (Phase 1)
 - No external market research (live data) → Phase 3
-- No auto idea generation (`/counsel:recommend`) → Phase 2
+- No auto idea generation (`/business-counselor:counsel-recommend`) → Phase 2
 - Repeated-evaluation consistency score (`consistency_score`) not measured → Phase 2
 
 ---
