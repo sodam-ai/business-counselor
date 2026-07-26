@@ -14,9 +14,8 @@
 이미 [Claude Code](https://claude.ai/download)가 설치돼 있다면, 터미널에서:
 
 ```bash
-git clone https://github.com/sodam-ai/business-counselor.git
-claude plugin marketplace add ./business-counselor
-claude plugin install business-counselor@local-plugins
+claude plugin marketplace add sodam-ai/business-counselor
+claude plugin install business-counselor@business-counselor-marketplace
 ```
 
 → Claude Code 재시작 → 채팅창에 `/counsel:evaluate "내 아이디어 한 줄"` 입력. 끝.
@@ -81,29 +80,42 @@ claude plugin install business-counselor@local-plugins
 
 ## 🔧 설치 방법
 
-> **공통 주의:** `git clone` 후 그 폴더 *안으로 들어가지 말고*, 폴더가 보이는 같은 위치에서 다음 명령을 실행하세요.
-
-### 방법 A — Git으로 설치 (권장)
+### 방법 A — GitHub에서 바로 설치 (권장, git clone 불필요)
 
 터미널에 한 줄씩 붙여넣고 Enter:
+
+```bash
+# 1. 마켓플레이스 등록 (GitHub 저장소를 직접 참조 — 클론 불필요)
+claude plugin marketplace add sodam-ai/business-counselor
+
+# 2. 플러그인 설치
+claude plugin install business-counselor@business-counselor-marketplace
+
+# 3. 설치 확인
+claude plugin list
+```
+
+→ 목록에 `business-counselor@business-counselor-marketplace  √ enabled` 가 보이면 성공.
+
+### 방법 B — Git으로 클론해서 설치 (코드를 직접 수정하며 쓸 때)
+
+> **주의:** `git clone` 후 그 폴더 *안으로 들어가지 말고*, 폴더가 보이는 같은 위치에서 다음 명령을 실행하세요.
 
 ```bash
 # 1. 저장소 다운로드
 git clone https://github.com/sodam-ai/business-counselor.git
 
-# 2. 로컬 마켓플레이스 등록 (business-counselor 폴더가 보이는 위치에서)
+# 2. 로컬 경로로 마켓플레이스 등록 (business-counselor 폴더가 보이는 위치에서)
 claude plugin marketplace add ./business-counselor
 
 # 3. 플러그인 설치
-claude plugin install business-counselor@local-plugins
+claude plugin install business-counselor@business-counselor-marketplace
 
 # 4. 설치 확인
 claude plugin list
 ```
 
-→ 목록에 `business-counselor@local-plugins  √ enabled` 가 보이면 성공.
-
-### 방법 B — ZIP으로 설치 (Git 없을 때)
+### 방법 C — ZIP으로 설치 (Git 없을 때)
 
 1. [GitHub 페이지](https://github.com/sodam-ai/business-counselor) → 초록색 **Code** → **Download ZIP**
 2. 다운로드된 ZIP 압축 해제
@@ -112,7 +124,7 @@ claude plugin list
 
 ```bash
 claude plugin marketplace add ./business-counselor
-claude plugin install business-counselor@local-plugins
+claude plugin install business-counselor@business-counselor-marketplace
 claude plugin list
 ```
 
@@ -220,7 +232,7 @@ business-counselor/
 | 증상 | 원인 | 해결 |
 |------|------|------|
 | `/counsel:` 명령이 안 보임 | 설치 후 미재시작 | **Claude Code를 껐다 다시 실행** |
-| `plugin list`에 enabled 안 뜸 | 등록/설치 누락 | `marketplace add ./business-counselor` → `install ...@local-plugins` 다시 실행 |
+| `plugin list`에 enabled 안 뜸 | 등록/설치 누락 | `marketplace add sodam-ai/business-counselor` → `install ...@business-counselor-marketplace` 다시 실행 |
 | `claude: command not found` | Claude Code 미설치/경로 | [claude.ai/download](https://claude.ai/download)에서 설치 후 재시작 |
 | `git: command not found` | Git 미설치 | [git-scm.com](https://git-scm.com/downloads) 설치 또는 ZIP 방법(B) 사용 |
 | 평가가 5~8분 걸림 | 깊은 분석은 원래 오래 걸림 | 정상입니다. 빠르게 원하면 **기본(카드) 모드** 사용 |

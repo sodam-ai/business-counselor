@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "local-plugins",
-  "description": "로컬 개발 플러그인 마켓플레이스",
+  "name": "business-counselor-marketplace",
+  "description": "AI 사업 카운슬러 플러그인 마켓플레이스",
   "owner": {
     "name": "SoDam AI Studio"
   },

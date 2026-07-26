@@ -4,6 +4,24 @@
 
 ---
 
+## [플러그인] 마켓플레이스 등록 방식 개선 — 2026-07-27
+
+### 배경
+`marketplace.json`의 `name`이 `"local-plugins"`로 설정돼 있어 README가 git clone 후 로컬 경로로만
+등록하는 방법만 안내하고 있었음. 실측 결과 `claude plugin marketplace add sodam-ai/business-counselor`로
+GitHub 저장소를 직접 참조해 등록하는 것이 이미 가능함을 확인 — 진짜 원인은 마켓플레이스 이름이었음
+(형제 플러그인들은 모두 고유 마켓플레이스 이름을 사용 중이었는데 이 저장소만 제네릭한 이름).
+
+### 수정 (Fixed)
+- `marketplace.json`: `name` `"local-plugins"` → `"business-counselor-marketplace"` (형제 플러그인 명명 관례 일치)
+- README.md·README_EN.md: GitHub 직접 등록을 방법 A(권장)로 승격, git clone 방법은 방법 B로 재배치,
+  ZIP 방법은 방법 C로 이동. 모든 설치 명령에서 `@local-plugins` → `@business-counselor-marketplace`
+
+### 검증 (Verified)
+- `claude plugin marketplace add sodam-ai/business-counselor` 실측 성공 확인(클론 없이 GitHub 직접 등록)
+
+---
+
 ## [플러그인] v0.2.1 — 2026-07-26 (Phase 1 정합성 점검 — 종결 전 사전 수정)
 
 ### 배경
