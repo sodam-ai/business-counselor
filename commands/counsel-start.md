@@ -43,7 +43,7 @@ version: "1.0"
 
 인터뷰 완료 후 `templates/profile.template.md`를 참조하여 `~/.claude/plugins/business-counselor/data/profile.md`를 생성한다.
 
-**필수 frontmatter 필드 (14개):**
+**필수 frontmatter 필드 (15개):**
 ```yaml
 ---
 id: profile-main
