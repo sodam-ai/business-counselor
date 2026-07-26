@@ -31,6 +31,7 @@ success_criteria:
   deadline: null
   rationale: null
 consistency_score: placeholder
+mode: null
 verdict: null
 confidence: null
 model_id: claude-sonnet-4-6

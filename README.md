@@ -1,6 +1,6 @@
 # AI 사업 카운슬러 (business-counselor)
 
-> **Claude Code 플러그인** · v0.2.0 · Phase 1 MVP
+> **Claude Code 플러그인** · v0.2.1 · Phase 1 MVP
 > 사업 아이디어를 입력하면 AI가 13명 전문가 관점으로 **5단계 냉철 분석**을 즉시 제공합니다.
 
 **코딩을 전혀 몰라도 됩니다.** Claude Code 채팅창에 명령어만 입력하면 됩니다.
@@ -21,7 +21,7 @@ claude plugin install business-counselor@local-plugins
 
 → Claude Code 재시작 → 채팅창에 `/counsel:evaluate "내 아이디어 한 줄"` 입력. 끝.
 
-처음이라 위 명령이 막막하면 아래 **[설치 방법](#-설치-방법)**과 **[왕초보 가이드](#-왕초보-가이드-컴퓨터처음-쓰는-분도)**를 그대로 따라 하세요.
+처음이라 위 명령이 막막하면 아래 **[설치 방법](#-설치-방법)**과 **[사용 방법](#beginner-guide)**을 그대로 따라 하세요.
 
 ---
 
@@ -120,6 +120,7 @@ claude plugin list
 
 ---
 
+<a id="beginner-guide"></a>
 ## 🚀 사용 방법 (빠른 첫 사용)
 
 ### 1단계 — (선택) 나에 대한 인터뷰
@@ -138,10 +139,11 @@ claude plugin list
 
 아이디어를 큰따옴표 안에 입력. 모호하면 AI가 보강 질문 1~2개를 먼저 합니다. 결과는 맨 위 **「한눈 요약」 카드**로 나옵니다.
 
+<a id="mode-guide"></a>
 ### 기본(카드) / 전체(상세) 모드
 
 - **기본**: `/counsel:evaluate "아이디어"` → **「한눈 요약」 카드만** (빠르고 짧음).
-- **전체**: `/counsel:evaluate "아이디어" 전체` → **§1~§5 상세 분석 전부** 생성·저장.
+- **전체**: `/counsel:evaluate "아이디어" 전체` → **§1~§5 상세 분석 전부** 생성·저장. (아래 [기본/전체 모드](#mode-guide) 참고)
 - 이미 저장된 전체 분석 다시 보기: `/counsel:show <id>`
 
 ---
