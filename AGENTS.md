@@ -18,12 +18,12 @@
 
 | 명령 | 설명 |
 |------|------|
-| `/business-counselor:counsel-start` | 자기 인터뷰 시작 — Mom Test 스타일 6카테고리 |
-| `/business-counselor:counsel-resume` | 인터뷰 이어서 — 부족 영역 우선 질문 |
-| `/business-counselor:counsel-evaluate "<idea>"` | 아이디어 5단계 냉철 판독 (단일 호출) |
-| `/business-counselor:counsel-list` | 과거 평가 목록 |
-| `/business-counselor:counsel-show <id>` | 특정 평가 재조회 |
-| `/business-counselor:counsel-help` | 사용법 한 장 — 명령·흐름·용어 풀이 |
+| `/business-counselor:start` | 자기 인터뷰 시작 — Mom Test 스타일 6카테고리 |
+| `/business-counselor:resume` | 인터뷰 이어서 — 부족 영역 우선 질문 |
+| `/business-counselor:evaluate "<idea>"` | 아이디어 5단계 냉철 판독 (단일 호출) |
+| `/business-counselor:list` | 과거 평가 목록 |
+| `/business-counselor:show <id>` | 특정 평가 재조회 |
+| `/business-counselor:help` | 사용법 한 장 — 명령·흐름·용어 풀이 |
 
 ---
 
@@ -49,12 +49,12 @@
 
 ## 가드레일 (필수)
 
-- 모든 명령: `/business-counselor:counsel-*` 네임스페이스 강제
+- 모든 명령: `/business-counselor:*` 네임스페이스 강제
 - 모든 에이전트: `bc-` prefix 강제
 - AGENTS.md: 이 플러그인 폴더 안에만 (글로벌 X)
 - 기존 hook·`~/.claude/CLAUDE.md`·`MEMORY.md`·`user_persona*.md` **절대 수정 X**
 - 외부 API 호출 **0** (Phase 1·2 정책)
-- 단일 호출 정책: `/business-counselor:counsel-evaluate` = `bc-idea-evaluator` 1회만
+- 단일 호출 정책: `/business-counselor:evaluate` = `bc-idea-evaluator` 1회만
 - 출력 파일 frontmatter: `disclaimer` + `success_criteria` + `consistency_score` + `model_id` + `temperature` + `debate_mode` 자동 삽입
 
 ---

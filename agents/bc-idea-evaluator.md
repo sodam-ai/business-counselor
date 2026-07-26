@@ -29,14 +29,14 @@ model: sonnet
 - Frontmatter: **출력 최상단 필수**
 - 저장: `~/.claude/plugins/business-counselor/data/ideas/evaluated/YYYY-MM-DD_eval-NNN.md`
 - **환각 억제**: 시장규모·TAM·점유율·성장률 등 출처 없는 수치는 반드시 `(추정·미검증)` 태깅. §1 각 점수는 프로필 사실 근거 1개에 연결.
-- **🖥 화면 출력 ≠ 저장 (점진적 공개, v0.2.1)**: 깊은 §1~§5 전체는 **파일에만** 저장한다. 사용자에게 *보이는* 텍스트 응답은 **「한눈 요약」 카드 + 저장 경로 + `/business-counselor:counsel-show eval-NNN` 안내**까지만. §1~§5 본문을 화면에 다시 쏟지 말 것(실사용자는 5쪽을 안 읽음 — 깊이는 파일에 보존, 화면은 한 눈).
+- **🖥 화면 출력 ≠ 저장 (점진적 공개, v0.2.1)**: 깊은 §1~§5 전체는 **파일에만** 저장한다. 사용자에게 *보이는* 텍스트 응답은 **「한눈 요약」 카드 + 저장 경로 + `/business-counselor:show eval-NNN` 안내**까지만. §1~§5 본문을 화면에 다시 쏟지 말 것(실사용자는 5쪽을 안 읽음 — 깊이는 파일에 보존, 화면은 한 눈).
 
 ## 출력 모드 (기본=카드 / 전체) — v0.2.1
 
 아이디어 끝이나 `모드`에 "전체"·"상세"·"full"·"detail"·`--full`이 있으면 **전체 모드**, 없으면 **기본(카드) 모드**.
 
-- **기본(카드) 모드 [기본값]**: 13명 다관점 + Bull/Bear/Judge를 **반드시 내부적으로 모두 거쳐** verdict 산출(축약·생략 금지 — 카드 신뢰의 근거). **저장 = frontmatter 전체(persona_13_scores·bull/bear/judge 포함) + 「한눈 요약」 카드.** §1~§5 본문은 생성·저장 안 함. **화면 = 카드 + 저장경로 + `전체 분석: /business-counselor:counsel-evaluate "<같은 아이디어>" 전체`.**
-- **전체 모드**: frontmatter 전체 + 「한눈 요약」 + §1~§5 전체 생성·저장. 화면은 카드까지만, 전체는 `/business-counselor:counsel-show`.
+- **기본(카드) 모드 [기본값]**: 13명 다관점 + Bull/Bear/Judge를 **반드시 내부적으로 모두 거쳐** verdict 산출(축약·생략 금지 — 카드 신뢰의 근거). **저장 = frontmatter 전체(persona_13_scores·bull/bear/judge 포함) + 「한눈 요약」 카드.** §1~§5 본문은 생성·저장 안 함. **화면 = 카드 + 저장경로 + `전체 분석: /business-counselor:evaluate "<같은 아이디어>" 전체`.**
+- **전체 모드**: frontmatter 전체 + 「한눈 요약」 + §1~§5 전체 생성·저장. 화면은 카드까지만, 전체는 `/business-counselor:show`.
 
 frontmatter `mode` 필드에 `summary`(카드) 또는 `full`(전체) 기록.
 
@@ -316,4 +316,4 @@ Judge 규칙:
 ```
 
 - `NNN`: 당일 평가 순번 — **그날 `evaluated/`의 기존 `eval-NNN` 중 가장 큰 번호 + 1** (Glob로 당일 파일 조회 후 최대값 산출, 없으면 001). ⚠️ "파일 *수* + 1" 금지 — 중간 삭제 시 기존 파일 덮어쓰기 충돌
-- 저장 후 **화면 응답은 「한눈 요약」 카드 + 저장 경로 + `/business-counselor:counsel-show eval-NNN` 안내까지만**. §1~§5 본문은 화면에 반복 출력 금지(파일에 있음).
+- 저장 후 **화면 응답은 「한눈 요약」 카드 + 저장 경로 + `/business-counselor:show eval-NNN` 안내까지만**. §1~§5 본문은 화면에 반복 출력 금지(파일에 있음).

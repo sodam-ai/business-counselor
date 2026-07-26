@@ -1,10 +1,10 @@
 ---
-name: business-counselor:counsel-resume
+name: business-counselor:resume
 description: 인터뷰 이어서 — 부족 영역만 우선 질문, 이미 답한 카테고리 재질문 0건
 version: "1.0"
 ---
 
-# /business-counselor:counsel-resume
+# /business-counselor:resume
 
 ## 목적
 
@@ -15,7 +15,7 @@ version: "1.0"
 
 ```
 1. ~/.claude/plugins/business-counselor/data/profile.md 존재 여부 확인
-   - 없으면: "프로필이 없습니다. /business-counselor:counsel-start 로 먼저 인터뷰를 진행하세요." 출력 후 중단
+   - 없으면: "프로필이 없습니다. /business-counselor:start 로 먼저 인터뷰를 진행하세요." 출력 후 중단
    - 있으면: 아래 누락 필드 감지 진행
 ```
 
@@ -82,5 +82,5 @@ disclaimer: |
 세션 기록: ~/.claude/plugins/business-counselor/data/sessions/{YYYY-MM-DD}_{NNN}.md
 
 모든 핵심 필드가 채워졌으면:
-- /business-counselor:counsel-evaluate "아이디어 내용" 으로 평가 시작
+- /business-counselor:evaluate "아이디어 내용" 으로 평가 시작
 ```

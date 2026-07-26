@@ -1,10 +1,10 @@
 ---
-name: business-counselor:counsel-evaluate
+name: business-counselor:evaluate
 description: 아이디어 5단계 냉철 판독 — 13명 다관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론 단일 호출
 version: "1.0"
 ---
 
-# /business-counselor:counsel-evaluate
+# /business-counselor:evaluate
 
 ## 목적
 
@@ -14,7 +14,7 @@ version: "1.0"
 ## 입력
 
 ```
-/business-counselor:counsel-evaluate "아이디어 내용"
+/business-counselor:evaluate "아이디어 내용"
 ```
 
 아이디어 텍스트는 따옴표 안에 자유 형식으로 입력.
@@ -46,7 +46,7 @@ version: "1.0"
 
 ```
 1. ~/.claude/plugins/business-counselor/data/profile.md 존재 여부 확인
-   - 없으면: "프로필이 없습니다. /business-counselor:counsel-start 로 인터뷰를 먼저 진행하세요.
+   - 없으면: "프로필이 없습니다. /business-counselor:start 로 인터뷰를 먼저 진행하세요.
              프로필 없이도 평가를 진행하시겠습니까?" 확인 후 진행
    - 있으면: ~/.claude/plugins/business-counselor/data/profile.md 전체 내용 로드
 ```
@@ -119,8 +119,8 @@ ID: eval-{YYYY-MM-DD}-{NNN}
 verdict: {go|iterate|no-go}  |  confidence: {N}
 
 전체 상세(13명·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 보기:
-  - 기본(카드)으로 봤으면 → /business-counselor:counsel-evaluate "아이디어" 전체  (전체 생성)
-  - 전체 모드로 봤으면   → /business-counselor:counsel-show eval-{...}  (저장된 전체 열람)
-과거 평가 목록: /business-counselor:counsel-list
-이 평가 다시 보기: /business-counselor:counsel-show eval-{YYYY-MM-DD}-{NNN}
+  - 기본(카드)으로 봤으면 → /business-counselor:evaluate "아이디어" 전체  (전체 생성)
+  - 전체 모드로 봤으면   → /business-counselor:show eval-{...}  (저장된 전체 열람)
+과거 평가 목록: /business-counselor:list
+이 평가 다시 보기: /business-counselor:show eval-{YYYY-MM-DD}-{NNN}
 ```

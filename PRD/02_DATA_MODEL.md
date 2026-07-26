@@ -63,7 +63,7 @@
 | domain_interests | 관심 도메인 | ["AI 이미지/영상", "온톨로지", "바이브코딩"] | O |
 | risk_appetite | 리스크 성향 | conservative/balanced/aggressive | O |
 | past_business | 과거 사업 이력 | "없음" 또는 자유서술 | X |
-| profile_updates | 누적 갱신된 필드명 목록 (counsel-resume 갱신 이력) | ["capital_krw", "skills"] | O |
+| profile_updates | 누적 갱신된 필드명 목록 (resume 갱신 이력) | ["capital_krw", "skills"] | O |
 | disclaimer | 면책 조항 | "본 프로필은 본인 작성. 외부 송신 0." | O |
 
 **body**: Mom Test 인터뷰 답변 누적 (자유서술, 시간순)
