@@ -1,6 +1,6 @@
 # AI Business Counselor (business-counselor)
 
-> **Claude Code Plugin** · v0.2.2 · Phase 1 MVP
+> **Claude Code Plugin** · v0.4.0 · Phase 1 MVP
 > Enter a business idea and AI instantly delivers a **5-stage cold analysis** from 13 expert perspectives.
 
 **No coding required.** Just type commands in the Claude Code chat window.
@@ -61,7 +61,7 @@ Below it, the **5-stage detail** (only when you want it — see [Default/Full mo
 | § 4 | **Pre-mortem** | Top 3 failure causes + probability + mitigation, assuming it already failed |
 | § 5 | **Adversarial Debate** | Bull (pro) · Bear (con) · Judge (ruling) → go / iterate / no-go |
 
-All results auto-save to `~/.claude/plugins/business-counselor/data/`.
+All results auto-save to `~/Documents/business-counselor/`.
 
 ---
 
@@ -218,12 +218,12 @@ business-counselor/
 
 **Your data** (auto-created after install, local only):
 ```
-~/.claude/plugins/business-counselor/data/
+~/Documents/business-counselor/
 ├── profile.md           ← Your profile (interview result)
 ├── sessions/            ← Interview logs
 └── ideas/evaluated/     ← Idea analysis results
 ```
-> `~` is your home folder. On Windows usually `C:\Users\(you)\.claude\...`.
+> `~` is your home folder. On Windows usually `C:\Users\(you)\Documents\business-counselor\`.
 
 ---
 
@@ -249,7 +249,7 @@ business-counselor/
 ### Data security
 - Your profile and analyses are stored **on your local machine only**.
 - Not sent to external servers (Phase 1 & 2 policy). The analysis engine has file read/write only (no internet calls).
-- Data path: `~/.claude/plugins/business-counselor/data/`
+- Data path: `~/Documents/business-counselor/`
 
 ### Legal disclaimer
 This tool does **NOT** constitute: investment advisory (Korean Capital Markets Act Art. 6(5)) · business consulting · tax/legal advisory.

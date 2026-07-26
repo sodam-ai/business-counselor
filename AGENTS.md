@@ -62,7 +62,7 @@
 ## 데이터 경로
 
 ```
-~/.claude/plugins/business-counselor/data/
+~/Documents/business-counselor/
 ├── profile.md
 ├── sessions/
 ├── ideas/evaluated/

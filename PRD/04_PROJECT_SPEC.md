@@ -17,7 +17,7 @@
 | 스킬 형식 | `SKILL.md`(Open Agent Skills 표준) | Claude+Codex 공식 지원 |
 | 서브에이전트 | `agents/*.md` (Claude Code 표준) | 컨텍스트 격리·도구 제한 |
 | 데이터 저장 | Markdown + YAML frontmatter + JSONL | DB 0, 사람이 직접 읽고 수정 가능, Git 친화적 |
-| 데이터 위치 | `~/.claude/plugins/business-counselor/data/` | 플러그인 격리, 다른 프로젝트 침범 0 |
+| 데이터 위치 | `~/Documents/business-counselor/` | 플러그인 격리, 다른 프로젝트 침범 0 |
 | 인증 | 없음 | Claude Code 자체 인증 사용. 본인용 |
 | 외부 호출 | **Phase 3만 + 사용자 명시 호출 시만 활성** (default 비활성) | Phase 1·2는 외부 송신 0. API 절약 정책 |
 | **API 호출 정책 (v1.1)** | **한 명령 = 한 응답. 단일 호출 내부 5단계 강제** | API 비용 절약 + 양측 증거 동시 평가로 판정 품질 ↑ |

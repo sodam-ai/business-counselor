@@ -39,11 +39,11 @@
 
 | 파일 종류 | 경로 | 파일명 규칙 |
 |----------|------|-----------|
-| 프로필 | `~/.claude/plugins/business-counselor/data/profile.md` | 단일 파일, 누적 갱신 |
-| 세션 | `~/.claude/plugins/business-counselor/data/sessions/` | `YYYY-MM-DD_NNN.md` |
-| 평가 | `~/.claude/plugins/business-counselor/data/ideas/evaluated/` | `YYYY-MM-DD_eval-NNN.md` |
-| 생성(Phase 2) | `~/.claude/plugins/business-counselor/data/ideas/generated/` | `YYYY-MM-DD_idea-NNN.md` |
-| 결정(Phase 2) | `~/.claude/plugins/business-counselor/data/decisions.jsonl` | JSONL, timestamp ISO 8601 |
+| 프로필 | `~/Documents/business-counselor/profile.md` | 단일 파일, 누적 갱신 |
+| 세션 | `~/Documents/business-counselor/sessions/` | `YYYY-MM-DD_NNN.md` |
+| 평가 | `~/Documents/business-counselor/ideas/evaluated/` | `YYYY-MM-DD_eval-NNN.md` |
+| 생성(Phase 2) | `~/Documents/business-counselor/ideas/generated/` | `YYYY-MM-DD_idea-NNN.md` |
+| 결정(Phase 2) | `~/Documents/business-counselor/decisions.jsonl` | JSONL, timestamp ISO 8601 |
 
 ---
 

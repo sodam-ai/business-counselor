@@ -9,12 +9,12 @@ version: "1.0"
 ## 목적
 
 사용자 맥락(자본·시간·역량·관심 도메인·리스크 성향)을 수집하여
-`~/.claude/plugins/business-counselor/data/profile.md`를 생성한다. 이 프로필은 이후 모든 평가의 기준이 된다.
+`~/Documents/business-counselor/profile.md`를 생성한다. 이 프로필은 이후 모든 평가의 기준이 된다.
 
 ## 실행 전 확인
 
 ```
-1. ~/.claude/plugins/business-counselor/data/profile.md 존재 여부 확인
+1. ~/Documents/business-counselor/profile.md 존재 여부 확인
    - 있으면: "이미 프로필이 있습니다. /business-counselor:resume 로 보완하거나 계속 진행하세요." 출력 후 중단
    - 없으면: 아래 인터뷰 시작
 ```
@@ -41,7 +41,7 @@ version: "1.0"
 
 ## profile.md 생성 규칙
 
-인터뷰 완료 후 `templates/profile.template.md`를 참조하여 `~/.claude/plugins/business-counselor/data/profile.md`를 생성한다.
+인터뷰 완료 후 `templates/profile.template.md`를 참조하여 `~/Documents/business-counselor/profile.md`를 생성한다.
 
 **필수 frontmatter 필드 (15개):**
 ```yaml
@@ -69,7 +69,7 @@ disclaimer: |
 
 ## 세션 파일 생성
 
-`~/.claude/plugins/business-counselor/data/sessions/{YYYY-MM-DD}_001.md` 생성:
+`~/Documents/business-counselor/sessions/{YYYY-MM-DD}_001.md` 생성:
 ```yaml
 ---
 session_id: session-{YYYY-MM-DD}-001
@@ -86,8 +86,8 @@ disclaimer: |
 ## 완료 메시지
 
 ```
-프로필 저장 완료: ~/.claude/plugins/business-counselor/data/profile.md
-세션 기록: ~/.claude/plugins/business-counselor/data/sessions/{YYYY-MM-DD}_001.md
+프로필 저장 완료: ~/Documents/business-counselor/profile.md
+세션 기록: ~/Documents/business-counselor/sessions/{YYYY-MM-DD}_001.md
 
 다음 단계:
 - 아이디어가 있으면: /business-counselor:evaluate "아이디어 내용"

@@ -12,7 +12,7 @@
 
 BASE_FIELDS="disclaimer schema_version"
 EVAL_EXTRA="success_criteria consistency_score model_id temperature debate_mode"
-DATA_DIR="${1:-$HOME/.claude/plugins/business-counselor/data}"
+DATA_DIR="${1:-$HOME/Documents/business-counselor}"
 FAIL=0
 COUNT=0
 

@@ -8,13 +8,13 @@ version: "1.0"
 
 ## 목적
 
-`~/.claude/plugins/business-counselor/data/ideas/evaluated/` 폴더의 모든 평가 파일을 스캔하여
+`~/Documents/business-counselor/ideas/evaluated/` 폴더의 모든 평가 파일을 스캔하여
 ID·날짜·아이디어 요약·판정·신뢰도를 테이블로 출력한다.
 
 ## 실행 절차
 
 ```
-1. ~/.claude/plugins/business-counselor/data/ideas/evaluated/ 폴더 존재 여부 확인
+1. ~/Documents/business-counselor/ideas/evaluated/ 폴더 존재 여부 확인
    - 없거나 비어있으면: 아래 "기록 없음" 메시지 출력
 
 2. 폴더 내 *.md 파일 전체 스캔

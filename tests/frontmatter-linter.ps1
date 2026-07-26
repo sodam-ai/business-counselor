@@ -11,7 +11,7 @@
 #   또는: pwsh tests/frontmatter-linter.ps1 [data_dir]
 
 param(
-  [string]$DataDir = "$env:USERPROFILE\.claude\plugins\business-counselor\data"
+  [string]$DataDir = "$env:USERPROFILE\Documents\business-counselor"
 )
 
 # 출력 메시지는 ASCII 전용 (Windows PowerShell 5.1 cp949 콘솔에서 한글 mojibake 방지).
