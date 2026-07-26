@@ -10,8 +10,8 @@ reference: "The Mom Test by Rob Fitzpatrick"
 ## 목적
 
 두 가지 용도:
-1. **인터뷰 단계** (`/counsel:start`·`/counsel:resume`): 사용자 프로필 수집용 질문 생성
-2. **아이디어 평가 단계** (`/counsel:evaluate`): "잠재 고객이 실제 돈 낼 증거" 검증 질문 5개 생성
+1. **인터뷰 단계** (`/business-counselor:counsel-start`·`/business-counselor:counsel-resume`): 사용자 프로필 수집용 질문 생성
+2. **아이디어 평가 단계** (`/business-counselor:counsel-evaluate`): "잠재 고객이 실제 돈 낼 증거" 검증 질문 5개 생성
 
 ## Mom Test 핵심 원칙
 

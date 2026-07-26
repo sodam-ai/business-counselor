@@ -1,10 +1,10 @@
 ---
-name: counsel:show
+name: business-counselor:counsel-show
 description: 특정 평가 재조회 — 평가 ID로 전체 내용 출력
 version: "1.0"
 ---
 
-# /counsel:show
+# /business-counselor:counsel-show
 
 ## 목적
 
@@ -14,15 +14,15 @@ version: "1.0"
 ## 입력
 
 ```
-/counsel:show {ID}
-예: /counsel:show eval-2026-05-08-001
+/business-counselor:counsel-show {ID}
+예: /business-counselor:counsel-show eval-2026-05-08-001
 ```
 
 ## 실행 절차
 
 ```
 1. 입력 ID 파싱
-   - ID가 없으면: "ID를 입력하세요. 예: /counsel:show eval-2026-05-08-001" 출력 후 중단
+   - ID가 없으면: "ID를 입력하세요. 예: /business-counselor:counsel-show eval-2026-05-08-001" 출력 후 중단
 
 2. ~/.claude/plugins/business-counselor/data/ideas/evaluated/ 폴더에서 ID 매칭 파일 검색
    - 파일 없으면: "해당 ID의 평가를 찾을 수 없습니다: {ID}" 출력 후 중단
@@ -56,5 +56,5 @@ version: "1.0"
 해당 ID의 평가를 찾을 수 없습니다: {입력 ID}
 
 저장된 평가 목록을 확인하려면:
-  /counsel:list
+  /business-counselor:counsel-list
 ```

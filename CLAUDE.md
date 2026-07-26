@@ -9,12 +9,12 @@
 
 - **기존 환경 절대 수정 X**: `~/.claude/CLAUDE.md`, `MEMORY.md`, `user_persona*.md`,
   SessionStart·UserPromptSubmit hook 파일 수정·삭제·간섭 금지
-- **네임스페이스 오염 X**: `/counsel:` 외 네임스페이스로 명령 만들지 마
+- **네임스페이스 오염 X**: `/business-counselor:counsel-*` 외 네임스페이스로 명령 만들지 마
 - **에이전트 prefix 오염 X**: `bc-` prefix 없는 서브에이전트 만들지 마
 - **AGENTS.md 글로벌 생성 X**: 플러그인 폴더 외부에 AGENTS.md 생성 금지
-- **외부 API X (Phase 1·2)**: 사용자 명시 `/counsel:research` 호출 없이 외부 송신 0
+- **외부 API X (Phase 1·2)**: 사용자 명시 `/business-counselor:counsel-research` 호출 없이 외부 송신 0
 - **멀티 에이전트 분리 X**: `bc-bull-advocate`·`bc-bear-critic`·`bc-devil-judge` 별도 에이전트 만들지 마
-- **추가 서브에이전트 호출 X**: `/counsel:evaluate` 실행 시 `bc-idea-evaluator` 1회만
+- **추가 서브에이전트 호출 X**: `/business-counselor:counsel-evaluate` 실행 시 `bc-idea-evaluator` 1회만
 - **자동 가정 X**: 모호 입력 시 보강 질문 1~2개 후 진행 (자동 가정 금지)
 - **면책 없는 파일 생성 X**: 모든 출력 파일에 `disclaimer` frontmatter 자동 삽입 필수
 - **PII 외부 송신 X**: 이름·주소·자본금·생년월일 등 외부 전송 금지 (Phase 1·2)

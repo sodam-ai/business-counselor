@@ -39,12 +39,12 @@ business-counselor/
 ├── LICENSE                           # (선택)
 │
 ├── commands/
-│   ├── counsel-start.md              # /counsel:start
-│   ├── counsel-resume.md             # /counsel:resume
-│   ├── counsel-evaluate.md           # /counsel:evaluate
-│   ├── counsel-list.md               # /counsel:list
-│   ├── counsel-show.md               # /counsel:show
-│   ├── counsel-help.md               # /counsel:help (v0.2.0 추가)
+│   ├── counsel-start.md              # /business-counselor:counsel-start
+│   ├── counsel-resume.md             # /business-counselor:counsel-resume
+│   ├── counsel-evaluate.md           # /business-counselor:counsel-evaluate
+│   ├── counsel-list.md               # /business-counselor:counsel-list
+│   ├── counsel-show.md               # /business-counselor:counsel-show
+│   ├── counsel-help.md               # /business-counselor:counsel-help (v0.2.0 추가)
 │   ├── counsel-recommend.md          # Phase 2
 │   ├── counsel-decide.md             # Phase 2
 │   ├── counsel-research.md           # Phase 3
@@ -81,16 +81,16 @@ business-counselor/
 ## 절대 하지 마 (DO NOT) — AI에게 코드 시킬 때 반드시 공유
 
 - [ ] 사용자 자산·소득·이름·주소 등 PII를 외부 API에 직접 전송하지 마 (Phase 3 외부 호출 시 마스킹 필수)
-- [ ] 슬래시 명령에 `/counsel:` 네임스페이스 빠뜨리지 마 (다른 플러그인과 충돌)
+- [ ] 슬래시 명령에 `/business-counselor:counsel-*` 네임스페이스 빠뜨리지 마 (다른 플러그인과 충돌)
 - [ ] 서브에이전트에 `bc-` prefix 빠뜨리지 마
 - [ ] AGENTS.md를 사용자 홈 루트(`C:\Users\PC\AGENTS.md`) 또는 임의 프로젝트 루트에 생성하지 마 (의도치 않은 글로벌 인식 발생)
 - [ ] 기존 hook(SessionStart·UserPromptSubmit·PreToolUse 등) 수정·삭제·간섭하지 마
 - [ ] 사용자 `~/.claude/CLAUDE.md`, `MEMORY.md`, `user_persona*.md` 절대 자동 수정하지 마
 - [ ] 면책 frontmatter 없이 신규 파일 생성하지 마 (린터로 검증)
 - [ ] 마크다운/JSONL 외 데이터 형식 도입하지 마 (SQLite·Postgres 도입 금지)
-- [ ] 사용자 명시 동의 없이 외부 API 호출하지 마 (Phase 1·2는 외부 송신 0, **Phase 3는 사용자가 `/counsel:research` 명시 입력 시만 활성**)
+- [ ] 사용자 명시 동의 없이 외부 API 호출하지 마 (Phase 1·2는 외부 송신 0, **Phase 3는 사용자가 `/business-counselor:counsel-research` 명시 입력 시만 활성**)
 - [ ] **별도 호출로 멀티 에이전트(Bull/Bear/Judge) 분리하지 마 — API 비용. 단일 호출 내부에서 3관점 강제 (v1.1)**
-- [ ] **단일 `/counsel:evaluate` 호출 시 추가 서브에이전트 호출 0건 유지 — `bc-idea-evaluator` 1회만 (v1.1)**
+- [ ] **단일 `/business-counselor:counsel-evaluate` 호출 시 추가 서브에이전트 호출 0건 유지 — `bc-idea-evaluator` 1회만 (v1.1)**
 - [ ] **`bc-bull-advocate`·`bc-bear-critic`·`bc-devil-judge` 같은 별도 서브에이전트 만들지 마 (v1.1 — API 절약)**
 - [ ] 특정 종목·금융상품·세무 자문 직접 답변하지 마 (자본시장법 회색지대)
 - [ ] 자기 확신·긍정 편향 응답 작성하지 마 (사용자 의도: "냉철한 판독")
@@ -105,7 +105,7 @@ business-counselor/
 
 - [ ] 모든 출력 파일에 `disclaimer` + `success_criteria` + `consistency_score` + `model_id` + `temperature` + `debate_mode: single-call` frontmatter 자동 삽입 (v1.1)
 - [ ] **success_criteria 자동 매칭 규칙 (v1.2)**: 13명 평가 점수 분포(특히 #4 QA·#9 PM·#10 경영진)·사용자 자본·시간·도메인에 따라 카탈로그 5개 중 1~2개 자동 선택. 카탈로그: ① 고객 인터뷰 ≥10명/+30일 ② MVP POC 100% 핵심 1기능/+60일 ③ LOI ≥3건/+45일 ④ 유료 사용자 ≥1명 또는 매출 10만원/+90일 ⑤ 시장 리서치 ≥3출처+통계 1개/+14일
-- [ ] 슬래시 명령 모두 `/counsel:` 네임스페이스 (예: `/counsel:start`)
+- [ ] 슬래시 명령 모두 `/business-counselor:counsel-*` 네임스페이스 (예: `/business-counselor:counsel-start`)
 - [ ] 서브에이전트 모두 `bc-` prefix
 - [ ] **5단계(13관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 각 단계 명시적 섹션 분리** (v1.1, Phase 1 포함 5단계. Pre-mortem: Phase 1=3개, Phase 2+=5개)
 - [ ] **적대 토론은 Bull/Bear/Judge 3섹션 명시 분리 — 단일 호출 안에서** (v1.1)
@@ -117,7 +117,7 @@ business-counselor/
 - [ ] 사용자가 모호한 입력 시 보강 질문 1~2개 (자동 가정 금지)
 - [ ] decisions.jsonl 새 줄 추가 시 timestamp ISO 8601 형식
 - [ ] frontmatter `schema_version` 명시 (변경 시 마이그레이션 작성. 현재 1.2)
-- [ ] **API 호출 최소화 — 한 명령 = 한 응답 원칙. `/counsel:evaluate`는 `bc-idea-evaluator` 1회 호출만으로 5단계 완성 (Phase 1·2 공통. Pre-mortem: Phase 1=3개, Phase 2+=5개)** (v1.1)
+- [ ] **API 호출 최소화 — 한 명령 = 한 응답 원칙. `/business-counselor:counsel-evaluate`는 `bc-idea-evaluator` 1회 호출만으로 5단계 완성 (Phase 1·2 공통. Pre-mortem: Phase 1=3개, Phase 2+=5개)** (v1.1)
 - [ ] **출력 분량: 깊이 우선 — 브레비티는 「한눈 요약」 카드, `<6,000`은 강제 아닌 가이드 (v0.2.0)**
 - [ ] **Phase 3 외부 호출 전 사용자 confirmation 단계 (예: "정말 외부 검색하시겠습니까? 비용 발생")** (v1.1)
 
@@ -227,7 +227,7 @@ powershell -File tests\frontmatter-linter.ps1 data\          # Windows 네이티
 ### 본인 사용 (Phase 1~2)
 1. `git clone <repo>` → `~/.claude/plugins/business-counselor/`
 2. Claude Code 재시작 → 자동 인식
-3. `/counsel:start` 입력 시작
+3. `/business-counselor:counsel-start` 입력 시작
 
 ### Codex 사용 (Phase 1~)
 1. 같은 폴더에서 Codex 실행 → AGENTS.md 자동 인식
@@ -249,7 +249,7 @@ powershell -File tests\frontmatter-linter.ps1 data\          # Windows 네이티
 
 ## 가드레일 자가 검증 (PR 전 — v1.1)
 
-- [ ] 모든 슬래시 명령이 `/counsel:` 네임스페이스인지
+- [ ] 모든 슬래시 명령이 `/business-counselor:counsel-*` 네임스페이스인지
 - [ ] 모든 서브에이전트가 `bc-` prefix인지
 - [ ] AGENTS.md가 플러그인 폴더 외에 생성되지 않았는지
 - [ ] 기존 hook 파일 변경 0인지 (`git diff`로 확인)

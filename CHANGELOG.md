@@ -4,6 +4,37 @@
 
 ---
 
+## [플러그인] 명령 네임스페이스 표기 정정 — 2026-07-27 (실 E2E에서 발견된 치명 결함)
+
+### 배경
+새 세션에서 실제로 플러그인을 설치하고 명령을 실행하는 E2E 검증 중, `/counsel:start`·`/counsel:resume`는
+(사용자가 실제 등록된 이름을 보고 `/business-counselor:counsel-start` 형태로 직접 입력해) 정상 동작했으나,
+문서에 적힌 그대로 `/counsel:evaluate "..."`를 입력하자 **"Unknown command"로 3회 연속 실패**했다.
+
+### 원인 (실측 확인)
+Claude Code 플러그인의 슬래시 명령은 `/<플러그인 이름>:<명령 파일명>` 형태로만 등록되며, 명령 파일
+frontmatter의 `name:` 필드로 임의의 네임스페이스(`counsel:`)를 지정해도 실제 라우팅에는 반영되지 않는다.
+즉 `/counsel:xxx`는 **애초에 한 번도 작동한 적이 없는 표기**였고, 실제 동작하는 유일한 형식은
+`/business-counselor:counsel-xxx`이다. `tests/manual-scenarios.md`에 2026-05-07 초안 시점부터
+"명령·에이전트 충돌 시 prefix 강화(`/counsel:` → `/business-counselor:`) 검토"라는 대비책이 이미
+적혀 있었던 것으로 보아, 설계 당시에도 이 가능성이 완전히 배제되지는 않았던 것으로 보인다.
+
+### 수정 (Fixed)
+- `commands/*.md` 6개 파일의 frontmatter `name:` 필드 및 본문 예시를 `business-counselor:counsel-*`로 정정
+- `README.md`·`README_EN.md`·`AGENTS.md`·`CLAUDE.md`·`agents/bc-idea-evaluator.md`·`skills/mom-test/SKILL.md`
+  의 모든 명령 예시·안내 문구 정정
+- `PRD/01_PRD.md`·`03_PHASES.md`·`04_PROJECT_SPEC.md`·`PRD/README.md`의 네임스페이스 규칙·예시 전면 정정
+  (규칙 자체는 "플러그인 자동 접두사 네임스페이스 강제"로 재해석 — 목적은 동일, 표기만 정정)
+- `tests/manual-scenarios.md`·`tests/results-template.md`의 테스트 명령 예시 정정
+- 비개발자용 E2E 테스트 가이드(Artifact)의 복사-붙여넣기 명령 4곳 정정 후 재게시
+
+### 검증 (Verified / 미검증)
+- 새 세션에서 `/business-counselor:counsel-start`·`/business-counselor:counsel-resume` 실제 동작 확인(정상)
+- `/business-counselor:counsel-evaluate`는 **아직 실제 실행으로 검증되지 않음** — 다음 새 세션에서 재확인 필요
+- 인터뷰(`/counsel:start`)는 생애사 질문 2개까지만 진행되고 사용자가 아직 미답변 — profile.md 미생성 상태
+
+---
+
 ## [플러그인] 마켓플레이스 등록 방식 개선 — 2026-07-27
 
 ### 배경
@@ -64,12 +95,12 @@ Phase 2 착수 전 게이트 점검(`03_PHASES.md` 전제 조건: 평가 5건+·
 ## [플러그인] v0.2.0 — 2026-06-15 (UX/사용성 고도화 — 핵심 경로 E2E 검증 후)
 
 ### 검증 (Verified)
-- **E2E 시나리오 4(핵심 경로) 실측 통과**: `/counsel:evaluate` 실제 실행 → §1~§5 + frontmatter 정상, 린터 PASS. v0.1.1 수정(§4 확률+완화책·#11/#13 ⚠️·단일호출·verdict 강제하향·NNN·환각태깅) 전부 실동작 확인.
+- **E2E 시나리오 4(핵심 경로) 실측 통과**: `/business-counselor:counsel-evaluate` 실제 실행 → §1~§5 + frontmatter 정상, 린터 PASS. v0.1.1 수정(§4 확률+완화책·#11/#13 ⚠️·단일호출·verdict 강제하향·NNN·환각태깅) 전부 실동작 확인.
 - **실측 발견**: 출력 ~11,900자(≈6~8k 토큰)로 PRD `<6,000` 목표 초과 → 본 버전에서 압축 규칙으로 대응.
 
 ### 추가 (Added)
 - **「한눈 요약」 카드**: 평가 출력 맨 위 TL;DR(판정 ✅/⚠️/⛔·확신도·강점·막힌곳·다음행동). 색·기호 단독 의존 금지(텍스트 라벨 병기=접근성). `agents/bc-idea-evaluator.md`·`templates/evaluation.template.md` 반영.
-- **`/counsel:help` 명령**: 명령 5개·추천 흐름·전문용어 풀이를 한 장에(비개발자 온보딩·접근성). 용어집을 매 평가 인라인 대신 help에 모아 토큰 절약. AGENTS.md·README 2종 등록.
+- **`/business-counselor:counsel-help` 명령**: 명령 5개·추천 흐름·전문용어 풀이를 한 장에(비개발자 온보딩·접근성). 용어집을 매 평가 인라인 대신 help에 모아 토큰 절약. AGENTS.md·README 2종 등록.
 - **「타겟 고객의 한마디」(§1 부록)**: 13명 전문가 패널과 별개로, 실제 '돈 낼 고객' 1인칭 예상 반응(첫반응·거부이유·현재대안·지갑여는조건)을 §1 표 아래 추가. 13행 표·5단계·페르소나 1:1 정합 무수정(부록 형태). §3 Mom Test와 "가설↔검증"으로 연결해 중복 회피. agents·template·help 반영.
 
 ### 고도화 (Improved)
@@ -77,10 +108,10 @@ Phase 2 착수 전 게이트 점검(`03_PHASES.md` 전제 조건: 평가 5건+·
 
 ### 고도화 (Improved, 추가)
 - **화면/저장 분리(점진적 공개)**: 깊은 §1~§5는 파일에 그대로 저장하되, **화면 응답은 「한눈 요약」 카드 + show 안내까지만** 출력. 실사용자가 5쪽을 강제로 읽지 않게 함 — 압축이 아니라 *안 보여줄 뿐*이라 깊이 손실 0. 사용자 피드백("출력이 너무 길다") 반영.
-- **2단계 기본/전체 모드**: 기본 `/counsel:evaluate`=「한눈 요약」 카드만 생성(빠름·짧음), `"...전체"`/`--full`=§1~§5 전체 생성. 두 모드 모두 13관점·적대토론 **내부 추론 필수**(verdict 품질 유지). 속도·길이 동시 해결. 사용자 피드백('전체는 선택에 따라 작성') 반영. frontmatter `mode: summary|full` 기록.
+- **2단계 기본/전체 모드**: 기본 `/business-counselor:counsel-evaluate`=「한눈 요약」 카드만 생성(빠름·짧음), `"...전체"`/`--full`=§1~§5 전체 생성. 두 모드 모두 13관점·적대토론 **내부 추론 필수**(verdict 품질 유지). 속도·길이 동시 해결. 사용자 피드백('전체는 선택에 따라 작성') 반영. frontmatter `mode: summary|full` 기록.
 
 ### 미검증 (Pending)
-- 한눈 요약·압축의 실제 토큰 절감 효과는 다음 `/counsel:evaluate` 실행에서 재확인 필요(빌드≠작동).
+- 한눈 요약·압축의 실제 토큰 절감 효과는 다음 `/business-counselor:counsel-evaluate` 실행에서 재확인 필요(빌드≠작동).
 - 시나리오 1(인터뷰→profile)·2(resume)·5(환경 무결성) 실 E2E 미완.
 
 ### 스키마/버전
@@ -91,7 +122,7 @@ Phase 2 착수 전 게이트 점검(`03_PHASES.md` 전제 조건: 평가 5건+·
 ## [플러그인] v0.1.1 — 2026-06-15 (Phase 1 안정화 + 기존 기능 고도화)
 
 ### 수정 (Fixed) — 정합성 결함 6건
-- **린터 과잉 검증 버그**: `frontmatter-linter.sh`가 모든 .md에 6필드를 요구해 `/counsel:start` 직후 profile.md·세션 파일이 FAIL하던 문제 → 파일 유형별 검증(모든 파일=disclaimer+schema_version, evaluated/generated=6필드)으로 수정. 02_DATA_MODEL.md 정합.
+- **린터 과잉 검증 버그**: `frontmatter-linter.sh`가 모든 .md에 6필드를 요구해 `/business-counselor:counsel-start` 직후 profile.md·세션 파일이 FAIL하던 문제 → 파일 유형별 검증(모든 파일=disclaimer+schema_version, evaluated/generated=6필드)으로 수정. 02_DATA_MODEL.md 정합.
 - **세션 파일 면책 누락**: counsel-start·counsel-resume 세션 frontmatter에 `disclaimer`+`schema_version` 추가 ("면책 없는 파일 생성 금지" 규칙 위반 해소).
 - **marketplace.json 라이선스 불일치**: `private` → `Apache-2.0` / `SoDam AI Studio` (plugin.json·LICENSE·README와 일치).
 - **도구 부산물 추적 위험**: .gitignore에 .complexity-log.md·.pair-programming-session.md·.plugin-config/·.todos-report.md/·tests/results/ 추가.
@@ -116,7 +147,7 @@ Phase 2 착수 전 게이트 점검(`03_PHASES.md` 전제 조건: 평가 5건+·
 - git diff: 전역 환경 파일(CLAUDE.md·MEMORY.md·user_persona*.md·hook) 무손상.
 
 ### 미완료 (Pending)
-- 수동 시나리오 5건 실 E2E (사용자가 플러그인 설치 후 `/counsel:*` 실행 — `tests/results-template.md`로 기록).
+- 수동 시나리오 5건 실 E2E (사용자가 플러그인 설치 후 `/business-counselor:counsel-*` 실행 — `tests/results-template.md`로 기록).
 
 ### 스키마
 - schema_version 1.2 유지(변경 없음). 플러그인 버전 0.1.0 → 0.1.1.
