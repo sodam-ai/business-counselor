@@ -1,6 +1,6 @@
 # AI 사업 카운슬러 (business-counselor)
 
-> **Claude Code 플러그인** · v0.2.0 · Phase 1 MVP
+> **Claude Code 플러그인** · v0.2.1 · Phase 1 MVP
 > 사업 아이디어를 입력하면 AI가 13명 전문가 관점으로 **5단계 냉철 분석**을 즉시 제공합니다.
 
 **코딩을 전혀 몰라도 됩니다.** Claude Code 채팅창에 명령어만 입력하면 됩니다.
