@@ -6,7 +6,7 @@
 
 - 실행일:
 - 실행자:
-- 플러그인 버전: v0.2.1
+- 플러그인 버전: v0.2.2
 - 설치 경로: `~/.claude/plugins/business-counselor/`
 
 ---
