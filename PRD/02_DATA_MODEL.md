@@ -238,4 +238,4 @@ disclaimer: |
 - [ ] 인터뷰 카테고리 6종(생애사·자본·시간·역량·관심도메인·리스크성향) 외 가족·건강·도덕적 신념 추가 여부
 - [ ] **v1.1 신규**: `bull_arguments`·`bear_arguments` 최소·최대 항목 수 (Bull 3개? Bear 5개?)
 - [ ] **v1.1 신규**: `consistency_score` 임계값 (Phase 2 측정 시 0.20 초과 = 불안정 등)
-- [ ] **v1.1 신규**: `success_criteria.metric` 표준 카탈로그 (일반론 vs 도메인 특화)
+- ✓ **v1.1 신규**: ~~`success_criteria.metric` 표준 카탈로그~~ → **v1.2 카탈로그 5개 완성** (04_PROJECT_SPEC.md §"항상 해" 참조. 2026-07-27 문서 간 불일치 발견·동기화)

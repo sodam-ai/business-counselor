@@ -266,7 +266,7 @@ powershell -File tests\frontmatter-linter.ps1 data\          # Windows 네이티
 
 ## [NEEDS CLARIFICATION]
 
-- [ ] 라이선스 (MIT vs 비공개) — 사용자 결정
+- ✓ ~~라이선스 (MIT vs 비공개)~~ → **Apache-2.0 채택·구현 완료** (LICENSE·plugin.json·README 3곳 일치. 2026-07-27 문서 간 불일치 발견·동기화)
 - [ ] Codex AGENTS.md 활성 시점: Claude Code와 동시 또는 Phase 2 이후?
 - ✓ ~~면책 조항 한국어 문구 최종안~~ → **v1.2 본문 박힘** (02_DATA_MODEL.md 공통 frontmatter 참조). 후속 변호사 검토 권고.
 - ✓ ~~13관점 한국어 라벨 user_persona.md와 100% 일치 검증~~ → **v1.2 페르소나 v5 13명 다관점 1:1 매칭 완료**. 영문 코드 폐기·전문가 시점 표 채택.
