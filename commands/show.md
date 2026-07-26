@@ -8,7 +8,7 @@ version: "1.0"
 
 ## 목적
 
-평가 ID를 입력받아 `~/.claude/plugins/business-counselor/data/ideas/evaluated/` 에서 해당 파일을 찾아
+평가 ID를 입력받아 `~/Documents/business-counselor/ideas/evaluated/` 에서 해당 파일을 찾아
 전체 내용(frontmatter + §1~§5)을 출력한다.
 
 ## 입력
@@ -24,7 +24,7 @@ version: "1.0"
 1. 입력 ID 파싱
    - ID가 없으면: "ID를 입력하세요. 예: /business-counselor:show eval-2026-05-08-001" 출력 후 중단
 
-2. ~/.claude/plugins/business-counselor/data/ideas/evaluated/ 폴더에서 ID 매칭 파일 검색
+2. ~/Documents/business-counselor/ideas/evaluated/ 폴더에서 ID 매칭 파일 검색
    - 파일 없으면: "해당 ID의 평가를 찾을 수 없습니다: {ID}" 출력 후 중단
 
 3. 파일 전체 내용 출력

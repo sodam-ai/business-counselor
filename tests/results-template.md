@@ -6,7 +6,7 @@
 
 - 실행일:
 - 실행자:
-- 플러그인 버전: v0.2.2
+- 플러그인 버전: v0.4.0
 - 설치 경로: `~/.claude/plugins/business-counselor/`
 
 ---
@@ -14,10 +14,10 @@
 ## 사전: 린터 사전 점검 (택1)
 
 ```bash
-bash tests/frontmatter-linter.sh ~/.claude/plugins/business-counselor/data        # Git Bash
+bash tests/frontmatter-linter.sh ~/Documents/business-counselor        # Git Bash
 ```
 ```powershell
-powershell -File tests\frontmatter-linter.ps1 $env:USERPROFILE\.claude\plugins\business-counselor\data   # Windows
+powershell -File tests\frontmatter-linter.ps1 $env:USERPROFILE\Documents\business-counselor   # Windows
 ```
 - [ ] 결과(PASS/FAIL/INFO):
 

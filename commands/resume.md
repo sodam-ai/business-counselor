@@ -8,20 +8,20 @@ version: "1.0"
 
 ## 목적
 
-기존 `~/.claude/plugins/business-counselor/data/profile.md`를 읽고 **누락·모호한 필드만 추가 질문**하여 프로필을 보완한다.
+기존 `~/Documents/business-counselor/profile.md`를 읽고 **누락·모호한 필드만 추가 질문**하여 프로필을 보완한다.
 이미 답변된 카테고리는 재질문하지 않는다.
 
 ## 실행 전 확인
 
 ```
-1. ~/.claude/plugins/business-counselor/data/profile.md 존재 여부 확인
+1. ~/Documents/business-counselor/profile.md 존재 여부 확인
    - 없으면: "프로필이 없습니다. /business-counselor:start 로 먼저 인터뷰를 진행하세요." 출력 후 중단
    - 있으면: 아래 누락 필드 감지 진행
 ```
 
 ## 누락·모호 필드 감지 규칙
 
-`~/.claude/plugins/business-counselor/data/profile.md` frontmatter를 읽고 아래 기준으로 필드를 분류한다:
+`~/Documents/business-counselor/profile.md` frontmatter를 읽고 아래 기준으로 필드를 분류한다:
 
 | 상태 | 기준 | 처리 |
 |------|------|------|
@@ -47,7 +47,7 @@ version: "1.0"
 
 ## profile.md 갱신 규칙
 
-답변 수집 후 `~/.claude/plugins/business-counselor/data/profile.md`를 갱신한다:
+답변 수집 후 `~/Documents/business-counselor/profile.md`를 갱신한다:
 
 ```yaml
 last_updated: {YYYY-MM-DDTHH:MM:SS}  # 현재 시각으로 업데이트
@@ -60,7 +60,7 @@ profile_updates:
 
 ## 세션 파일 생성
 
-`~/.claude/plugins/business-counselor/data/sessions/{YYYY-MM-DD}_{NNN}.md` 생성 (NNN: 당일 순번):
+`~/Documents/business-counselor/sessions/{YYYY-MM-DD}_{NNN}.md` 생성 (NNN: 당일 순번):
 ```yaml
 ---
 session_id: session-{YYYY-MM-DD}-{NNN}
@@ -77,9 +77,9 @@ disclaimer: |
 ## 완료 메시지
 
 ```
-프로필 갱신 완료: ~/.claude/plugins/business-counselor/data/profile.md
+프로필 갱신 완료: ~/Documents/business-counselor/profile.md
 갱신 필드: {갱신된 필드 목록}
-세션 기록: ~/.claude/plugins/business-counselor/data/sessions/{YYYY-MM-DD}_{NNN}.md
+세션 기록: ~/Documents/business-counselor/sessions/{YYYY-MM-DD}_{NNN}.md
 
 모든 핵심 필드가 채워졌으면:
 - /business-counselor:evaluate "아이디어 내용" 으로 평가 시작

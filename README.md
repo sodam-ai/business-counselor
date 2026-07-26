@@ -1,6 +1,6 @@
 # AI 사업 카운슬러 (business-counselor)
 
-> **Claude Code 플러그인** · v0.2.2 · Phase 1 MVP
+> **Claude Code 플러그인** · v0.4.0 · Phase 1 MVP
 > 사업 아이디어를 입력하면 AI가 13명 전문가 관점으로 **5단계 냉철 분석**을 즉시 제공합니다.
 
 **코딩을 전혀 몰라도 됩니다.** Claude Code 채팅창에 명령어만 입력하면 됩니다.
@@ -61,7 +61,7 @@ claude plugin install business-counselor@business-counselor-marketplace
 | § 4 | **Pre-mortem** | "1년 뒤 망했다면 왜?" 실패 원인 3개 + 확률 + 완화책 |
 | § 5 | **적대 토론** | Bull(찬성)·Bear(반대)·Judge(판정) → go / iterate / no-go |
 
-모든 결과는 `~/.claude/plugins/business-counselor/data/`에 자동 저장됩니다.
+모든 결과는 `~/Documents/business-counselor/`에 자동 저장됩니다.
 
 ---
 
@@ -218,12 +218,12 @@ business-counselor/
 
 **내 데이터 위치** (설치 후 자동 생성, 내 컴퓨터에만):
 ```
-~/.claude/plugins/business-counselor/data/
+~/Documents/business-counselor/
 ├── profile.md           ← 내 정보 (인터뷰 결과)
 ├── sessions/            ← 인터뷰 기록
 └── ideas/evaluated/     ← 아이디어 분석 결과
 ```
-> `~` 는 사용자 홈 폴더입니다. Windows는 보통 `C:\Users\(내 이름)\.claude\...` 입니다.
+> `~` 는 사용자 홈 폴더입니다. Windows는 보통 `C:\Users\(내 이름)\Documents\business-counselor\` 입니다.
 
 ---
 
@@ -249,7 +249,7 @@ business-counselor/
 ### 데이터 보안
 - 내 정보(프로필)와 분석 결과는 **내 컴퓨터에만** 저장됩니다.
 - 외부 서버로 전송되지 않습니다 (Phase 1·2 정책). 분석 엔진은 파일 읽기/쓰기 권한만 가집니다(외부 인터넷 호출 차단).
-- 데이터 경로: `~/.claude/plugins/business-counselor/data/`
+- 데이터 경로: `~/Documents/business-counselor/`
 
 ### 법적 면책
 본 도구는 다음에 **해당하지 않습니다**: 투자자문업(자본시장법 제6조 제5항)·창업컨설팅업·세무자문·법률자문.

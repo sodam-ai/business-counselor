@@ -45,10 +45,10 @@ version: "1.0"
 ## Step 2: 프로필 컨텍스트 준비
 
 ```
-1. ~/.claude/plugins/business-counselor/data/profile.md 존재 여부 확인
+1. ~/Documents/business-counselor/profile.md 존재 여부 확인
    - 없으면: "프로필이 없습니다. /business-counselor:start 로 인터뷰를 먼저 진행하세요.
              프로필 없이도 평가를 진행하시겠습니까?" 확인 후 진행
-   - 있으면: ~/.claude/plugins/business-counselor/data/profile.md 전체 내용 로드
+   - 있으면: ~/Documents/business-counselor/profile.md 전체 내용 로드
 ```
 
 ---
@@ -61,7 +61,7 @@ version: "1.0"
 호출 형식:
 아이디어: {명확화된 아이디어 원문}
 모드: {입력에 "전체"·"상세"·"full"·"detail"·--full 있으면 "전체", 없으면 "기본(카드)"}
-프로필 컨텍스트: {~/.claude/plugins/business-counselor/data/profile.md 전체 내용 또는 "(프로필 없음)"}
+프로필 컨텍스트: {~/Documents/business-counselor/profile.md 전체 내용 또는 "(프로필 없음)"}
 ```
 
 ### 단일 호출 강제
@@ -75,12 +75,12 @@ version: "1.0"
 
 ## Step 4: 결과 저장
 
-bc-idea-evaluator 응답을 `~/.claude/plugins/business-counselor/data/ideas/evaluated/` 에 저장한다.
+bc-idea-evaluator 응답을 `~/Documents/business-counselor/ideas/evaluated/` 에 저장한다.
 
 ### 파일명 규칙
 
 ```
-~/.claude/plugins/business-counselor/data/ideas/evaluated/{YYYY-MM-DD}_eval-{NNN}.md
+~/Documents/business-counselor/ideas/evaluated/{YYYY-MM-DD}_eval-{NNN}.md
 ```
 
 - `YYYY-MM-DD`: 오늘 날짜
@@ -114,7 +114,7 @@ bc-idea-evaluator가 출력한 전체 내용 (frontmatter + §1~§5 본문) 그�
 
 ```
 평가 완료.
-저장 위치: ~/.claude/plugins/business-counselor/data/ideas/evaluated/{YYYY-MM-DD}_eval-{NNN}.md
+저장 위치: ~/Documents/business-counselor/ideas/evaluated/{YYYY-MM-DD}_eval-{NNN}.md
 ID: eval-{YYYY-MM-DD}-{NNN}
 verdict: {go|iterate|no-go}  |  confidence: {N}
 

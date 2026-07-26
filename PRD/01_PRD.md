@@ -51,7 +51,7 @@
 **시나리오 1 — 첫 사용 (인터뷰)**
 1. 사용자가 Claude Code에서 `/business-counselor:start` 입력
 2. AI가 Mom Test 스타일 질문 던짐 ("지난 1년 동안 가장 시간을 많이 쓴 일은?")
-3. 사용자 답변 → `~/.claude/plugins/business-counselor/data/profile.md`에 누적
+3. 사용자 답변 → `~/Documents/business-counselor/profile.md`에 누적
 4. 30~40분 인터뷰 후 프로필 1차 완성
 
 **시나리오 2 — 아이디어 가져오기 (판독)**
@@ -166,7 +166,7 @@
 
 > 개발 시작 전에 결정 필요한 사항. v1.1 self-review로 일부 해소됨(✓).
 
-- [ ] **파일 저장 경로 확정**: 기본 `~/.claude/plugins/business-counselor/data/`. 사용자 환경(`C:\Users\PC\AppData\Roaming\claude-code\plugins\...`) 에서 작동 확인 필요
+- ✓ **파일 저장 경로 확정**: ~~기본 `~/.claude/plugins/business-counselor/data/`~~ → **`~/Documents/business-counselor/`로 최종 확정** (2026-07-27). 실 E2E에서 `~/.claude/` 전체가 AI 직접 쓰기를 막는 시스템 보호 대상임이 확인돼(하위 경로 무관), 원래 목적("플러그인 격리 + 사람이 직접 읽고 수정 가능")을 지키려면 `.claude/` 밖으로 옮기는 게 유일한 해결책이었음.
 - [ ] **인터뷰 카테고리 6종 최종 확정**: 생애사/자본/시간/역량/관심도메인/리스크성향 6개로 충분한지, 아니면 가족·건강 추가 필요한지
 - ✓ ~~**13관점 한국어 명칭 최종**~~ → **v1.2 페르소나 v5 13명 다관점 1:1 매칭 완료**. 영문 코드 폐기·전문가 시점 표 채택 (04_PROJECT_SPEC.md 참조).
 - ✓ **Pre-mortem 시나리오 개수**: ~~5개? 7개?~~ → **Phase 1=3개 OK, Phase 2부터 5개 강제** (v1.1 결정)

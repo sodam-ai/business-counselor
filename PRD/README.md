@@ -31,7 +31,7 @@
 
 핵심:
 - 명령: `/business-counselor:start`, `/business-counselor:resume`, `/business-counselor:evaluate`, `/business-counselor:list`, `/business-counselor:show`
-- 데이터: `~/.claude/plugins/business-counselor/data/`
+- 데이터: `~/Documents/business-counselor/`
 - 외부 호출 0
 
 ### Phase 2 (+1~2주, 추천)

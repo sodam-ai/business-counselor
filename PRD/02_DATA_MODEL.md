@@ -11,7 +11,7 @@
 ## 저장 위치
 
 ```
-~/.claude/plugins/business-counselor/data/
+~/Documents/business-counselor/
 ├── profile.md                    # 사용자 프로필 (1개, 누적 갱신)
 ├── sessions/
 │   └── 2026-05-07_001.md         # 인터뷰 1회당 1파일
@@ -216,6 +216,7 @@ disclaimer: |
 - **DB 없음**: Sqlite·Postgres 도입 시 마이그레이션·스키마 관리 부담. 마크다운+grep 충분
 - **frontmatter 표준**: YAML frontmatter는 GitHub·Obsidian·Notion·Cursor 모두 인식
 - **사람이 직접 읽고 수정 가능**: AI가 잘못 쓴 경우 사용자가 vim/메모장으로 수정
+- **저장 위치가 `~/Documents/business-counselor/`인 이유 (2026-07-27 변경)**: 원래는 `~/.claude/plugins/business-counselor/data/`였으나, 실 E2E에서 `~/.claude/` 전체를 "시스템 설정"으로 보고 AI 직접 쓰기를 막는 보호 장치가 발견됨(하위 경로를 바꿔도 소용없음, 직접 재현 확인). 위 "사람이 직접 읽고 수정 가능"이라는 목적 자체를 지키려면 `.claude/` 밖의 평범한 사용자 폴더로 옮기는 것이 유일한 방법이었음 — 목적 변경이 아니라 목적을 지키기 위한 이전.
 
 ### 보안 (페르소나 #11 변호사 + 데이터 안전)
 - **로컬 only**: profile.md(자산·이력) 외부 송신 0

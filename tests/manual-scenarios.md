@@ -10,7 +10,7 @@
 
 ### 전제
 - 플러그인 신규 설치 직후
-- `~/.claude/plugins/business-counselor/data/` 비어 있음
+- `~/Documents/business-counselor/` 비어 있음
 - 사용자가 처음 사용
 
 ### 절차
