@@ -4,7 +4,7 @@
 
 ---
 
-## [플러그인] 명령 네임스페이스 표기 정정 — 2026-07-27 (실 E2E에서 발견된 치명 결함)
+## [플러그인] v0.2.2 — 2026-07-27 (명령 네임스페이스 표기 정정 — 실 E2E에서 발견된 치명 결함)
 
 ### 배경
 새 세션에서 실제로 플러그인을 설치하고 명령을 실행하는 E2E 검증 중, `/counsel:start`·`/counsel:resume`는
@@ -30,12 +30,20 @@ frontmatter의 `name:` 필드로 임의의 네임스페이스(`counsel:`)를 지
 
 ### 검증 (Verified / 미검증)
 - 새 세션에서 `/business-counselor:counsel-start`·`/business-counselor:counsel-resume` 실제 동작 확인(정상)
-- `/business-counselor:counsel-evaluate`는 **아직 실제 실행으로 검증되지 않음** — 다음 새 세션에서 재확인 필요
-- 인터뷰(`/counsel:start`)는 생애사 질문 2개까지만 진행되고 사용자가 아직 미답변 — profile.md 미생성 상태
+- **후속 재검증(같은 날)**: `/business-counselor:counsel-evaluate`도 정상 인식·실행 확인 —
+  모호 입력 시 보강 질문 2개 정상 유도, 프로필 없을 때 확인 질문(`counsel-evaluate.md` 49~50행 스펙대로) 정상 출력.
+  단, 5단계 전체 출력(§1~§5 + verdict)까지는 아직 도달 못 함(사용자가 "프로필 없이 진행" 여부 미응답).
+- 인터뷰(`/business-counselor:counsel-start`)는 생애사 질문 2개까지만 진행되고 사용자가 아직 미답변 — profile.md 미생성 상태
+
+### 스키마/버전
+- schema_version 1.2 유지. 플러그인 0.2.1 → 0.2.2(patch) — 이 버전 상승 자체가 필요했던 이유:
+  `claude plugin update`는 버전 번호가 그대로면 최신 커밋을 다시 받아오지 않음(실측 확인) — 버전을
+  올리지 않으면 이미 설치한 사용자가 `update`만으로는 이 치명 결함 수정을 받을 수 없었음. 아래
+  v0.2.2(마켓플레이스 등록 개선) 항목과 함께 이번 버전에 포함.
 
 ---
 
-## [플러그인] 마켓플레이스 등록 방식 개선 — 2026-07-27
+## [플러그인] v0.2.2 — 2026-07-27 (마켓플레이스 등록 방식 개선)
 
 ### 배경
 `marketplace.json`의 `name`이 `"local-plugins"`로 설정돼 있어 README가 git clone 후 로컬 경로로만
