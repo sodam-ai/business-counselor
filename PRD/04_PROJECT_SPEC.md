@@ -125,7 +125,11 @@ business-counselor/
 
 ## 13명 다관점 (페르소나 v5 1:1 매칭) — v1.2
 
-> 출처: `~/.claude/projects/D--AI-Tool-CLI-LLM-Claude-Code/memory/user_persona_triggers.md` Section B.
+> 출처(2026-05-07 시점 스냅샷): 당시 `user_persona_triggers.md` Section B에서 13명 다관점 채택.
+> 해당 파일은 이후 sodam-persona 플러그인(persona_core.md + persona-triggers 스킬)으로 재구성되며 폐기됨
+> (2026-07-26 확인 — 구경로·현재 라이브 경로 모두에 파일 부재). 현재 라이브 페르소나 체계는 15명
+> (#14 회계·세무·#15 마케팅 추가)이지만, 본 스킬은 P0-1 채택 시점의 13명 구성을 **의도적으로 고정**
+> 유지한다(범위 확장 아님 — 13→15 동기화는 별도 결정 필요).
 > 사업 아이디어를 **13명 전문가 시점에서 1~5점 평가** + 한 줄 코멘트.
 > v1.0/v1.1의 영문 코드(O/B/I/...)는 페르소나 v5와 매칭되지 않아 v1.2에서 폐기·교체.
 

@@ -41,9 +41,15 @@ powershell -File tests\frontmatter-linter.ps1 $env:USERPROFILE\.claude\plugins\b
 
 ```powershell
 # 글로벌 환경 파일 해시 (1차/2차 동일해야 함)
+# 주의: 아래 memory 경로는 실행 시점의 실제 프로젝트 폴더로 매번 확인할 것
+#   (프로젝트 폴더명이 바뀌면 경로도 바뀜 — 예: C--Users-PC ≠ 예전 D--AI-Tool-CLI-LLM-Claude-Code.
+#    Get-ChildItem $env:APPDATA\claude-code\projects\ 로 현재 폴더명 먼저 확인)
 Get-FileHash $env:USERPROFILE\.claude\CLAUDE.md
 Get-FileHash $env:USERPROFILE\.claude\settings.json
-Get-ChildItem $env:USERPROFILE\.claude\projects\D--AI-Tool-CLI-LLM-Claude-Code\memory\*.md | Get-FileHash
+Get-FileHash $env:APPDATA\claude-code\settings.json -ErrorAction SilentlyContinue
+Get-ChildItem $env:APPDATA\claude-code\projects\C--Users-PC\memory\*.md | Get-FileHash
+# sodam-persona 플러그인 자체 데이터(user_persona*.md 원본)는 위 memory 폴더가 아니라
+# 플러그인 캐시 폴더에 있을 수 있음 — `claude plugin list`로 정확한 위치 재확인 후 해시
 ```
 
 - [ ] `~/.claude/CLAUDE.md` 변경 0

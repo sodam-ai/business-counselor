@@ -2,7 +2,7 @@
 name: 13-personas
 description: 페르소나 v5 13명 다관점 1~5점 사업 아이디어 평가 스킬
 version: "1.2"
-source: ~/.claude/projects/D--AI-Tool-CLI-LLM-Claude-Code/memory/user_persona_triggers.md Section B
+source: "2026-05-07 시점 스냅샷 (user_persona_triggers.md Section B, 현재 폐기 — sodam-persona 플러그인으로 재구성됨)"
 ---
 
 # 13명 다관점 평가 스킬 (페르소나 v5 1:1 매칭)
