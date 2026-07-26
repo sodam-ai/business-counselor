@@ -21,7 +21,7 @@ claude plugin install business-counselor@local-plugins
 
 → Restart Claude Code → type `/counsel:evaluate "my idea in one line"`. Done.
 
-New to this? Follow the **[Installation](#-installation)** and **[Guide for Non-Developers](#-guide-for-non-developers-even-if-youre-new-to-computers)** below step by step.
+New to this? Follow the **[Installation](#-installation)** and **[Usage](#beginner-guide)** below step by step.
 
 ---
 
@@ -120,6 +120,7 @@ claude plugin list
 
 ---
 
+<a id="beginner-guide"></a>
 ## 🚀 Usage (Quick First Run)
 
 ### Step 1 — (Optional) Interview about you
@@ -138,10 +139,11 @@ Answer ~12 questions (capital, time, skills, interests) in plain language (1–2
 
 Wrap the idea in quotes. If vague, AI asks 1–2 clarifying questions first. The result appears as a top **"At-a-Glance Summary" card**.
 
+<a id="mode-guide"></a>
 ### Default (card) / Full (detail) mode
 
 - **Default**: `/counsel:evaluate "idea"` → **summary card only** (fast, short).
-- **Full**: `/counsel:evaluate "idea" full` → **full §1–§5 detail** generated & saved.
+- **Full**: `/counsel:evaluate "idea" full` → **full §1–§5 detail** generated & saved. (see [Default/Full mode](#mode-guide) below)
 - Re-view saved full analysis: `/counsel:show <id>`
 
 ---

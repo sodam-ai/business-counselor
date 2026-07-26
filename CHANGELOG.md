@@ -4,6 +4,35 @@
 
 ---
 
+## [플러그인] v0.2.1 — 2026-07-26 (Phase 1 정합성 점검 — 종결 전 사전 수정)
+
+### 배경
+Phase 2 착수 전 게이트 점검(`03_PHASES.md` 전제 조건: 평가 5건+·profile.md 완성·시나리오 5건 PASS) 결과
+실측 평가 3건·profile.md 부재·시나리오 1/5(1건만 PASS) 확인. Phase 1 종결 E2E를 진행하기 전,
+결과 파일 규격에 영향을 주는 정합성 결함을 먼저 해소.
+
+### 수정 (Fixed)
+- **템플릿 필드 누락**: `templates/evaluation.template.md` frontmatter에 `mode` 필드 없음 →
+  `bc-idea-evaluator.md`가 요구하는 `mode: summary|full` 미기재 상태로 실데이터 3건 모두 저장됨.
+  템플릿에 `mode: null` 추가로 에이전트 규격과 일치.
+- **README 죽은 링크 4건 (한/영 각 2건)**: "왕초보 가이드"/"Guide for Non-Developers" 링크가
+  실존하지 않는 섹션을 가리킴 → 이미 비개발자 눈높이로 작성된 "사용 방법"/"Usage" 섹션으로 재연결.
+  GitHub의 한글+이모지 앵커 자동변환에 의존하지 않도록 `<a id="beginner-guide">`·`<a id="mode-guide">`
+  명시적 앵커 추가(§ 기본/전체 모드 링크도 동일 방식으로 고정).
+- **PRD/04 구조 문서 드리프트**: `counsel-help.md`(v0.2.0 추가)·`frontmatter-linter.ps1`·
+  `results-template.md`(v0.1.1 추가)가 프로젝트 구조 트리에 누락 → 실제 파일 목록과 동기화.
+
+### 스키마/버전
+- schema_version 1.2 유지(변경 없음). 플러그인 0.2.0 → 0.2.1 (patch — 신규 기능 없음, 정합성 수정만).
+  `plugin.json`·`.claude-plugin/marketplace.json` 버전 lockstep 갱신(v0.1.1 선례 준수).
+  `bc-idea-evaluator.md` 내부의 기존 "v0.2.1" 자기 참조(32행, 점진적 공개 규칙)와 이제 실제 버전 일치.
+
+### 미완료 (Pending — 다음 작업)
+- 시나리오 1(인터뷰)·2(resume)·5(환경 무결성) 실 E2E — **AI 대행 불가**(실사용자 인터뷰 답변·새 세션 필요).
+- Phase 2 착수는 위 3개 시나리오 PASS + 평가 5건 누적 + profile.md 완성 후.
+
+---
+
 ## [플러그인] v0.2.0 — 2026-06-15 (UX/사용성 고도화 — 핵심 경로 E2E 검증 후)
 
 ### 검증 (Verified)

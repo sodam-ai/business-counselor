@@ -44,6 +44,7 @@ business-counselor/
 │   ├── counsel-evaluate.md           # /counsel:evaluate
 │   ├── counsel-list.md               # /counsel:list
 │   ├── counsel-show.md               # /counsel:show
+│   ├── counsel-help.md               # /counsel:help (v0.2.0 추가)
 │   ├── counsel-recommend.md          # Phase 2
 │   ├── counsel-decide.md             # Phase 2
 │   ├── counsel-research.md           # Phase 3
@@ -70,7 +71,9 @@ business-counselor/
 │
 └── tests/
     ├── manual-scenarios.md           # 수동 테스트 5건+
-    └── frontmatter-linter.sh         # disclaimer 누락 검증 스크립트
+    ├── frontmatter-linter.sh         # disclaimer 누락 검증 스크립트 (Git Bash)
+    ├── frontmatter-linter.ps1        # 동일 검증, Windows 네이티브 (v0.1.1 추가)
+    └── results-template.md           # 시나리오 결과 기록 템플릿 (v0.1.1 추가, .gitignore 처리)
 ```
 
 ---
