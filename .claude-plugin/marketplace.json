@@ -10,7 +10,7 @@
       "name": "business-counselor",
       "source": "./",
       "description": "AI 사업 카운슬러 — 5단계 냉철 판독 플러그인",
-      "version": "0.5.0",
+      "version": "0.5.1",
       "author": {
         "name": "SoDam AI Studio"
       },

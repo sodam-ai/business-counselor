@@ -1,6 +1,6 @@
 # AI 사업 카운슬러 (business-counselor)
 
-> **Claude Code 플러그인** · v0.5.0 · Phase 1 MVP
+> **Claude Code 플러그인** · v0.5.1 · Phase 1 MVP
 > 사업 아이디어를 입력하면 AI가 13명 전문가 관점으로 **5단계 냉철 분석**을 즉시 제공합니다.
 
 **코딩을 전혀 몰라도 됩니다.** Claude Code 채팅창에 명령어만 입력하면 됩니다.
@@ -209,7 +209,7 @@ business-counselor/
 ├── CLAUDE.md            ← AI 행동 규칙
 ├── AGENTS.md            ← AI 에이전트 진입점
 ├── CHANGELOG.md         ← 변경 이력
-├── commands/            ← 명령어 6개 (start·resume·evaluate·list·show·help)
+├── commands/            ← 명령어 7개 (start·resume·edit·evaluate·list·show·help)
 ├── skills/              ← 분석 스킬 (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven)
 ├── agents/              ← bc-idea-evaluator (핵심 분석 엔진)
 ├── templates/           ← 출력 양식

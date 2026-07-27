@@ -1,6 +1,6 @@
 # AI Business Counselor (business-counselor)
 
-> **Claude Code Plugin** · v0.5.0 · Phase 1 MVP
+> **Claude Code Plugin** · v0.5.1 · Phase 1 MVP
 > Enter a business idea and AI instantly delivers a **5-stage cold analysis** from 13 expert perspectives.
 
 **No coding required.** Just type commands in the Claude Code chat window.
@@ -209,7 +209,7 @@ business-counselor/
 ├── CLAUDE.md            ← AI behavior rules
 ├── AGENTS.md            ← AI agent entry point
 ├── CHANGELOG.md         ← Change history
-├── commands/            ← 6 commands (start·resume·evaluate·list·show·help)
+├── commands/            ← 7 commands (start·resume·edit·evaluate·list·show·help)
 ├── skills/              ← analysis skills (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven)
 ├── agents/              ← bc-idea-evaluator (core analysis engine)
 ├── templates/           ← output templates
