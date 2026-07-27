@@ -1,4 +1,4 @@
-# 검증 결과 기록 템플릿 — Phase 1 시나리오 5건
+# 검증 결과 기록 템플릿 — Phase 1 시나리오 6건
 
 > 사용법: 이 파일을 `tests/results/2026-MM-DD_run-NNN.md`로 복사한 뒤 채운다.
 > (`tests/results/`는 .gitignore 처리됨 — 로컬 기록용)
@@ -6,7 +6,7 @@
 
 - 실행일:
 - 실행자:
-- 플러그인 버전: v0.4.0
+- 플러그인 버전: v0.5.0
 - 설치 경로: `~/.claude/plugins/business-counselor/`
 
 ---
@@ -32,6 +32,7 @@ powershell -File tests\frontmatter-linter.ps1 $env:USERPROFILE\Documents\busines
 | 3 | 모호 아이디어 | `/business-counselor:evaluate "AI로 뭔가 해보고 싶어"` | ☐ | 보강질문 1~2개, 자동가정 0 |
 | 4 | 명확 아이디어 5단계 (핵심) | `/business-counselor:evaluate "..."` | ☐ | 한눈 요약 카드·§1~§5 분리·§4 확률+완화책·verdict·면책·분량(깊이우선)·단일호출 |
 | 5 | 환경 무결성 | (아래 스냅샷) | ☐ | CLAUDE.md·MEMORY.md·persona·hook diff 0 |
+| 6 | 프로필 수정·삭제 (edit) | `/business-counselor:edit "..."` | ☐ | 확인 질문 필수·취소 정상동작·전체삭제 시 평가기록은 보존 |
 
 ---
 
@@ -62,8 +63,8 @@ Get-ChildItem $env:APPDATA\claude-code\projects\C--Users-PC\memory\*.md | Get-Fi
 
 ## 통합 판정
 
-- [ ] 시나리오 1~5 모두 PASS (5/5)
-- [ ] 5건 누적 외부 API 호출 0
-- [ ] 5건 누적 추가 서브에이전트 호출 0 (bc-idea-evaluator 1회/평가)
+- [ ] 시나리오 1~6 모두 PASS (6/6)
+- [ ] 6건 누적 외부 API 호출 0
+- [ ] 6건 누적 추가 서브에이전트 호출 0 (bc-idea-evaluator 1회/평가, edit는 서브에이전트 미사용)
 - 최종:  ☐ PASS  /  ☐ FAIL
 - 후속 조치:

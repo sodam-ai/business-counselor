@@ -1,6 +1,6 @@
 # AI Business Counselor (business-counselor)
 
-> **Claude Code Plugin** · v0.4.0 · Phase 1 MVP
+> **Claude Code Plugin** · v0.5.0 · Phase 1 MVP
 > Enter a business idea and AI instantly delivers a **5-stage cold analysis** from 13 expert perspectives.
 
 **No coding required.** Just type commands in the Claude Code chat window.
@@ -167,6 +167,7 @@ Wrap the idea in quotes. If vague, AI asks 1–2 clarifying questions first. The
 | `/business-counselor:help` | Usage, commands & glossary on one screen |
 | `/business-counselor:start` | Start the AI interview about you (first time) |
 | `/business-counselor:resume` | Continue the interview (fill missing info) |
+| `/business-counselor:edit "request"` | Change or clear an already-answered field, or delete the whole profile |
 | `/business-counselor:evaluate "idea"` | Analyze — default is the summary card |
 | `/business-counselor:evaluate "idea" full` | Analyze — full §1–§5 detail |
 | `/business-counselor:list` | List past analyses (id · verdict · confidence) |

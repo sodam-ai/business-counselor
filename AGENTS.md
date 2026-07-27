@@ -20,6 +20,7 @@
 |------|------|
 | `/business-counselor:start` | 자기 인터뷰 시작 — Mom Test 스타일 6카테고리 |
 | `/business-counselor:resume` | 인터뷰 이어서 — 부족 영역 우선 질문 |
+| `/business-counselor:edit "<요청>"` | 이미 답한 프로필 항목 수정·비우기, 전체 삭제(확인 필수) |
 | `/business-counselor:evaluate "<idea>"` | 아이디어 5단계 냉철 판독 (단일 호출) |
 | `/business-counselor:list` | 과거 평가 목록 |
 | `/business-counselor:show <id>` | 특정 평가 재조회 |

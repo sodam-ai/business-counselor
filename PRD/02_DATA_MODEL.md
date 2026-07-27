@@ -63,10 +63,14 @@
 | domain_interests | 관심 도메인 | ["AI 이미지/영상", "온톨로지", "바이브코딩"] | O |
 | risk_appetite | 리스크 성향 | conservative/balanced/aggressive | O |
 | past_business | 과거 사업 이력 | "없음" 또는 자유서술 | X |
-| profile_updates | 누적 갱신된 필드명 목록 (resume 갱신 이력) | ["capital_krw", "skills"] | O |
+| profile_updates | 누적 갱신된 필드명 목록 (resume "(추가)"·edit "(수정)"·"(비움)" 이력 포함) | ["capital_krw", "skills", "risk_appetite(수정)"] | O |
 | disclaimer | 면책 조항 | "본 프로필은 본인 작성. 외부 송신 0." | O |
 
-**body**: Mom Test 인터뷰 답변 누적 (자유서술, 시간순)
+**body**: Mom Test 인터뷰 답변 누적 (자유서술, 시간순) + `/business-counselor:edit`가 추가하는 "## 수정 이력" 섹션(v0.5.0)
+
+**추가/수정/제거 (v0.5.0)**: `id`·`schema_version`·`last_updated`·`profile_updates`·`disclaimer` 5개는 시스템 관리
+필드라 명령으로 직접 수정 대상이 아님. 나머지 사용자 응답 필드는 `/business-counselor:resume`(빈 값만 채움)과
+`/business-counselor:edit`(이미 채워진 값 변경·비움, 프로필 전체 삭제)로 나뉘어 전부 커버된다.
 
 ---
 

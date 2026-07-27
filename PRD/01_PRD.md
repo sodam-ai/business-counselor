@@ -77,6 +77,7 @@
 | 기능 | 설명 | 우선순위 | 복잡도 |
 |------|------|----------|--------|
 | A. 자기 인터뷰 & 프로필 누적 (`/business-counselor:start`, `/business-counselor:resume`) | Mom Test 스타일 질문으로 과거·현재·자산·역량·관심사·리스크 성향 누적 | P1 (MVP) | 간단 |
+| **프로필 수정·삭제** (`/business-counselor:edit`) | 이미 답한 항목 값 변경·비우기, 전체 삭제(확인 필수) — `resume`(빈 곳 채우기)과 역할 분리 | **P1 (MVP)** | 간단 |
 | C. 가져온 아이디어 냉철 판독 (`/business-counselor:evaluate`) | 5단계(13명 다관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론) 적용 후 점수·위험·go/no-go | P1 (MVP) | 보통 |
 | **단일 호출 적대 토론 (Bull/Bear/Judge)** | 별도 서브에이전트 분리 호출 0 — 한 응답 안에서 3관점 강제. API 절약 + 양측 증거 동시 평가 | **P1 (MVP)** | 보통 |
 | **Goal-Driven 성공 기준·일관성 점수** | 모든 verdict에 `success_criteria` + `consistency_score` frontmatter 자동 삽입 | **P1 (MVP)** | 간단 |

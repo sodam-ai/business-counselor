@@ -41,6 +41,7 @@ business-counselor/
 ├── commands/
 │   ├── start.md              # /business-counselor:start
 │   ├── resume.md             # /business-counselor:resume
+│   ├── edit.md                # /business-counselor:edit (v0.5.0 추가)
 │   ├── evaluate.md           # /business-counselor:evaluate
 │   ├── list.md               # /business-counselor:list
 │   ├── show.md               # /business-counselor:show
@@ -115,6 +116,7 @@ business-counselor/
 - [ ] Phase 진행 시 회귀 테스트 매트릭스(`tests/manual-scenarios.md`) 통과 후 다음 Phase
 - [ ] 환각 방지를 위해 출처 미상 시 "추정"·"미검증" 명시
 - [ ] 사용자가 모호한 입력 시 보강 질문 1~2개 (자동 가정 금지)
+- [x] **`/business-counselor:edit`의 프로필 전체 삭제는 확인 질문 후에만 실행 — 자동 즉시 삭제 금지 (v0.5.0)**
 - [ ] decisions.jsonl 새 줄 추가 시 timestamp ISO 8601 형식
 - [ ] frontmatter `schema_version` 명시 (변경 시 마이그레이션 작성. 현재 1.2)
 - [ ] **API 호출 최소화 — 한 명령 = 한 응답 원칙. `/business-counselor:evaluate`는 `bc-idea-evaluator` 1회 호출만으로 5단계 완성 (Phase 1·2 공통. Pre-mortem: Phase 1=3개, Phase 2+=5개)** (v1.1)
