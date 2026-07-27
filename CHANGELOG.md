@@ -4,6 +4,25 @@
 
 ---
 
+## [플러그인] v0.5.1 — 2026-07-27 (검증 중 발견 결함 3건 수정)
+
+### 배경
+`/business-counselor:edit` 추가 후 정합성 검증(린터·JSON·독립 에이전트 교차검증·실 profile.md 대조) 중 발견.
+
+### 수정 (Fixed)
+- **`risk_appetite` 문서-구현 불일치**: `02_DATA_MODEL.md`가 `conservative/balanced/aggressive`로
+  문서화했으나 실제 구현(`start.md`)과 실 데이터는 `low/medium/high` 사용 중 — 문서를 실제 구현에 맞춰 정정
+- **`capital_krw`/`monthly_income_krw` 단위 불일치**: 문서는 "만원 단위"(예: 5000)라 했으나 실제로는
+  원 단위 그대로 저장(예: 20000000, 필드명 `_krw`와 일치) — 문서 정정
+- **README/README_EN 파일 트리 주석**: `commands/` 옆 "6개" 표기가 `edit` 추가 후 갱신 안 됨 → 7개로 정정
+- `resume.md`에 "완료된 필드를 사용자가 자발적으로 정정하려 하면 `edit`로 안내" 규칙 추가(resume/edit 역할 경계 명확화)
+
+### 스키마/버전
+- schema_version 1.2 유지(실 데이터 형식 변경 없음, 문서만 실제와 일치시킴). 0.5.0 → 0.5.1(patch — 문서
+  정정 + 명령 파일 1개 소규모 규칙 추가, 신규 기능 없음).
+
+---
+
 ## [플러그인] v0.5.0 — 2026-07-27 (프로필 수정·삭제 명령 추가 — `/business-counselor:edit`)
 
 ### 배경
