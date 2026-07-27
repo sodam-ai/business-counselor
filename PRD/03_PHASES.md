@@ -17,6 +17,7 @@
 - [ ] AGENTS.md 미러 (플러그인 폴더 내, 사용자 홈/프로젝트 루트 설치 금지)
 - [ ] 명령 `/business-counselor:start` — 첫 인터뷰 시작 + profile.md 생성
 - [ ] 명령 `/business-counselor:resume` — 다음 세션 이어서 + 부족 영역 자동 우선 질문
+- [x] **명령 `/business-counselor:edit` — 이미 답한 항목 값 수정·비우기, 전체 삭제(확인 필수) (2026-07-27 추가)**
 - [ ] 명령 `/business-counselor:evaluate "<idea>"` — 가져온 아이디어 판독 (**5단계: 13명 다관점·Lean Canvas·Mom Test·Pre-mortem 3개·적대 토론**, 단일 호출)
 - [ ] 명령 `/business-counselor:list` — 과거 평가 목록
 - [ ] 명령 `/business-counselor:show <id>` — 특정 평가 재조회

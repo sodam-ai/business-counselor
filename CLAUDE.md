@@ -16,6 +16,7 @@
 - **멀티 에이전트 분리 X**: `bc-bull-advocate`·`bc-bear-critic`·`bc-devil-judge` 별도 에이전트 만들지 마
 - **추가 서브에이전트 호출 X**: `/business-counselor:evaluate` 실행 시 `bc-idea-evaluator` 1회만
 - **자동 가정 X**: 모호 입력 시 보강 질문 1~2개 후 진행 (자동 가정 금지)
+- **확인 없는 프로필 삭제 X**: `/business-counselor:edit`의 전체 삭제는 확인 질문 없이 즉시 실행 금지
 - **면책 없는 파일 생성 X**: 모든 출력 파일에 `disclaimer` frontmatter 자동 삽입 필수
 - **PII 외부 송신 X**: 이름·주소·자본금·생년월일 등 외부 전송 금지 (Phase 1·2)
 - **종목·금융상품 추천 X**: 자본시장법 회색지대 직접 답변 금지
