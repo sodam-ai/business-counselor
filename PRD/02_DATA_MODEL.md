@@ -56,12 +56,12 @@
 | birth_year | 출생연도 | 1990 | O |
 | residence | 거주지 (시·도 단위) | 서울 | O |
 | family_status | 가족 상태 | 미혼/기혼·자녀N | O |
-| capital_krw | 운용 가능 자본 (만원 단위) | 5000 | O |
-| monthly_income_krw | 월 수입 | 350 | O |
+| capital_krw | 운용 가능 자본 (원 단위 그대로, 필드명대로 KRW 정수) | 20000000 | O |
+| monthly_income_krw | 월 수입 (원 단위 그대로) | 3500000 | O |
 | time_available_hr | 주당 활용 가능 시간 | 20 | O |
 | skills | 보유 역량 (배열) | ["바이브코딩", "AI 도구 운영"] | O |
 | domain_interests | 관심 도메인 | ["AI 이미지/영상", "온톨로지", "바이브코딩"] | O |
-| risk_appetite | 리스크 성향 | conservative/balanced/aggressive | O |
+| risk_appetite | 리스크 성향 | low/medium/high | O |
 | past_business | 과거 사업 이력 | "없음" 또는 자유서술 | X |
 | profile_updates | 누적 갱신된 필드명 목록 (resume "(추가)"·edit "(수정)"·"(비움)" 이력 포함) | ["capital_krw", "skills", "risk_appetite(수정)"] | O |
 | disclaimer | 면책 조항 | "본 프로필은 본인 작성. 외부 송신 0." | O |
