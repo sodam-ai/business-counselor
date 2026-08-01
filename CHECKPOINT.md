@@ -1,7 +1,7 @@
 # CHECKPOINT — business-counselor
 
 > 마일스톤 + 검증 커맨드 + done-when. 세션이 바뀌어도 이 파일만 보면 "지금 뭘 해야 하는지" 알 수 있게 유지한다.
-> 최종 갱신: 2026-07-27 · 최신 확인 버전: v0.5.1 (main 브랜치, GitHub sodam-ai/business-counselor)
+> 최종 갱신: 2026-08-02 · 저장소 main: v0.5.2 · **실제 설치·구동본: v0.5.1** (GitHub sodam-ai/business-counselor)
 
 ---
 
@@ -9,25 +9,57 @@
 
 - 명령 7개 구현·설치·라이브 검증 완료: `start`·`resume`·`edit`·`evaluate`·`list`·`show`·`help`
 - 데이터 위치: `~/Documents/business-counselor/` (구 `~/.claude/plugins/.../data/`에서 이전, 이유: `.claude/` 전체가 AI 직접 쓰기 차단 대상이라는 게 실측으로 확인됨)
-- profile.md 실제 존재 확인(6개 카테고리 전부 답변됨), 평가 5건 누적 확인
+- profile.md 실제 존재 확인, 평가 5건 누적 확인
+  - 단, **본문 6개 카테고리는 전부 답변됐지만 frontmatter 4필드는 비어 있음**: `birth_year`·`residence`·`family_status`·`monthly_income_krw`
+  - 이 중 앞 3개는 `resume.md`의 카테고리-필드 매핑에 아예 없어 `resume`으로는 채워지지 않음(채우려면 `edit`). 저심각도, 기능 차단 없음
 - `tests/manual-scenarios.md` 시나리오 **6개 중 4개 실측 PASS**(1·3·4·5), **2개 미검증**(2·6)
 - `tests/results/` 폴더 자체가 아직 없음 — 정식 기록 0건(전부 채팅 로그로만 존재)
+
+### 실제 설치 경로 (2026-08-02 실측 — 기존 기재가 틀렸음)
+
+- 구동본: `%APPDATA%\claude-code\plugins\marketplaces\business-counselor-marketplace` (GitHub 클론, `business-counselor@business-counselor-marketplace: true`)
+- `~/.claude/plugins/business-counselor/`는 **설치본이 아님** — `plugin.json`이 없고 옛 `data/` 잔존물만 있음
+- 저장소(v0.5.2) ↔ 설치본(v0.5.1) 차이는 `git diff 5475fea..main` 결과 **README 4종·CHANGELOG·CHECKPOINT·버전 표기뿐**. `commands/`·`agents/`·`skills/` 변경 0건
+- → **저장소 수정은 push·플러그인 업데이트·Claude Code 완전 재시작을 거쳐야 실사용에 반영됨**
 
 ---
 
 ## M1: 시나리오 2·6 실사용 검증 (edit 명령 + resume 정상 경로)
 
+### ⚠️ M1은 실사용 데이터를 파괴하는 테스트다 — 사전 준비 필수
+
+5단계에서 **실제 `profile.md`가 삭제되고**, 7단계에서 **30~40분 인터뷰를 처음부터 다시** 하게 된다.
+6단계는 "평가 5건이 같이 지워질 수도 있다"를 전제로 한 검사다(아래 위험표 참조). 따라서:
+
+- [x] **사전 백업 완료** — `~/Documents/business-counselor_BACKUP_pre-M1_20260802\` (7개 파일 SHA-256 전량 일치 확인, 2026-08-02)
+- [ ] **M1 종료 후 복원**: 7단계에서 만든 새 프로필·세션을 확인만 하고, 백업 폴더 내용을 `~/Documents/business-counselor\`로 되돌린다 (원본 인터뷰 보존 → 재인터뷰 불필요)
+- [ ] **선행 조건**: `commands/start.md` 세션 채번 수정(v0.5.3)이 **설치본에 반영된 뒤** 실행할 것. 미반영 상태로 하루에 완주하면 2단계 `resume`이 만든 세션 파일을 7단계 `start`가 덮어쓴다
+
+### 검증 7단계
+
 - [ ] `/business-counselor:edit "관심도메인 지워줘"` 실행 → 확인 질문 뜨는지, "네" 답변 후에만 반영되는지
-- [ ] `/business-counselor:resume` 실행 → 방금 비운 항목 **1개만** 재질문하는지 (다른 5개 카테고리 재질문 0건이어야 통과)
+- [ ] `/business-counselor:resume` 실행 → **방금 비운 `domain_interests` + 기존에 비어 있던 `monthly_income_krw`만** 질문하는지
+      (⚠️ "1개만"이 아니다 — `resume.md`의 카테고리-필드 매핑상 **자본 → `capital_krw`+`monthly_income_krw`** 2필드이고 후자가 원래 null이라, 스펙대로 동작해도 2건을 묻는 것이 정상.
+       **판정 기준은 "이미 채워진 필드를 재질문하지 않는가" 0건**)
 - [ ] `/business-counselor:edit "프로필 전체 삭제해줘"` 실행 → 비가역 경고 + 확인 질문 뜨는지
 - [ ] 확인 질문에 **"아니요"로 취소** → `profile.md`가 그대로 남아있는지 확인
 - [ ] 다시 `/business-counselor:edit "프로필 전체 삭제해줘"` → 이번엔 **"네"** → 실제 삭제되는지
 - [ ] 삭제 후 `~/Documents/business-counselor/ideas/evaluated/*.md`(과거 평가 5건)는 그대로 남아있는지 확인
+- [ ] 삭제 후 `~/Documents/business-counselor/sessions/*.md`(과거 인터뷰 기록)도 그대로 남아있는지 확인
+      (⚠️ 아래 위험표가 `sessions/` 동반 삭제를 **치명**으로 분류했는데 기존 체크리스트에 이 항목이 빠져 있었음 — 2026-08-02 추가)
 - [ ] 삭제 후 `/business-counselor:start` 재실행 → 새 인터뷰가 정상 시작되는지 확인
 
-**검증**: 위 7단계를 **새로 연 Claude Code 세션**에서 사람이 직접 실행 (AI 대행 불가 — 실제 자연어 대화·확인 응답 필요)
-**done-when**: 7단계 전부 스펙대로 동작. 확인 질문 누락 0건, 잘못된 재질문 0건, 삭제 범위 오류(sessions·evaluated까지 같이 삭제됨) 0건
+**검증**: 위 8단계를 **새로 연 Claude Code 세션**에서 사람이 직접 실행 (AI 대행 불가 — 실제 자연어 대화·확인 응답 필요)
+**done-when**: 8단계 전부 스펙대로 동작. 확인 질문 누락 0건, **이미 채워진 필드 재질문 0건**, 삭제 범위 오류(`sessions/`·`ideas/evaluated/`까지 같이 삭제됨) 0건
 **상태**: pending
+
+### M1에서 나와도 버그가 아닌 것 (오판정 방지 — 2026-08-02 추가)
+
+| 현상 | 왜 정상인가 |
+|---|---|
+| `resume`이 "월 수입"도 함께 물음 | `monthly_income_krw`가 원래 null. 위 판정 기준 참조 |
+| 관심도메인을 비웠는데 본문 "## 5. 관심도메인" 답변이 그대로 보임 | `edit.md`는 frontmatter만 비우고 본문에는 "수정 이력" 한 줄만 추가하도록 설계됨 |
+| 홈 루트 `C:\Users\PC\AGENTS.md`가 존재함 | 내용 확인 결과 **Codex 전역 설정**이며 이 플러그인과 무관 (2026-08-02 실측). 가드레일 위반 아님 |
 
 ### M1 예상 위험/실패 시나리오 (사전 검토)
 | 위험 | 내용 | 실패 시 심각도 |

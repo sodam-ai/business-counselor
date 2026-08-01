@@ -63,7 +63,11 @@ profile_updates:
 
 ## 세션 파일 생성
 
-`~/Documents/business-counselor/sessions/{YYYY-MM-DD}_{NNN}.md` 생성 (NNN: 당일 순번):
+`~/Documents/business-counselor/sessions/{YYYY-MM-DD}_{NNN}.md` 생성:
+
+- `NNN`: 당일 순번 — **그날 `sessions/`의 기존 `{YYYY-MM-DD}_NNN.md` 중 가장 큰 번호 + 1** (그날 파일이 없으면 `001`). Glob로 당일 파일 조회 후 최대값 산출.
+  ⚠️ "파일 *수* + 1" 금지 — 중간 삭제 시 기존 세션 기록을 덮어씀 (`start`·`evaluate`와 동일 규칙).
+
 ```yaml
 ---
 session_id: session-{YYYY-MM-DD}-{NNN}

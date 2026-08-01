@@ -4,6 +4,56 @@
 
 ---
 
+## [플러그인] v0.5.3 — 2026-08-02 (세션 파일 덮어쓰기 버그 수정 + M1 검증 문서 정정)
+
+### 배경
+`CHECKPOINT.md`의 M1(시나리오 2·6 실사용 검증)을 실행하기 전, 7단계 절차를 실제 파일과 한 단계씩 대조 검토.
+그 결과 **M1을 그대로 완주하면 실사용 데이터가 손실되거나 정상 동작이 FAIL로 기록되는 요인**을 발견해 선제 수정.
+
+### 수정 (Fixed) — 치명
+
+- **`commands/start.md` 세션 파일명 `001` 하드코딩 → 같은 날 세션 기록 덮어쓰기**
+  - 증거: `start.md`는 `sessions/{YYYY-MM-DD}_001.md`로 **고정**, `resume.md`는 `{NNN}` 당일 순번,
+    `evaluate.md`는 "그날 최대 번호 +1" + "파일 *수* +1 금지" 경고까지 명시 — **세 명령의 규칙이 서로 달랐음**
+  - 실패 경로: M1 순서가 `resume`(2단계) → 프로필 삭제(5단계) → `start`(7단계)라, **하루에 완주하면
+    resume이 만든 `_001.md`를 start가 같은 이름으로 다시 만들어 덮어씀** = M1의 resume 검증 증거가 그 자리에서 소실
+  - 수정: `start.md`를 `evaluate.md`와 **동일한 채번 규칙**("그날 `sessions/` 최대 NNN +1, 없으면 001")으로 통일
+  - 함께 수정: `resume.md`의 "당일 순번"도 같은 문구로 명확화 — 세 명령 중 하나만 애매하게 남기면
+    이번 버그를 만든 것과 **똑같은 드리프트가 재발**하므로 (신규 규칙 발명 아님, 저장소 기존 문장 이식)
+
+### 수정 (Fixed) — 검증 문서 오류
+
+- **`CHECKPOINT.md` M1 done-when이 정상 동작을 FAIL로 판정** — "resume이 **1개만** 재질문해야 통과"라고 했으나,
+  실 `profile.md`의 `monthly_income_krw`가 null이고 `resume.md` 매핑이 **자본 → `capital_krw`+`monthly_income_krw`**
+  2필드라 스펙대로 동작해도 2건을 묻는 게 정상. 판정 기준을 **"이미 채워진 필드 재질문 0건"**으로 정정
+- **`CHECKPOINT.md`가 자기 위험표의 치명 항목을 검증하지 않음** — 위험표는 "`sessions/`나 `ideas/evaluated/`까지
+  같이 삭제됨 = 치명"이라 적었는데 체크리스트에는 `ideas/evaluated/`만 있었음 → `sessions/` 확인 항목 추가
+- **`CHECKPOINT.md`에 M1의 파괴적 성격이 미기재** — 5단계가 실사용 `profile.md`를 실제 삭제하고 7단계가
+  30~40분 재인터뷰를 요구하는데 그 비용·백업 절차가 없었음 → 사전 백업/사후 복원 절차를 M1 선행 조건으로 명시
+- **설치 경로 오기** — `results-template.md`·`CHECKPOINT.md`가 `~/.claude/plugins/business-counselor/`를 설치 경로로
+  기재. 실측 결과 그 폴더엔 `plugin.json`이 없고 옛 `data/` 잔존물만 있으며, **실제 구동본은
+  `%APPDATA%\claude-code\plugins\marketplaces\business-counselor-marketplace`**(GitHub 클론) → 정정
+- **명령 개수 "5개" 잔존** — v0.5.0에서 6→7개로 늘렸으나 `manual-scenarios.md` 시나리오 5와
+  `results-template.md`에 "5개"가 남아 **`edit`·`help` 2개가 네임스페이스 충돌 검사에서 누락**돼 있었음 → 7개로 정정
+
+### 추가 (Added)
+
+- `CHECKPOINT.md`에 "M1에서 나와도 버그가 아닌 것" 표 신설 — ① resume이 월 수입도 묻는 것 ② edit이 frontmatter만
+  비우고 본문 답변은 남기는 것 ③ 홈 루트 `AGENTS.md`(**내용 확인 결과 Codex 전역 설정, 이 플러그인과 무관** — 실측)
+- `manual-scenarios.md` 시나리오 6에 "같은 날 `resume`→`start` 연속 실행 시 세션 파일 미덮어쓰기" 검증 항목 추가
+  (본 릴리스 수정분의 회귀 방지)
+
+### 스키마/버전
+- schema_version 1.2 유지(데이터 구조·필드·경로 무변경). 플러그인 0.5.2 → 0.5.3(patch — 명령 프롬프트 버그 수정
+  + 검증 문서 정정, 신규 기능 0).
+
+### 미완료 (Pending)
+- **본 수정은 push → 플러그인 업데이트 → Claude Code 완전 재시작을 거쳐야 실사용에 반영된다.** 미반영 상태로
+  M1을 실행하면 덮어쓰기 버그가 그대로 재현됨
+- M1(시나리오 2·6) 자체는 여전히 사람이 새 세션에서 직접 실행해야 함 (AI 대행 불가)
+
+---
+
 ## [플러그인] v0.5.2 — 2026-07-27 (비개발자용 종합 README 신규 작성 — 한/영, md+html 4종)
 
 ### 배경

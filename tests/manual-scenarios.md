@@ -47,7 +47,7 @@
 4. 새 답변으로 profile.md 갱신
 
 ### 기대 결과 (PASS 조건)
-- [ ] AI가 이미 답한 카테고리 재질문 0건
+- [ ] AI가 **이미 값이 채워진** 필드를 재질문 0건 (⚠️ "질문 총 1개"가 아니라 "채워진 것 재질문 0건"이 기준 — null인 필드는 여러 개면 여러 개 묻는 게 정상, 2026-08-02 명확화)
 - [ ] 부족 영역 우선 질문 정확
 - [ ] profile.md `last_updated` 갱신
 - [ ] `profile_updates` 필드에 갱신된 필드명 기록
@@ -153,7 +153,8 @@
 - [ ] AGENTS.md가 사용자 홈 루트(`C:\Users\PC\AGENTS.md`)에 생성되지 않음
 - [ ] AGENTS.md가 임의 프로젝트 루트(`D:\AI_Dev_Work\...\AGENTS.md`)에 생성되지 않음
 - [ ] AGENTS.md가 플러그인 폴더 안에만 존재 (`~/.claude/plugins/business-counselor/AGENTS.md`)
-- [ ] 슬래시 명령 충돌 0 — `/business-counselor:*` 5개가 다른 플러그인 명령과 겹치지 않음
+- [ ] 슬래시 명령 충돌 0 — `/business-counselor:*` **7개**(`start`·`resume`·`edit`·`evaluate`·`list`·`show`·`help`)가 다른 플러그인 명령과 겹치지 않음
+      (2026-08-02 정정: v0.5.0에서 6→7개로 늘었는데 "5개" 표기가 남아 `edit`·`help` 2개가 충돌 검사에서 빠져 있었음)
 - [ ] 서브에이전트 이름 충돌 0 — `bc-idea-evaluator` 등이 기존 에이전트와 겹치지 않음
 - [ ] 페르소나 hook 정상 동작 (다음 세션에서 user_persona_min.md 자동 주입 정상)
 
@@ -186,7 +187,9 @@
 - [ ] 6번에서 "아니요" 응답 시 profile.md가 삭제되지 않고 그대로 남아있음 (취소 정상 동작)
 - [ ] 7번에서 "네" 응답 후에만 profile.md 실제 삭제
 - [ ] 삭제 후 `ideas/evaluated/*.md`(과거 평가 기록)는 그대로 남아있음 (함께 삭제되지 않음)
+- [ ] 삭제 후 `sessions/*.md`(과거 인터뷰 기록)도 그대로 남아있음 (2026-08-02 추가 — `edit.md`가 보존 대상으로 명시했는데 체크 항목에서 빠져 있었음)
 - [ ] 삭제 후 `/business-counselor:start` 재실행 시 새 인터뷰가 정상 시작됨
+- [ ] 같은 날 `resume` → `start`를 연속 실행해도 **세션 파일이 덮어써지지 않음**(`{YYYY-MM-DD}_002.md`로 채번, v0.5.3 수정분 검증)
 
 ### FAIL 시 액션
 - 확인 없이 즉시 반영/삭제 → `commands/edit.md`의 "확인 후에만 반영" 규칙 위반, 최우선 수정
