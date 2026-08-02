@@ -301,6 +301,25 @@ Shows all past analyses with id, verdict, and confidence.
 
 Use the real id shown in your `list` output. **Note**: the example id `eval-2026-07-27-001` in this document is a fictional placeholder for illustration — it does not actually exist, and typing it as-is will return "not found." Always copy an id that actually appears in your own `/business-counselor:list` output.
 
+### Step 5 — (Optional) Let AI recommend ideas first
+
+If you don't have an idea to bring and want the AI to propose some based on your profile:
+
+```
+/business-counselor:recommend 5
+```
+
+Recommends 5 ideas (default, adjustable 1–10) based on your profile, each with a Lean Canvas. You can
+deep-evaluate a favorite with `/business-counselor:evaluate`, or record a decision directly:
+
+```
+/business-counselor:decide idea-2026-08-02-001 go "starting with customer interviews"
+```
+
+`<id>` can be either `eval-*` (evaluation) or `idea-*` (recommendation), and `<action>` is one of
+`go`/`drop`/`iterate`/`defer`. Decisions accumulate append-only in `decisions.jsonl`, viewable later via
+`/business-counselor:show <id>`.
+
 ### If you get stuck
 
 ```
@@ -322,8 +341,10 @@ Shows all commands, the recommended flow, and a glossary on one screen. Feel fre
 | `/business-counselor:edit "request"` | Change or clear an already-answered field, or delete the whole profile (confirmation required) | Changes/deletes profile.md |
 | `/business-counselor:evaluate "idea"` | Analyze — default is the summary card | Creates an evaluation file |
 | `/business-counselor:evaluate "idea" full` | Analyze — full §1–§5 detail shown on screen | Creates an evaluation file |
-| `/business-counselor:list` | List past analyses (id · verdict · confidence) | No |
-| `/business-counselor:show <id>` | Re-view a specific full analysis | No |
+| `/business-counselor:recommend [N]` | Recommend N ideas (default 5) based on your profile, each with a Lean Canvas | Creates recommendation file(s) |
+| `/business-counselor:decide <id> <action>` | Record a decision (go/drop/iterate/defer) on an evaluation or recommendation | Appends to decisions.jsonl |
+| `/business-counselor:list` | List past analyses & recommendations (id · verdict · confidence) | No |
+| `/business-counselor:show <id>` | Re-view a specific analysis or recommendation | No |
 
 > Stuck? Type `/business-counselor:help` first.
 
@@ -377,9 +398,9 @@ business-counselor/
 ├── AGENTS.md            ← AI agent entry point
 ├── CHANGELOG.md         ← Full change history (all versions, detailed)
 ├── LICENSE              ← Full license text (Apache-2.0)
-├── commands/            ← 7 commands (start·resume·edit·evaluate·list·show·help)
-├── skills/               ← analysis skills (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven)
-├── agents/               ← bc-idea-evaluator (core analysis engine)
+├── commands/            ← 9 commands (start·resume·edit·evaluate·recommend·decide·list·show·help)
+├── skills/               ← analysis skills (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven·pre-mortem)
+├── agents/               ← bc-idea-evaluator (evaluate) · bc-idea-generator (recommend) — 2 core engines
 ├── templates/            ← output templates
 ├── tests/                ← linters & scenarios
 └── PRD/                  ← planning docs (01_PRD·02_DATA_MODEL·03_PHASES·04_PROJECT_SPEC)
@@ -390,7 +411,9 @@ business-counselor/
 ~/Documents/business-counselor/
 ├── profile.md            ← Your profile (interview result)
 ├── sessions/              ← Interview logs (one file per session)
-└── ideas/evaluated/       ← Idea analysis results (one file per evaluation)
+├── ideas/evaluated/       ← Idea analysis results (one file per evaluation)
+├── ideas/generated/       ← AI-recommended ideas (one file per idea)
+└── decisions.jsonl        ← go/drop/iterate/defer decision log (append-only)
 ```
 > `~` is your home folder. On Windows it's usually `C:\Users\(you)\Documents\business-counselor\`. On macOS it's `/Users/(you)/Documents/business-counselor/`. You can open this folder directly in File Explorer (Windows) or Finder (macOS) — every file is plain text (.md).
 
@@ -410,21 +433,22 @@ User (typing in the Claude Code chat window)
 Claude Code (host program — uses the user's own login and model calls)
         │  plugin routing: /business-counselor:<command filename>
         ▼
-commands/*.md  (7 command definitions — documents describing each command's behavior)
+commands/*.md  (9 command definitions — documents describing each command's behavior)
         │
         ├─ start·resume·edit  →  read/write profile.md directly
-        ├─ list·show           →  read saved evaluation files
-        └─ evaluate             →  delegated to the subagent below
+        ├─ list·show·decide    →  read/append saved evaluation, recommendation & decision files
+        ├─ evaluate             →  delegated to bc-idea-evaluator
+        └─ recommend            →  delegated to bc-idea-generator
                     │
                     ▼
-        agents/bc-idea-evaluator.md  (one isolated subagent)
-        Tool permissions: Read · Write · Glob **only**
+        agents/bc-idea-evaluator.md · bc-idea-generator.md  (2 isolated subagents, each single-call)
+        Tool permissions: both Read · Write · Glob **only**
         (No Task/WebFetch/WebSearch permission at all →
          neither external internet calls nor extra subagent calls
          are "blocked by policy" — the tools simply don't exist)
                     │
                     ▼
-        References 5 skills/*.md files — analysis methodology knowledge (13-personas, etc.)
+        References 6 skills/*.md files — analysis methodology knowledge (13-personas, pre-mortem, etc.)
                     │
                     ▼
         Saves results as text files (~/Documents/business-counselor/)
@@ -594,7 +618,7 @@ A. No. As explained in [Security / Data Flow](#security), Phase 1·2 (the curren
 A. No. This tool provides a **reference opinion**, not a guarantee of business success. For anything requiring legal, investment, or tax judgment, always consult a qualified professional. See [Legal / Copyright / License / Commercial Use](#legal) for details.
 
 **Q. Does the AI pick business ideas for me automatically?**
-A. Not yet. The current version (Phase 1) only **evaluates an idea you bring**. AI-driven idea recommendation based on your profile (`recommend`) is a planned future step (Phase 2) and is not part of this version.
+A. Yes. Use `/business-counselor:recommend` to get AI-picked ideas based on your profile (Phase 2, v0.6.0+). You can still bring your own idea with `/business-counselor:evaluate` — both paths are supported.
 
 **Q. Can I use this without internet?**
 A. No. Claude Code itself needs to talk to the AI model to generate any response, so an internet connection is required. That said, this plugin itself does not separately search external websites or transmit your data.

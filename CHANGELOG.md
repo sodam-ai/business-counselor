@@ -4,6 +4,34 @@
 
 ---
 
+## [플러그인] v0.6.1 — 2026-08-03 (PRD-vs-구현 전수 감사 + 문서 드리프트 수정)
+
+### 배경
+Phase 2 활성화(v0.6.0) 이후 "PRD대로 전부 구현됐는지" 감사 요청. 코드 자체(plugin.json·commands·agents)는
+전부 PRD와 일치했으나, **사용자 대면 문서 3종이 Phase 2를 전혀 반영하지 못한 상태**로 발견됨 — 실제로는
+이미 있는 기능을 "없다"고 안내하는 상태였음.
+
+### 수정 (Fixed) — 문서가 실제와 어긋남
+- **`commands/help.md`**: "명령 6개"만 안내, `recommend`·`decide` 누락 → 8개로 갱신, 추천 흐름·명령 목록에 추가
+- **`README.md`/`README_EN.md`** (5개 지점 동일):
+  - §7 사용법 가이드에 "AI가 먼저 아이디어 추천" 단계 자체가 없었음 → 추가
+  - §8 명령어 표에 `recommend`·`decide` 행 누락 → 추가
+  - §11 파일 트리 "명령어 7개"·에이전트 1개·데이터폴더 목록(evaluated만) → 9개·에이전트 2개·`ideas/generated/`+`decisions.jsonl` 추가로 정정
+  - §12 아키텍처 다이어그램 "서브에이전트 1개·스킬 5종" → 2개·6종 + recommend 라우팅 추가
+  - **§16 FAQ가 사실과 반대로 안내** — "AI가 알아서 추천 안 해줌 (아직 없음)"이라고 답하고 있었으나 v0.6.0부터 `recommend`가 이미 존재 → 정정
+- **`agents/bc-idea-generator.md`**: 출력 frontmatter에 `model_id`·`temperature`(재현성 필드) 누락 → 추가
+  (`bc-idea-evaluator.md`에는 있었으나 generator 작성 시 누락됨)
+- **`PRD/02_DATA_MODEL.md`**: GeneratedIdea 필드 표에도 위와 동일하게 `model_id`·`temperature` 추가.
+  단, `bull_arguments`·`debate_mode`·`success_criteria`·`consistency_score`는 추천(recommend)에 적대 토론·
+  verdict 단계가 없어 **의도적으로 계속 제외** — 197행의 "EvaluatedIdea·GeneratedIdea 한정"이라는 부정확한
+  요약 문구도 함께 정정
+
+### 확인됨 (변경 없음)
+- `plugin.json`·`commands/`·`agents/`·`skills/` 실제 코드는 PRD와 100% 일치(이번 감사로 새로 발견된 코드
+  결함 0건) — 어긋난 건 전부 사용자 대면 문서 쪽이었음
+
+---
+
 ## [플러그인] v0.6.0 — 2026-08-02 (Phase 2 활성화: 아이디어 추천·결정 기록)
 
 ### 배경
