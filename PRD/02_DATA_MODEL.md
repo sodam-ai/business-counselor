@@ -103,9 +103,13 @@ AI가 사용자 프로필 기반 추천한 사업 아이디어. Phase 2부터.
 | fit_score | 사용자 적합도 (0~100) | 78 | O |
 | persona_13_score | 13명 다관점 평균 (1~5, 페르소나 v5 1:1 매칭) | 3.7 | O |
 | lean_canvas | 9블록 | (구조화 객체) | O |
+| model_id | 재현성용 모델 식별자 | "claude-sonnet-4-6" | O |
+| temperature | 재현성용 샘플링 온도 | 0.2 | O |
 | disclaimer | 면책 | (공통) | O |
 
 **body**: Lean Canvas 1쪽(Problem·Customer Segments·UVP·Solution·Channels·Revenue Streams·Cost Structure·Key Metrics·Unfair Advantage)
+
+> **2026-08-03 정정**: `model_id`·`temperature`는 재현성 목적상 EvaluatedIdea뿐 아니라 GeneratedIdea에도 적용(어떤 AI 호출이든 모델·온도 기록은 보편적으로 유효 — 실제 코드 감사로 누락 발견 후 표·구현 양쪽 동기화). 반면 `bull_arguments`·`bear_arguments`·`judge_verdict`·`debate_mode`·`success_criteria`·`consistency_score`는 **GeneratedIdea에 의도적으로 제외** — 추천(`recommend`)은 적대 토론·verdict 판정 단계가 없어(§5 Phase 2 스펙 참조) 개념적으로 해당 없음. 위 197번째 줄의 "EvaluatedIdea·GeneratedIdea 한정" 표현은 부정확했던 요약 문구였음(정정).
 
 ---
 

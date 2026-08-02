@@ -8,7 +8,7 @@ version: "1.0"
 
 ## 목적
 
-처음 쓰는 사람이 **명령 6개·진행 흐름·전문용어**를 한 화면에서 파악하도록 돕는다.
+처음 쓰는 사람이 **명령 8개·진행 흐름·전문용어**를 한 화면에서 파악하도록 돕는다.
 인자 없이 호출되며, 아래 내용을 그대로(또는 최신 상태에 맞춰) 출력한다.
 
 ---
@@ -20,19 +20,23 @@ AI 사업 카운슬러 — 사용법 한 장
 
 [추천 흐름]
 1) /business-counselor:start                 나에 대한 인터뷰 (처음 한 번) → profile.md 생성
-2) /business-counselor:evaluate "아이디어"   아이디어 5단계 냉철 판독 → 결과 저장
-3) /business-counselor:list                  지금까지 판독 목록 보기
-4) /business-counselor:show <id>             특정 판독 다시 보기
+2) /business-counselor:recommend [N]         내 프로필 기반 아이디어 N개 추천 (기본 5개)
+   /business-counselor:evaluate "아이디어"   또는 직접 가져온 아이디어 5단계 냉철 판독 → 결과 저장
+3) /business-counselor:decide <id> <go|drop|iterate|defer>  결정 기록
+4) /business-counselor:list                  지금까지 판독·추천 목록 보기
+5) /business-counselor:show <id>             특정 판독·추천 다시 보기
    /business-counselor:resume                인터뷰 이어서(빠진 항목만 보완)
    /business-counselor:edit "..."            이미 답한 항목 수정·삭제, 프로필 전체 삭제
 
-[명령 6개]
+[명령 8개]
 - /business-counselor:start                  자기 인터뷰 시작 (Mom Test 6분야, 약 30~40분)
 - /business-counselor:resume                 빠진 항목만 추가 질문해 프로필 보완
 - /business-counselor:edit "바꾸고 싶은 내용"  이미 답한 항목 값 수정·비우기·프로필 전체 삭제
 - /business-counselor:evaluate "<아이디어>"  13관점·Lean Canvas·Mom Test·Pre-mortem·적대토론 단일 판독
-- /business-counselor:list                   판독 기록 목록 (id·판정·확신도)
-- /business-counselor:show <id>              해당 판독 전체 다시 보기
+- /business-counselor:recommend [N]          내 프로필 기반 아이디어 N개(기본 5) 추천, 각 Lean Canvas 포함
+- /business-counselor:decide <id> <action>   아이디어 결정(go/drop/iterate/defer) 기록
+- /business-counselor:list                   판독·추천 기록 목록 (id·판정·확신도)
+- /business-counselor:show <id>              해당 판독·추천 전체 다시 보기
 
 [용어 풀이 — 어려운 말 한 줄 설명]
 - 13명 다관점     개발·보안·법무·투자자 등 전문가 13명 시점으로 1~5점 평가

@@ -301,6 +301,24 @@ claude plugin install business-counselor@business-counselor-marketplace
 
 `list`에서 확인한 실제 id를 그대로 넣으면 해당 분석의 전체 §1~§5 내용을 다시 볼 수 있습니다. **주의**: 이 문서에 적힌 `eval-2026-07-27-001` 같은 예시는 설명용 가짜 id입니다 — 실제로 존재하는 id가 아니므로 그대로 입력하면 "찾을 수 없음" 결과가 나옵니다. 항상 내 `/business-counselor:list` 결과에 실제로 표시된 id를 복사해서 쓰세요.
 
+### 5단계 — (선택) AI가 먼저 아이디어 추천
+
+내가 아이디어를 안 가져오고, AI가 내 프로필 기반으로 먼저 제안해주길 원하면:
+
+```
+/business-counselor:recommend 5
+```
+
+프로필 기반 아이디어 5개(기본값, 1~10 조정 가능)를 각 Lean Canvas와 함께 추천합니다. 마음에 드는 걸
+`/business-counselor:evaluate`로 심층 판독하거나, 바로 결정을 기록할 수 있습니다:
+
+```
+/business-counselor:decide idea-2026-08-02-001 go "고객 인터뷰부터 시작"
+```
+
+`<id>`는 `eval-*`(판독) 또는 `idea-*`(추천) 모두 가능하고, `<action>`은 `go`/`drop`/`iterate`/`defer` 중 하나입니다.
+결정은 `decisions.jsonl`에 append-only로 쌓여 나중에 `/business-counselor:show <id>`로 이력을 다시 볼 수 있습니다.
+
 ### 막히면
 
 ```
@@ -322,8 +340,10 @@ claude plugin install business-counselor@business-counselor-marketplace
 | `/business-counselor:edit "요청"` | 이미 답한 정보 수정·비우기, 프로필 전체 삭제(확인 필수) | profile.md 변경/삭제 |
 | `/business-counselor:evaluate "아이디어"` | 아이디어 분석 — 기본은 한눈 요약 카드 | 평가 결과 파일 생성 |
 | `/business-counselor:evaluate "아이디어" 전체` | 아이디어 분석 — §1~§5 전체 상세 화면 표시 | 평가 결과 파일 생성 |
-| `/business-counselor:list` | 지금까지 분석한 목록 (id·판정·확신도) | 없음 |
-| `/business-counselor:show <id>` | 특정 분석 전체 다시 보기 | 없음 |
+| `/business-counselor:recommend [N]` | 내 프로필 기반 아이디어 N개(기본 5) 추천, 각 Lean Canvas 포함 | 추천 결과 파일 생성 |
+| `/business-counselor:decide <id> <action>` | 판독·추천 결과에 대한 결정(go/drop/iterate/defer) 기록 | decisions.jsonl 추가 |
+| `/business-counselor:list` | 지금까지 분석·추천한 목록 (id·판정·확신도) | 없음 |
+| `/business-counselor:show <id>` | 특정 분석·추천 전체 다시 보기 | 없음 |
 
 > 막히면 언제든 `/business-counselor:help` 를 먼저 입력하세요.
 
@@ -377,9 +397,9 @@ business-counselor/
 ├── AGENTS.md            ← AI 에이전트 진입점
 ├── CHANGELOG.md         ← 변경 이력 원문(모든 버전 상세)
 ├── LICENSE              ← 라이선스 전문(Apache-2.0)
-├── commands/            ← 명령어 7개 (start·resume·edit·evaluate·list·show·help)
-├── skills/               ← 분석 스킬 (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven)
-├── agents/               ← bc-idea-evaluator (핵심 분석 엔진)
+├── commands/            ← 명령어 9개 (start·resume·edit·evaluate·recommend·decide·list·show·help)
+├── skills/               ← 분석 스킬 (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven·pre-mortem)
+├── agents/               ← bc-idea-evaluator(판독)·bc-idea-generator(추천) — 핵심 분석 엔진 2개
 ├── templates/            ← 출력 양식
 ├── tests/                ← 린터·시나리오
 └── PRD/                  ← 기획 문서 (01_PRD·02_DATA_MODEL·03_PHASES·04_PROJECT_SPEC)
@@ -390,7 +410,9 @@ business-counselor/
 ~/Documents/business-counselor/
 ├── profile.md            ← 내 정보 (인터뷰 결과)
 ├── sessions/              ← 인터뷰 기록 (1회당 1파일)
-└── ideas/evaluated/       ← 아이디어 분석 결과 (1건당 1파일)
+├── ideas/evaluated/       ← 아이디어 분석 결과 (1건당 1파일)
+├── ideas/generated/       ← AI 추천 아이디어 (1건당 1파일)
+└── decisions.jsonl        ← go/drop/iterate/defer 결정 기록 (append-only)
 ```
 > `~` 는 사용자 홈 폴더입니다. Windows는 보통 `C:\Users\(내 이름)\Documents\business-counselor\` 입니다. macOS는 `/Users/(내 이름)/Documents/business-counselor/` 입니다. 파일 탐색기(Windows)나 Finder(macOS)로 직접 열어서 확인할 수 있습니다 — 전부 평범한 텍스트(.md) 파일입니다.
 
@@ -410,21 +432,22 @@ business-counselor/
 Claude Code (호스트 프로그램 — 사용자 자신의 로그인·모델 호출을 사용)
         │  플러그인 라우팅: /business-counselor:<명령 파일명>
         ▼
-commands/*.md  (명령 정의 7개 — 각 명령의 행동 규칙을 적은 문서)
+commands/*.md  (명령 정의 9개 — 각 명령의 행동 규칙을 적은 문서)
         │
         ├─ start·resume·edit  →  profile.md 직접 읽기/쓰기
-        ├─ list·show           →  저장된 평가 파일 읽기
-        └─ evaluate             →  아래 서브에이전트로 위임
+        ├─ list·show·decide    →  저장된 평가·추천·결정 파일 읽기/append
+        ├─ evaluate             →  bc-idea-evaluator로 위임
+        └─ recommend            →  bc-idea-generator로 위임
                     │
                     ▼
-        agents/bc-idea-evaluator.md  (격리된 서브에이전트 1개)
-        도구 권한: Read · Write · Glob **만** 허용
+        agents/bc-idea-evaluator.md · bc-idea-generator.md  (격리된 서브에이전트 2개, 각각 단일 호출)
+        도구 권한: 둘 다 Read · Write · Glob **만** 허용
         (Task·WebFetch·WebSearch 권한이 아예 없음 →
          외부 인터넷 호출도, 추가 서브에이전트 호출도
          "설정으로 막아놓은 것"이 아니라 애초에 도구가 없어 불가능)
                     │
                     ▼
-        skills/*.md 5종 참조 — 분석 방법론 지식(13-personas 등)
+        skills/*.md 6종 참조 — 분석 방법론 지식(13-personas·pre-mortem 등)
                     │
                     ▼
         결과를 텍스트 파일로 저장 (~/Documents/business-counselor/)
@@ -594,7 +617,7 @@ A. 아닙니다. [보안 · 데이터 흐름](#security)에서 설명한 대로,
 A. 아니요. 이 도구는 **참고용 의견**을 제공하는 것이며, 사업 성공을 보장하지 않습니다. 특히 법률·투자·세무와 관련된 판단이 필요한 경우 반드시 변호사·세무사·재무자문가 등 전문가와 상담하세요. 자세한 내용은 [법률 · 저작권 · 라이선스 · 상업적 용도](#legal)를 확인하세요.
 
 **Q. AI가 알아서 사업 아이디어를 골라주나요?**
-A. 아직은 아닙니다. 현재(Phase 1)는 **내가 가져온 아이디어를 평가**하는 기능만 있습니다. 프로필 기반으로 AI가 먼저 아이디어를 추천하는 기능(`recommend`)은 계획된 다음 단계(Phase 2)이며, 이 버전에는 포함돼 있지 않습니다.
+A. 네. `/business-counselor:recommend`로 내 프로필 기반 아이디어를 AI가 먼저 추천받을 수 있습니다(Phase 2, v0.6.0+). 직접 아이디어를 가져와 평가받고 싶으면 기존처럼 `/business-counselor:evaluate`를 쓰면 됩니다 — 두 방식 다 지원합니다.
 
 **Q. 인터넷이 없어도 쓸 수 있나요?**
 A. 아니요. Claude Code 자체가 AI 모델과 통신해야 응답을 만들 수 있으므로 인터넷 연결이 필요합니다. 다만 이 플러그인이 별도로 외부 웹사이트를 검색하거나 데이터를 전송하지는 않습니다.

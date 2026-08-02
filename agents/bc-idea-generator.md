@@ -62,6 +62,8 @@ persona_13_score: {N.N} # 13명 다관점 평균 (1~5)
 domain: "{도메인 태그}"
 stage: draft
 tags: [{태그1}, {태그2}]
+model_id: claude-sonnet-4-6   # frontmatter model: sonnet 으로 고정 실행 → 기록값과 실제 일치
+temperature: 0.2              # 선언적 메타(재현성 기록용). 런타임 샘플링에 강제 적용되진 않음
 disclaimer: |
   본 도구는 자본시장법 제6조 제5항(투자자문업) 및 제17조(인가요건) 적용을 받지 않는
   사업·창업 아이디어 의견 생성 도구이며, 특정 종목·금융상품·재무상품 추천이 아닙니다.
