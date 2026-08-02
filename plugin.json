@@ -1,6 +1,6 @@
 {
   "name": "business-counselor",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "AI 사업 카운슬러 — 사업 아이디어를 5단계(13명 다관점·Lean Canvas·Mom Test·Pre-mortem·적대 토론)로 냉철하게 판독",
   "author": {
     "name": "SoDam AI Studio"

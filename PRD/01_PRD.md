@@ -122,7 +122,7 @@
 - [ ] `/business-counselor:evaluate "<임의 아이디어>"` 입력 시 **5단계**(13관점·Lean Canvas·Mom Test·**Pre-mortem 3개**·적대 토론) 출력 정상
 - [ ] 적대 토론 출력 시 **Bull / Bear / Judge 3섹션 명시 분리** (단일 호출 내부)
 - [ ] 모든 출력 파일에 `disclaimer`·`success_criteria`·`consistency_score` 3개 frontmatter 필드 자동 삽입 (consistency_score는 Phase 1 placeholder OK)
-- [ ] 명령 5개 모두 `/business-counselor:*` 네임스페이스 (다른 플러그인과 충돌 0)
+- [ ] 명령 **7개**(`start`·`resume`·`edit`·`evaluate`·`list`·`show`·`help`) 모두 `/business-counselor:*` 네임스페이스 (다른 플러그인과 충돌 0) — (2026-08-02 정정: v0.2.0·v0.5.0에서 5→7개로 확장됐으나 본 완료 기준만 미동기화 상태였음)
 - [ ] 서브에이전트 1개(`bc-idea-evaluator`) 전용 (Phase 1은 단일 — bull/bear/judge 별도 분리 X). `bc-` prefix 강제
 - [ ] AGENTS.md는 플러그인 폴더 안에만 존재 (사용자 홈/프로젝트 루트에 새 AGENTS.md 생성 금지)
 - [ ] 기존 hook(SessionStart·UserPromptSubmit) 절대 수정·간섭 안 함

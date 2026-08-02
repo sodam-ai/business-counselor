@@ -6,8 +6,13 @@
 
 - 실행일:
 - 실행자:
-- 플러그인 버전: v0.5.1
-- 설치 경로: `~/.claude/plugins/business-counselor/`
+- 플러그인 버전(실행 시점 실측 기입):
+- 설치 경로(실행 시점 실측 기입):
+  ```powershell
+  # 실제 구동본 위치 — 아래가 정답 경로 (2026-08-02 실측으로 정정)
+  Get-Content "$env:APPDATA\claude-code\plugins\marketplaces\business-counselor-marketplace\plugin.json"
+  # 주의: ~/.claude/plugins/business-counselor/ 는 설치본이 아님 (plugin.json 없음, 옛 data/ 잔존물만)
+  ```
 
 ---
 
@@ -28,11 +33,11 @@ powershell -File tests\frontmatter-linter.ps1 $env:USERPROFILE\Documents\busines
 | # | 시나리오 | 명령 | PASS/FAIL | 메모 |
 |---|---------|------|-----------|------|
 | 1 | 첫 인터뷰 (Cold start) | `/business-counselor:start` | ☐ | profile.md·sessions/ 생성, frontmatter(disclaimer 포함) |
-| 2 | 이어서 (Resume) | `/business-counselor:resume` | ☐ | 재질문 0건, last_updated 갱신 |
+| 2 | 이어서 (Resume) | `/business-counselor:resume` | ☐ | **이미 채워진 필드** 재질문 0건(null 필드는 여러 개면 여러 개 질문이 정상), last_updated 갱신 |
 | 3 | 모호 아이디어 | `/business-counselor:evaluate "AI로 뭔가 해보고 싶어"` | ☐ | 보강질문 1~2개, 자동가정 0 |
 | 4 | 명확 아이디어 5단계 (핵심) | `/business-counselor:evaluate "..."` | ☐ | 한눈 요약 카드·§1~§5 분리·§4 확률+완화책·verdict·면책·분량(깊이우선)·단일호출 |
 | 5 | 환경 무결성 | (아래 스냅샷) | ☐ | CLAUDE.md·MEMORY.md·persona·hook diff 0 |
-| 6 | 프로필 수정·삭제 (edit) | `/business-counselor:edit "..."` | ☐ | 확인 질문 필수·취소 정상동작·전체삭제 시 평가기록은 보존 |
+| 6 | 프로필 수정·삭제 (edit) | `/business-counselor:edit "..."` | ☐ | 확인 질문 필수·취소 정상동작·전체삭제 시 **`ideas/evaluated/`+`sessions/` 둘 다** 보존·사전 백업 후 실행 |
 
 ---
 
@@ -57,7 +62,8 @@ Get-ChildItem $env:APPDATA\claude-code\projects\C--Users-PC\memory\*.md | Get-Fi
 - [ ] `MEMORY.md`·`user_persona*.md` 변경 0
 - [ ] `settings.json`(SessionStart·UserPromptSubmit hook) 변경 0
 - [ ] AGENTS.md가 홈/프로젝트 루트에 생성되지 않음 (플러그인 폴더 내에만)
-- [ ] `/business-counselor:*` 5개·`bc-idea-evaluator` 이름 충돌 0
+- [ ] `/business-counselor:*` **7개**(start·resume·edit·evaluate·list·show·help)·`bc-idea-evaluator` 이름 충돌 0
+- [ ] 홈 루트 `AGENTS.md`가 있어도 **내용이 이 플러그인 것인지 먼저 확인** — Codex 전역 설정이면 위반 아님 (2026-08-02 실측 확인)
 
 ---
 
