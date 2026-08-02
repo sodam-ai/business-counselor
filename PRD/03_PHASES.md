@@ -112,9 +112,12 @@ AI가 누적된 프로필을 기반으로 사용자에게 맞는 사업 아이�
 
 ### 기능
 - [ ] 명령 `/business-counselor:recommend [N=5]` — 누적 프로필 기반 N개 아이디어 + 각 Lean Canvas (단일 호출)
+  - **파일 채번 규칙 (2026-08-02 사전 명시 — Phase 1 `start.md` 버그 재발 방지)**: `ideas/generated/{YYYY-MM-DD}_idea-{NNN}.md`의 `NNN`은 **그날 `generated/`의 기존 파일 중 가장 큰 번호 + 1**(없으면 001). "파일 *수* + 1" 금지 — `evaluate.md`·`start.md`·`resume.md`와 동일 규칙.
 - [ ] 명령 `/business-counselor:decide <id> <go|drop|iterate|defer>` — 결정 기록 → decisions.jsonl
+  - **ID 분기 규칙 (2026-08-02 사전 명시)**: `id` 프리픽스가 `eval-*`면 `ideas/evaluated/`에서, `idea-*`면 `ideas/generated/`에서 검색. 매칭 파일 없으면 `show.md`와 동일하게 "해당 ID를 찾을 수 없습니다" 안내 후 중단.
 - [ ] 스킬 `pre-mortem/SKILL.md` — "1년 후 망했다면 이유 5가지" 시나리오 생성 (단일 호출 내 통합)
 - [ ] 서브에이전트 `bc-idea-generator` — 추천 격리 워커 (단일 — generator 내부에서도 분리 호출 X)
+  - **도구 제한 명시 (2026-08-02 사전 명시 — Phase 1 `bc-idea-evaluator` 패턴 이식)**: `tools: Read, Write, Glob`만 부여. `Task`(서브에이전트 분기)·`WebFetch`/`WebSearch`(외부 API) 도구를 원천 제외해, "단일 호출·외부 API 0" 정책을 프롬프트 약속이 아니라 런타임 불변식으로 강제.
 - [ ] 13명 다관점 점수 체계 정교화 (1~5점 가이드라인, 페르소나 v5 #11 변호사·#13 투자자 도메인 자동 강조 규칙 포함)
 - [ ] 과거 추천·판독 교차 참조 (`/business-counselor:show`에 관련 항목 표시)
 - [ ] **consistency_score 실측 — N=3회 자동 재평가 후 표준편차 기록 (v1.1 후속)**
@@ -133,6 +136,8 @@ AI가 누적된 프로필을 기반으로 사용자에게 맞는 사업 아이�
 - 5개 아이디어 추천 후 그 중 1개를 evaluate→decide까지 완전 진행
 - Pre-mortem 시나리오 5개 자동 출력
 - decisions.jsonl 5줄 이상 누적
+- **(2026-08-02 추가) 같은 날 `recommend`를 연속 2회 실행해도 `generated/` 파일이 덮어써지지 않음** (Phase 1 `start.md` 회귀 재발 방지 검증)
+- **(2026-08-02 추가) `agents/bc-idea-generator.md`의 `tools` 필드가 `Read, Write, Glob`뿐인지 확인** (Task·WebFetch·WebSearch 부재)
 
 ---
 
