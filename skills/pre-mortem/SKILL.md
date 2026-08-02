@@ -1,14 +1,12 @@
 ---
 name: pre-mortem
 description: "1년 후 망했다면 이유 5가지" Pre-mortem 시나리오 생성 스킬 (Phase 2 — 5개 강제)
-version: "0.1.0-draft"
+version: "1.0"
 ---
 
 # Pre-mortem 스킬 (Phase 2 — 5개)
 
-> ⚠️ **DRAFT — 미활성 상태**. `phase2-draft/skills/`에 있어 `plugin.json`에 연결되지 않았습니다.
 > Phase 1의 3개 버전은 `agents/bc-idea-evaluator.md` §4에 인라인으로 구현되어 있음(정식 스킬 파일 없이 본문 내장). Phase 2부터는 이 스킬 파일을 참조해 5개로 확장.
-> **활성화 조건**: `CHECKPOINT.md` M1·M2 완료 후에만 `skills/pre-mortem/`으로 이동·활성화할 것.
 
 ## 목적
 

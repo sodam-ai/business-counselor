@@ -1,13 +1,10 @@
 ---
 name: business-counselor:decide
 description: 아이디어 결정 기록 — go/drop/iterate/defer → decisions.jsonl (Phase 2)
-version: "0.1.0-draft"
+version: "1.0"
 ---
 
 # /business-counselor:decide
-
-> ⚠️ **DRAFT — 미활성 상태**. `phase2-draft/commands/`에 있어 `plugin.json`에 연결되지 않았습니다.
-> **활성화 조건**: `CHECKPOINT.md` M1·M2 완료 후에만 `commands/decide.md`로 이동·활성화할 것.
 
 ## 목적
 

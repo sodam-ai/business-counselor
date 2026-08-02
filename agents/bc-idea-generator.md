@@ -1,15 +1,12 @@
 ---
 name: bc-idea-generator
 description: 누적 프로필 기반 사업 아이디어 N개 생성 전문가 — 단일 호출로 각 아이디어의 Lean Canvas까지 완료 (Phase 2)
-version: "0.1.0-draft"
+version: "1.0"
 tools: Read, Write, Glob
 model: sonnet
 ---
 
-# bc-idea-generator: 사업 아이디어 추천 에이전트 (Phase 2 — DRAFT)
-
-> ⚠️ **DRAFT — 미활성 상태**. `phase2-draft/agents/`에 있어 `plugin.json`의 `agents` 배열(`["./agents/bc-idea-evaluator.md"]`)에 등록되지 않았습니다. `agents`는 화이트리스트 방식이라 이 파일은 위치와 무관하게 명시적으로 추가하기 전까지 로드되지 않습니다.
-> **활성화 방법** (Phase 1 게이트 M1·M2 완료 후에만): (1) 이 파일을 `agents/bc-idea-generator.md`로 이동 (2) `plugin.json`의 `agents` 배열에 `"./agents/bc-idea-generator.md"` 추가.
+# bc-idea-generator: 사업 아이디어 추천 에이전트 (Phase 2)
 
 ## 정책 (single-call) 및 도구 경계
 

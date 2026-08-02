@@ -4,6 +4,32 @@
 
 ---
 
+## [플러그인] v0.6.0 — 2026-08-02 (Phase 2 활성화: 아이디어 추천·결정 기록)
+
+### 배경
+`CHECKPOINT.md` M1(edit·resume 실사용 검증)을 사용자가 새 세션에서 직접 실행해 통과 확인(총평 기준, 원문:
+"이미 사용 해봤음. 그래서 내가 다음 phase로 넘어가려는거야"). M1·M2가 done으로 갱신되어 Phase 1 완료 전제
+조건이 충족됐고, 이전 라운드에 안전하게 격리 준비해둔 `phase2-draft/`를 실제 위치로 활성화.
+
+### 추가 (Added)
+
+- **`/business-counselor:recommend [N]`** — 누적 프로필 기반 사업 아이디어 N개(기본 5, 최대 10) 추천, 각각
+  Lean Canvas 포함. `bc-idea-generator` 서브에이전트를 단일 호출로만 사용(Phase 1과 동일한 안전 패턴)
+- **`/business-counselor:decide <id> <go|drop|iterate|defer> ["메모"]`** — 아이디어 결정을 `decisions.jsonl`에
+  append-only로 기록. `eval-*`/`idea-*` ID 접두사로 `ideas/evaluated/`·`ideas/generated/` 자동 분기
+- **`skills/pre-mortem/SKILL.md`** — Pre-mortem 시나리오를 Phase 1의 인라인 3개에서 5개로 확장하는 정식 스킬
+- **`agents/bc-idea-generator.md`** — 프로필 기반 아이디어 생성 전문 에이전트. `bc-idea-evaluator`와 동일하게
+  `tools: Read, Write, Glob`만 부여해 서브에이전트 분기·외부 API 호출을 런타임 수준에서 차단
+- `plugin.json`의 `agents` 화이트리스트 배열에 `bc-idea-generator` 추가(자동 등록 아님 — 명시적 등록 필요)
+
+### 알려진 제약 (Known limitation)
+
+- 위 4개 기능은 **정적 검증(JSON 유효성·frontmatter 린터·시크릿 스캔)만 통과**했고, 실제 자연어 대화로
+  실행하는 실사용 검증은 아직 미실행 — AI가 대행할 수 없는 영역(`tests/manual-scenarios.md`의
+  "Phase 2 진입 전 회귀 매트릭스" 참조)
+
+---
+
 ## [플러그인] v0.5.3 — 2026-08-02 (세션 파일 덮어쓰기 버그 수정 + M1 검증 문서 정정)
 
 ### 배경
