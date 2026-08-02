@@ -1,7 +1,7 @@
 # CHECKPOINT — business-counselor
 
 > 마일스톤 + 검증 커맨드 + done-when. 세션이 바뀌어도 이 파일만 보면 "지금 뭘 해야 하는지" 알 수 있게 유지한다.
-> 최종 갱신: 2026-08-02 · v0.6.0 · Phase 2 파일 활성화 완료, 실사용 검증 대기
+> 최종 갱신: 2026-08-02 · v0.6.0 · Phase 2 파일 활성화 완료(실사용 검증 대기) · Phase 3 파일 작성 완료(활성화 보류)
 
 ---
 
@@ -107,6 +107,32 @@ PRD(`03_PHASES.md`)의 명시적 전제 조건: "Phase 1이 안정적으로 동�
 
 ---
 
+## M4: Phase 3 준비 (파일 작성 완료, 활성화는 보류)
+
+### 상태: 파일 작성 done (2026-08-02) / 활성화 blocked
+
+`phase3-draft/` 4개 파일(`research`·`followup`·`stats` 명령 + `bc-market-researcher` 에이전트) 작성 완료.
+`plugin.json` 미참조 확인(격리 유지). **Phase 2와 달리 곧바로 활성화하지 않음** — 아래 근거:
+
+- `ideas/generated/` 0건, `decisions.jsonl` 없음(2026-08-02 실측) — Phase 2가 아직 한 번도 실사용되지 않음
+- Phase 2 자체가 방금 병합되어 사용자 설치본에 아직 반영 전(재설치·재시작 필요) — 물리적으로 사용 불가능한 시점
+- PRD 자체의 Phase 3 착수 조건("Phase 1+2 10건 이상 누적", "시나리오 10건 PASS") 미충족
+- Phase 3는 이 플러그인 최초로 외부 API(`WebSearch`)를 여는 단계라 PII·비용 리스크가 Phase 1·2와 다른 등급
+
+### 활성화 조건 (`phase3-draft/README.md` 참조)
+
+1. Phase 2 실사용 증거 확인 (`ideas/generated/`·`decisions.jsonl`에 실제 기록 발생)
+2. PRD 착수 조건(10건 누적, 시나리오 10건 PASS) 충족
+3. `bc-market-researcher.md`의 "활성화 전 필수 검증" 체크리스트 사람이 직접 확인
+4. 파일 이동 + `plugin.json` 등록 + 회귀 매트릭스 실행
+
+### 이번 라운드에 함께 확정한 PRD 미결 항목
+
+- `PRD/03_PHASES.md`: 월 외부 호출 한도 **100회 확정**(하드 차단)
+- `PRD/02_DATA_MODEL.md`: `research/*.md` TTL 만료 시 **자동 삭제 확정**(archived/ 이동 없음)
+
+---
+
 ## 참고 — 알려진 저심각도 이슈 (M1~M3와 무관, 별도 처리 대기)
 
 이 항목들은 기능을 막지 않는 낮은 심각도로 이미 확인됐고, 새 증거 없이는 우선순위를 올리지 않는다:
@@ -128,3 +154,4 @@ PRD(`03_PHASES.md`)의 명시적 전제 조건: "Phase 1이 안정적으로 동�
 3. 사용자가 "다음 phase로 넘어가자"라고 말하면 항상 본인이 이미 테스트 완료했다는 뜻으로 간주하고 게이트로 막지 않는다
    (`~/.claude/projects/*/memory/feedback_phase-transition-implies-user-tested.md` 참조)
 4. 다음 실질 남은 일: `/business-counselor:recommend`·`/business-counselor:decide`를 사용자가 새 세션에서 직접 실행 → 결과 알려주면 이 문서의 M3 "미실행" 항목 갱신
+5. Phase 3(`phase3-draft/`)는 파일까지만 작성됨 — M4 활성화 조건 충족 전까지는 "다음 phase로 넘어가자"가 와도 파일 이동·plugin.json 등록은 보류(외부 API 첫 도입이라 Phase 2보다 검증 기준이 높음)

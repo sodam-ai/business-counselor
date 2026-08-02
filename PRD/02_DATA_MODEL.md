@@ -239,7 +239,10 @@ disclaimer: |
 
 - ✓ ~~`profile_snapshot_hash` 알고리즘: SHA-256 전체? 또는 핵심 필드만?~~ → **핵심 필드(사용자 응답 10개)만 SHA-256 — 04_PROJECT_SPEC.md §NEEDS CLARIFICATION 참조 (2026-08-02 결정)**
 - [ ] `decisions.jsonl` 회전(rotation) 정책: 무한 누적? N개 후 archive/?
-- [ ] `research/*.md` TTL 만료 시 자동 삭제? 또는 archived/ 이동?
+- ✓ `research/*.md` TTL 만료 시 자동 삭제? 또는 archived/ 이동? → **자동 삭제로 확정 (2026-08-02)**.
+  근거: 시장 리서치는 시의성이 핵심이라 오래된 캐시를 보관해도 재사용 가치가 낮고, 오히려 stale 데이터를
+  실수로 참조할 위험만 남음. 과거 평가 이력(`ideas/evaluated/`)과 달리 감사·추적 목적이 없어 archived/
+  이동의 실익이 없음. 필요 시 재검색하면 최신 데이터로 재생성됨(비용은 월 100회 한도 내에서 감당 가능한 수준)
 - [ ] 다국어 필드 지원 여부: 모든 한국어로 진행? 영문 키워드 일부 허용?
 - [ ] 인터뷰 카테고리 6종(생애사·자본·시간·역량·관심도메인·리스크성향) 외 가족·건강·도덕적 신념 추가 여부
 - [ ] **v1.1 신규**: `bull_arguments`·`bear_arguments` 최소·최대 항목 수 (Bull 3개? Bear 5개?)
