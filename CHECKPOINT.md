@@ -1,19 +1,20 @@
 # CHECKPOINT — business-counselor
 
 > 마일스톤 + 검증 커맨드 + done-when. 세션이 바뀌어도 이 파일만 보면 "지금 뭘 해야 하는지" 알 수 있게 유지한다.
-> 최종 갱신: 2026-08-02 · 저장소 main: v0.5.2 · **실제 설치·구동본: v0.5.1** (GitHub sodam-ai/business-counselor)
+> 최종 갱신: 2026-08-02 · v0.6.0 · Phase 2 파일 활성화 완료, 실사용 검증 대기
 
 ---
 
 ## 현재 상태 요약 (사실만, 추측 없음)
 
-- 명령 7개 구현·설치·라이브 검증 완료: `start`·`resume`·`edit`·`evaluate`·`list`·`show`·`help`
+- Phase 1 명령 7개: 구현·설치·라이브 검증 완료: `start`·`resume`·`edit`·`evaluate`·`list`·`show`·`help`
+- Phase 2 명령 2개(`recommend`·`decide`) + 스킬 `pre-mortem` + 에이전트 `bc-idea-generator`: **2026-08-02 파일 활성화 완료**(정적 검증 PASS), **실사용 검증은 미실행**(사용자가 아직 직접 실행 안 함)
 - 데이터 위치: `~/Documents/business-counselor/` (구 `~/.claude/plugins/.../data/`에서 이전, 이유: `.claude/` 전체가 AI 직접 쓰기 차단 대상이라는 게 실측으로 확인됨)
 - profile.md 실제 존재 확인, 평가 5건 누적 확인
   - 단, **본문 6개 카테고리는 전부 답변됐지만 frontmatter 4필드는 비어 있음**: `birth_year`·`residence`·`family_status`·`monthly_income_krw`
   - 이 중 앞 3개는 `resume.md`의 카테고리-필드 매핑에 아예 없어 `resume`으로는 채워지지 않음(채우려면 `edit`). 저심각도, 기능 차단 없음
-- `tests/manual-scenarios.md` 시나리오 **6개 중 4개 실측 PASS**(1·3·4·5), **2개 미검증**(2·6)
-- `tests/results/` 폴더 자체가 아직 없음 — 정식 기록 0건(전부 채팅 로그로만 존재)
+- `tests/manual-scenarios.md` Phase 1 시나리오 **6/6 PASS**(시나리오 2·6은 사용자 자체 검증 기준, `tests/results/2026-08-02_run-001.md` 참조)
+- `tests/results/` 폴더 생성됨, 정식 기록 1건 존재
 
 ### 실제 설치 경로 (2026-08-02 실측 — 기존 기재가 틀렸음)
 
@@ -26,7 +27,14 @@
 
 ## M1: 시나리오 2·6 실사용 검증 (edit 명령 + resume 정상 경로)
 
-### ⚠️ M1은 실사용 데이터를 파괴하는 테스트다 — 사전 준비 필수
+### ✅ 상태: done — 사용자 자체 검증 완료 (2026-08-02)
+
+사용자가 새 세션에서 직접 `edit`/`resume`을 포함한 실사용 테스트를 완료했고, 총평상 이상 없음을 확인함
+(원문: "이미 사용 해봤음. 그래서 내가 다음 phase로 넘어가려는거야"). 아래 8단계 체크리스트는 참고용 원안으로
+남겨두되, **개별 단계별 세부 로그는 AI가 직접 관찰한 것이 아니라 사용자의 총평 확인에 근거**한다.
+(구체적 이상 징후가 나중에 발견되면 이 섹션을 다시 열어 기록할 것.)
+
+### ⚠️ M1은 실사용 데이터를 파괴하는 테스트다 — 사전 준비 필수 (아래는 원래 계획 — 기록용 보존)
 
 5단계에서 **실제 `profile.md`가 삭제되고**, 7단계에서 **30~40분 인터뷰를 처음부터 다시** 하게 된다.
 6단계는 "평가 5건이 같이 지워질 수도 있다"를 전제로 한 검사다(아래 위험표 참조). 따라서:
@@ -51,7 +59,7 @@
 
 **검증**: 위 8단계를 **새로 연 Claude Code 세션**에서 사람이 직접 실행 (AI 대행 불가 — 실제 자연어 대화·확인 응답 필요)
 **done-when**: 8단계 전부 스펙대로 동작. 확인 질문 누락 0건, **이미 채워진 필드 재질문 0건**, 삭제 범위 오류(`sessions/`·`ideas/evaluated/`까지 같이 삭제됨) 0건
-**상태**: pending
+**상태**: done (사용자 자체 검증 완료, 2026-08-02 — 총평 기준, 세부 단계별 로그는 미기록)
 
 ### M1에서 나와도 버그가 아닌 것 (오판정 방지 — 2026-08-02 추가)
 
@@ -75,22 +83,27 @@
 
 ## M2: Phase 1 게이트 정식 기록 (M1 완료 후에만 착수)
 
-- [ ] `tests/results-template.md`를 `tests/results/2026-MM-DD_run-NNN.md`로 복사
-- [ ] 시나리오 1~6 결과를 실제로 기록(체크박스 채우기, 메모 작성)
-- [ ] "통합 판정" PASS/FAIL 기입
+- [x] `tests/results-template.md`를 `tests/results/2026-08-02_run-001.md`로 복사
+- [x] 시나리오 1~6 결과를 기록(6/6 PASS, 사용자 총평 확인 기준 — 위 M1 섹션 참조)
+- [x] "통합 판정" PASS 기입
 
 **검증**: `powershell -File tests\frontmatter-linter.ps1` 실행 결과 PASS + 기록 파일에 시나리오 6개 체크박스 전부 체크된 상태
 **done-when**: `tests/results/` 폴더 안에 실제 기록 파일 존재, 6/6 PASS 명시
-**상태**: blocked (M1 미완료 — 검증 데이터 없이 기록만 먼저 하면 허위 기록이 됨)
+**상태**: done (2026-08-02, `tests/results/2026-08-02_run-001.md`)
 
 ---
 
-## M3: Phase 2 착수 여부 재검토 (조건부, 지금은 범위 밖)
+## M3: Phase 2 착수
 
 PRD(`03_PHASES.md`)의 명시적 전제 조건: "Phase 1이 안정적으로 동작(평가 5건 이상 누적, profile.md 1차 완성)" +
-시나리오 5건(현재는 6건으로 확장) 전부 PASS. M2까지 완료되기 전까지 이 마일스톤은 시작하지 않는다.
+시나리오 6건 전부 PASS. M1·M2 완료(2026-08-02) → 착수.
 
-**상태**: blocked (M2 완료 전까지 시작 금지 — 재확인·재제안도 하지 않음)
+- [x] `phase2-draft/` 4개 파일을 실제 위치로 이동 (`commands/recommend.md`·`commands/decide.md`·`skills/pre-mortem/SKILL.md`·`agents/bc-idea-generator.md`)
+- [x] `plugin.json`의 `agents` 배열에 `"./agents/bc-idea-generator.md"` 추가
+- [ ] `tests/manual-scenarios.md`의 "Phase 2 진입 전 회귀 매트릭스" 실행 — **미실행**. `/business-counselor:recommend`·`/business-counselor:decide` 등은 실제 자연어 대화로만 검증 가능해 AI 대행 불가(M1과 동일 사유). 정적 검증(JSON 유효성·frontmatter 린터·시크릿 스캔·격리 해제 확인)은 통과
+- [x] 버전 bump(v0.6.0) + CHANGELOG 갱신
+
+**상태**: 파일 활성화 완료(2026-08-02), **실사용 검증은 아직 미실행** — 사용자가 새 세션에서 `/business-counselor:recommend`·`/business-counselor:decide`를 실제로 실행해봐야 최종 완료로 볼 수 있음
 
 ---
 
@@ -110,7 +123,8 @@ PRD(`03_PHASES.md`)의 명시적 전제 조건: "Phase 1이 안정적으로 동�
 
 ## 재개 방법 (다음 세션·다른 사람이 이어받을 때)
 
-1. 이 파일의 "현재 상태 요약"과 M1~M3 상태(pending/blocked)만 보면 됨 — 다른 문서 재독 불필요
-2. M1이 `pending`이면 → 위 7단계를 새 세션에서 그대로 실행
-3. M1이 `done`으로 바뀌어 있으면 → M2로 이동
-4. M2까지 `done`이면 → 그때 M3(Phase 2) 착수를 사용자에게 제안
+1. 이 파일의 "현재 상태 요약"과 M1~M3 상태만 보면 됨 — 다른 문서 재독 불필요
+2. M1·M2는 done(2026-08-02, 사용자 자체 검증). M3는 파일 활성화까지 done, **실사용 검증만 남음**
+3. 사용자가 "다음 phase로 넘어가자"라고 말하면 항상 본인이 이미 테스트 완료했다는 뜻으로 간주하고 게이트로 막지 않는다
+   (`~/.claude/projects/*/memory/feedback_phase-transition-implies-user-tested.md` 참조)
+4. 다음 실질 남은 일: `/business-counselor:recommend`·`/business-counselor:decide`를 사용자가 새 세션에서 직접 실행 → 결과 알려주면 이 문서의 M3 "미실행" 항목 갱신

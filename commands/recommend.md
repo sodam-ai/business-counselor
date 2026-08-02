@@ -1,13 +1,10 @@
 ---
 name: business-counselor:recommend
 description: 누적 프로필 기반 사업 아이디어 N개 추천 — 각 Lean Canvas 포함 (단일 호출, Phase 2)
-version: "0.1.0-draft"
+version: "1.0"
 ---
 
 # /business-counselor:recommend
-
-> ⚠️ **DRAFT — 미활성 상태**. 이 파일은 `phase2-draft/commands/`에 있어 `plugin.json`에 연결되지 않았습니다(`commands/` 폴더가 자동 등록 대상이라, 실제 명령으로 활성화하려면 `commands/recommend.md`로 옮겨야 합니다).
-> **활성화 조건**: `CHECKPOINT.md` M1·M2 완료 후에만 이동·활성화할 것.
 
 ## 목적
 
