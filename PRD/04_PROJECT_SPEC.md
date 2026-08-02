@@ -279,6 +279,6 @@ powershell -File tests\frontmatter-linter.ps1 data\          # Windows 네이티
 - [ ] **v1.1 잔존**: consistency_score 임계값 (Phase 2 측정 후 결정)
 - ✓ ~~출력 토큰 < 6,000 한계 검증~~ → **v1.2 추정 ~3,110 (Phase 1) / ~3,710 (Phase 2) (한계 52~62%) PASS**. Phase 1 첫 평가 시 실측 확정 (tests/manual-scenarios.md 시나리오 4 참조).
 - [ ] **v1.2 잔존**: bull_arguments·bear_arguments 최소·최대 항목 수 (Phase 2 사용 데이터로 결정)
-- [ ] **v1.2 잔존**: profile_snapshot_hash 알고리즘 (SHA-256 전체 vs 핵심 필드)
+- ✓ ~~**v1.2 잔존**: profile_snapshot_hash 알고리즘 (SHA-256 전체 vs 핵심 필드)~~ → **핵심 필드만 SHA-256으로 결정 (2026-08-02, Phase 2 착수 전 확정)**. 대상: `profile.md`의 **사용자 응답 필드 10개**(`birth_year`·`residence`·`family_status`·`capital_krw`·`monthly_income_krw`·`time_available_hr`·`skills`·`domain_interests`·`risk_appetite`·`past_business`)만 정규화(키 정렬)해 해시. 시스템 관리 필드(`id`·`schema_version`·`last_updated`·`profile_updates`·`disclaimer`)는 **제외** — `last_updated`가 매 저장마다 바뀌는데 이걸 포함하면 실질 변경이 없어도(예: 재저장) 해시가 매번 달라져 "프로필이 바뀌었다"는 거짓 신호를 만듦. 이 경계는 `edit.md`가 이미 정의해둔 "사용자 응답 필드 vs 시스템 관리 필드" 구분과 동일해 신규 개념 도입 아님.
 - [ ] **v1.2 잔존**: decisions.jsonl 회전 정책 (무한 누적 vs N개 후 archive)
 - [ ] **v1.2 잔존**: 외부 호출 confirmation UX (취소 시 롤백·비용 추정 표시 방법)

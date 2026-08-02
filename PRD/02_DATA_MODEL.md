@@ -237,7 +237,7 @@ disclaimer: |
 
 ## [NEEDS CLARIFICATION]
 
-- [ ] `profile_snapshot_hash` 알고리즘: SHA-256 전체? 또는 핵심 필드만?
+- ✓ ~~`profile_snapshot_hash` 알고리즘: SHA-256 전체? 또는 핵심 필드만?~~ → **핵심 필드(사용자 응답 10개)만 SHA-256 — 04_PROJECT_SPEC.md §NEEDS CLARIFICATION 참조 (2026-08-02 결정)**
 - [ ] `decisions.jsonl` 회전(rotation) 정책: 무한 누적? N개 후 archive/?
 - [ ] `research/*.md` TTL 만료 시 자동 삭제? 또는 archived/ 이동?
 - [ ] 다국어 필드 지원 여부: 모든 한국어로 진행? 영문 키워드 일부 허용?
