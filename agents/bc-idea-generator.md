@@ -73,6 +73,11 @@ disclaimer: |
 ---
 ```
 
+- **`title`에 큰따옴표(`"`)·역슬래시(`\`)가 포함되면 반드시 YAML 표준 이스케이프 처리 후 기록**
+  (`"` → `\"`, `\` → `\\`) — 그대로 삽입하면 frontmatter YAML 파싱이 깨질 수 있음(`bc-idea-evaluator.md`의
+  `raw_idea` 필드와 동일한 유형의 방어. `title`은 AI가 직접 짓는 문구라 발생 확률은 낮지만, 브랜드명 등을
+  따옴표로 인용하는 제목을 생성할 가능성이 있어 동일 규칙 적용)
+
 **`profile_snapshot_hash` 알고리즘** (2026-08-02 `PRD/04_PROJECT_SPEC.md`에서 확정): `profile.md`의 **사용자 응답 필드 10개**(`birth_year`·`residence`·`family_status`·`capital_krw`·`monthly_income_krw`·`time_available_hr`·`skills`·`domain_interests`·`risk_appetite`·`past_business`)만 키 알파벳 정렬 후 정규화해 SHA-256. 시스템 관리 필드(`id`·`schema_version`·`last_updated`·`profile_updates`·`disclaimer`)는 제외 — `last_updated`가 매 저장마다 바뀌어 실질 변경 없이도 거짓 "프로필 변경" 신호를 만들기 때문.
 
 ### 2-2. Lean Canvas 9블록

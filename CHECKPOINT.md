@@ -105,22 +105,33 @@ PRD(`03_PHASES.md`)의 명시적 전제 조건: "Phase 1이 안정적으로 동�
 
 **상태**: 파일 활성화 완료(2026-08-02), **실사용 검증은 아직 미실행** — 사용자가 새 세션에서 `/business-counselor:recommend`·`/business-counselor:decide`를 실제로 실행해봐야 최종 완료로 볼 수 있음
 
-### ⚠️ 실측 함정: `/plugin` 업데이트가 조용히 실패할 수 있음 (2026-08-03 발견)
+### ⚠️ 실측 함정: `/plugin` 업데이트가 조용히 실패할 수 있음 (2026-08-03 발견, 같은 날 2차 정정)
 
 사용자가 새 세션에서 `recommend`를 처음 시도했을 때 `Unknown command: /business-counselor:recommend` +
 `help`가 여전히 옛날 문구("명령 6개")를 출력 — **실제 설치본이 GitHub main과 7개 커밋(`5475fea` vs `e2aa2a4`)
-차이 나는 v0.5.1에 멈춰 있었음**(실측 확인). `/plugin` 업데이트 절차를 거쳤다고 생각했지만 실제로는
-설치본 git 클론이 갱신되지 않은 상태였음 — UI가 성공한 것처럼 보여도 실제 파일 반영은 별개일 수 있음.
+차이 나는 v0.5.1에 멈춰 있었음**(실측 확인).
 
-**수정 방법(이번에 사용, 재발 시 동일하게)**: 설치 경로에서 직접 git pull로 해결 가능(사용자 데이터
-무관 — `~/Documents/business-counselor/`는 전혀 다른 위치라 영향 없음).
-```powershell
-cd "$env:APPDATA\claude-code\plugins\marketplaces\business-counselor-marketplace"
-git pull origin main
-```
-pull 후 `plugin.json`의 `version`이 최신인지, `commands\recommend.md`가 존재하는지로 확인 가능.
-**pull 후에도 Claude Code 완전 재시작 + 새 세션은 그대로 필요**(파일만 최신이어도 실행 중인 프로세스는
-재시작 전까지 옛 정의를 계속 씀).
+**1차 조치(불완전했음)**: 설치 경로(`plugins/marketplaces/business-counselor-marketplace`)에서 `git pull
+origin main`으로 git 클론을 v0.6.1로 동기화. **그런데 그 다음 새 세션에서도 동일 증상이 재현됨** —
+git 클론 갱신만으로는 부족했다는 뜻.
+
+**2차 진단(실제 근본 원인)**: Claude Code 플러그인 로딩은 3단계를 거침 — ① marketplace git clone(소스) →
+② `plugins/cache/<마켓플레이스>/<플러그인>/<버전>/`에 버전별 스냅샷 캐시(0.5.1·0.6.1·0.6.2 폴더가 동시 존재
+하는 상태로 실측 확인) → ③ `plugins/installed_plugins.json`의 포인터(`installPath`·`version`·`gitCommitSha`).
+**새 세션은 오직 ③이 가리키는 캐시 폴더만 읽는다.** 실측 결과 ②에는 이미 완전한 v0.6.2 캐시 폴더가
+만들어져 있었는데(`.orphaned_at` 마커 붙은 채 방치), ③은 여전히 `v0.5.1`·커밋 `5475fea`를 가리키고 있었음
+— `/plugin` 업데이트가 새 버전을 캐시까지는 내려받았지만 "활성 버전으로 승격"하는 마지막 단계에서
+누락된 것으로 추정.
+
+**2차 조치(이번에 적용)**: `installed_plugins.json` 백업(`installed_plugins.json.bak-before-bc-fix-20260803`)
+후 business-counselor 엔트리의 `installPath`/`version`/`gitCommitSha`/`lastUpdated`를 v0.6.2 캐시 폴더로
+직접 갱신 + 해당 폴더의 `.orphaned_at` 마커 삭제(GC 방지). JSON 유효성 재검증·diff로 다른 플러그인 엔트리
+무변경 확인 완료. 상세 절차는 메모리 [[claude-code-plugin-update-silent-failure]] 참조(1차 진단이 불완전
+했다는 점까지 정정 반영됨).
+
+**pull/포인터 수정 후에도 Claude Code 완전 재시작 + 새 세션은 그대로 필요**(재시작 전까지 실행 중이던
+프로세스는 옛 정의를 메모리에 들고 있음). **이 조치가 실제로 문제를 해결했는지는 아직 사용자의 다음
+실사용 시도로 확인 전** — 2026-08-03 기준 미검증.
 
 ---
 
