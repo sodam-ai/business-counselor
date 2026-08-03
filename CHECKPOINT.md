@@ -105,6 +105,23 @@ PRD(`03_PHASES.md`)의 명시적 전제 조건: "Phase 1이 안정적으로 동�
 
 **상태**: 파일 활성화 완료(2026-08-02), **실사용 검증은 아직 미실행** — 사용자가 새 세션에서 `/business-counselor:recommend`·`/business-counselor:decide`를 실제로 실행해봐야 최종 완료로 볼 수 있음
 
+### ⚠️ 실측 함정: `/plugin` 업데이트가 조용히 실패할 수 있음 (2026-08-03 발견)
+
+사용자가 새 세션에서 `recommend`를 처음 시도했을 때 `Unknown command: /business-counselor:recommend` +
+`help`가 여전히 옛날 문구("명령 6개")를 출력 — **실제 설치본이 GitHub main과 7개 커밋(`5475fea` vs `e2aa2a4`)
+차이 나는 v0.5.1에 멈춰 있었음**(실측 확인). `/plugin` 업데이트 절차를 거쳤다고 생각했지만 실제로는
+설치본 git 클론이 갱신되지 않은 상태였음 — UI가 성공한 것처럼 보여도 실제 파일 반영은 별개일 수 있음.
+
+**수정 방법(이번에 사용, 재발 시 동일하게)**: 설치 경로에서 직접 git pull로 해결 가능(사용자 데이터
+무관 — `~/Documents/business-counselor/`는 전혀 다른 위치라 영향 없음).
+```powershell
+cd "$env:APPDATA\claude-code\plugins\marketplaces\business-counselor-marketplace"
+git pull origin main
+```
+pull 후 `plugin.json`의 `version`이 최신인지, `commands\recommend.md`가 존재하는지로 확인 가능.
+**pull 후에도 Claude Code 완전 재시작 + 새 세션은 그대로 필요**(파일만 최신이어도 실행 중인 프로세스는
+재시작 전까지 옛 정의를 계속 씀).
+
 ---
 
 ## M4: Phase 3 준비 (파일 작성 완료, 활성화는 보류)

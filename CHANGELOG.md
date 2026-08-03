@@ -4,6 +4,30 @@
 
 ---
 
+## [플러그인] v0.6.2 — 2026-08-03 (경계값/예외 입력 검토 + 설치본 동기화 함정 발견)
+
+### 배경
+사용자 실사용 시도에서 `recommend`가 "Unknown command"로 실패 → 설치본이 v0.5.1에 멈춰 있던 게 원인
+(GitHub main 대비 7커밋 뒤처짐). 설치 경로에서 직접 `git pull`로 수정(v0.6.1 반영). 이어서 Phase 2
+명령의 경계값·잘못된 입력 케이스를 재검토.
+
+### 수정 (Fixed)
+- **`commands/decide.md`**: `note` 필드에 큰따옴표·역슬래시·줄바꿈이 포함되면 JSON 이스케이프 없이
+  그대로 삽입되어 `decisions.jsonl`이 손상될 수 있는 경계값 결함 발견 → 이스케이프 규칙 명시 추가
+- **`commands/recommend.md`**: `N` 검증이 "숫자가 아니면"으로만 되어 있어 `3.5` 같은 소수 입력을
+  걸러내지 못하는 모호함 발견 → "정수가 아니면"으로 명확화
+
+### 문서화 (Docs)
+- **`CHECKPOINT.md`**: `/plugin` 업데이트가 UI상 문제없어 보여도 실제 설치본(git 클론)이 갱신 안 될 수
+  있음을 실측 기록. 재발 시 설치 경로에서 직접 `git pull origin main`으로 수정 가능함을 절차화
+
+### 확인됨 (정적 검증 결과)
+- JSON 유효성(plugin.json·marketplace.json) PASS, frontmatter 린터 PASS, 시크릿 노출 0건
+- 설치본(marketplace 클론)이 저장소 main과 커밋 해시 완전 일치 확인(`e2aa2a4`)
+- `commands/`·`agents/`·`skills/` 실제 파일 목록이 PRD 스펙과 1:1 일치(누락·잉여 0건)
+
+---
+
 ## [플러그인] v0.6.1 — 2026-08-03 (PRD-vs-구현 전수 감사 + 문서 드리프트 수정)
 
 ### 배경
