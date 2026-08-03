@@ -119,7 +119,8 @@ AI가 누적된 프로필을 기반으로 사용자에게 맞는 사업 아이�
 - [ ] 서브에이전트 `bc-idea-generator` — 추천 격리 워커 (단일 — generator 내부에서도 분리 호출 X)
   - **도구 제한 명시 (2026-08-02 사전 명시 — Phase 1 `bc-idea-evaluator` 패턴 이식)**: `tools: Read, Write, Glob`만 부여. `Task`(서브에이전트 분기)·`WebFetch`/`WebSearch`(외부 API) 도구를 원천 제외해, "단일 호출·외부 API 0" 정책을 프롬프트 약속이 아니라 런타임 불변식으로 강제.
 - [ ] 13명 다관점 점수 체계 정교화 (1~5점 가이드라인, 페르소나 v5 #11 변호사·#13 투자자 도메인 자동 강조 규칙 포함)
-- [ ] 과거 추천·판독 교차 참조 (`/business-counselor:show`에 관련 항목 표시)
+- [x] 과거 추천·판독 교차 참조 (`/business-counselor:show`에 관련 항목 표시) — 2026-08-03 구현: `show.md`
+  ID 분기(`eval-*`/`idea-*`)·`list.md` 판독/추천 2테이블 분리로 완료
 - [ ] **consistency_score 실측 — N=3회 자동 재평가 후 표준편차 기록 (v1.1 후속)**
 - [ ] **success_criteria 도메인별 카탈로그 작성 (v1.1 후속)**
 

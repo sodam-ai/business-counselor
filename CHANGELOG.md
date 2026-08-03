@@ -4,6 +4,38 @@
 
 ---
 
+## [플러그인] v0.6.4 — 2026-08-03 (`list`·`show`가 Phase 2 추천 아이디어를 못 찾던 결함 수정)
+
+### 배경
+"지금까지 구현된 기능이 제대로 작동하는지" 재검증 중 `commands/list.md`·`commands/show.md`를 다시 읽어보니
+둘 다 `ideas/evaluated/`(판독 결과)만 스캔/검색하고 있었음 — Phase 2에서 추가된 `ideas/generated/`(추천
+아이디어)는 전혀 다루지 않음. `PRD/03_PHASES.md` 122행에 "과거 추천·판독 교차 참조(`/business-counselor:
+show`에 관련 항목 표시)"가 Phase 2 기능 목록에 **미체크 항목**으로 이미 명시돼 있었고, `commands/help.md`는
+이미 "list/show가 판독·추천 둘 다 보여준다"고 안내하고 있었음(실제 구현과 안내 문구가 어긋난 상태) —
+`commands/decide.md`의 ID 분기 규칙 주석에도 "show.md와 동일 패턴"이라는 문구가 있어, 애초에 show.md도
+같이 분기 처리될 것으로 가정하고 작성됐으나 실제로는 반영되지 않았던 것으로 확인됨.
+
+### 재현
+1. `/business-counselor:recommend 5` → `idea-2026-08-03-001` 등 생성
+2. `/business-counselor:show idea-2026-08-03-001` 실행 → `evaluated/`에서만 검색해 "해당 ID의 평가를
+   찾을 수 없습니다" 오안내(파일은 `generated/`에 실제로 존재)
+3. `/business-counselor:list` 실행 → 추천 아이디어는 목록에 아예 나타나지 않음(판독만 있으면 정상, 추천만
+   있으면 "평가 기록이 없습니다"로 오안내)
+
+### 수정 (Fixed)
+- **`commands/show.md`**: `decide.md`와 동일한 ID 분기 규칙(`eval-*`→`evaluated/`, `idea-*`→`generated/`)
+  적용. "파일 없음" 메시지도 "평가"→"기록"으로 일반화(추천 아이디어에도 맞게)
+- **`commands/list.md`**: `evaluated/`·`generated/` 두 폴더를 모두 스캔해 "판독 기록"·"추천 기록" 두
+  테이블로 분리 출력. 기록 없음 메시지에 `recommend` 안내 추가
+
+### 확인됨 (정적 검증 결과)
+- frontmatter 린터 재실행 PASS
+- 변경분 시크릿 노출 스캔 0건
+- `commands/help.md`의 기존 안내 문구("판독·추천 목록 보기" 등)와 이번 수정이 일치함을 확인(문서는 이미
+  Phase 2를 반영해뒀는데 구현만 안 따라간 상태였음 — 문서 추가 수정 불필요)
+
+---
+
 ## [플러그인] v0.6.3 — 2026-08-03 (설치본 동기화 근본 원인 재정정 + YAML 이스케이프 결함 2건)
 
 ### 배경
