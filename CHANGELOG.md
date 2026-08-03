@@ -4,6 +4,32 @@
 
 ---
 
+## [플러그인] v0.6.3 — 2026-08-03 (설치본 동기화 근본 원인 재정정 + YAML 이스케이프 결함 2건)
+
+### 배경
+v0.6.2에서 "설치본 git 클론 미갱신"으로 진단·수정했으나, 이후 새 세션에서도 동일 증상(`recommend`
+Unknown command·`help` 구버전 문구) 재현. 재조사 결과 실제 원인은 더 깊은 곳에 있었음 — Claude Code의
+플러그인 로딩은 ①marketplace git clone → ②버전별 캐시 폴더 → ③`installed_plugins.json` 포인터 3단계를
+거치며, 새 세션은 오직 ③만 읽는다. ②에는 이미 최신 버전 캐시가 만들어져 있었는데 ③ 포인터가 옛 버전
+(`0.5.1`)을 계속 가리키고 있었던 것이 근본 원인. `installed_plugins.json`을 백업 후 직접 최신 버전으로
+갱신해 해결(상세 절차는 메모리 `claude-code-plugin-update-silent-failure` 참조).
+
+이어서 `evaluate`·`recommend` 결과 파일 생성 로직을 경계값 관점에서 추가 검토, 같은 유형의 결함 2건 발견.
+
+### 수정 (Fixed)
+- **`agents/bc-idea-evaluator.md`**: frontmatter `raw_idea` 필드(사용자 아이디어 원문을 그대로 삽입)에
+  큰따옴표·역슬래시·줄바꿈 이스케이프 규칙이 없어, 아이디어 설명에 큰따옴표가 포함되면(예: 브랜드명 인용)
+  평가 결과 파일의 YAML frontmatter 전체가 파싱 불가능해질 수 있는 결함 발견 → 이스케이프 규칙 명시 추가
+  (`commands/decide.md`의 `note` 필드 JSON 이스케이프 누락과 동일 유형)
+- **`agents/bc-idea-generator.md`**: frontmatter `title` 필드에도 동일 유형 방어 규칙 추가(AI가 직접 짓는
+  문구라 발생 확률은 낮으나, 브랜드명 인용 등으로 발생 가능성 있어 동일 규칙 적용)
+
+### 확인됨 (정적 검증 결과)
+- frontmatter 린터 재실행 PASS, 변경분 diff는 순수 추가(10줄, 삭제 0) — 기존 템플릿 구조 무변경 확인
+- 변경분 시크릿 노출 스캔 0건
+
+---
+
 ## [플러그인] v0.6.2 — 2026-08-03 (경계값/예외 입력 검토 + 설치본 동기화 함정 발견)
 
 ### 배경
