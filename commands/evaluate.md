@@ -53,6 +53,27 @@ version: "1.0"
 
 ---
 
+## Step 2.5: profile_snapshot_hash 계산 (프로필 있을 때만, 에이전트 호출 전)
+
+`bc-idea-evaluator`는 `tools: Read, Write, Glob`만 가지고 있어 실제 SHA-256을 계산할 수 없다
+(LLM은 암호화 해시를 암산으로 정확히 계산할 수 없음). **프로필이 있으면** 명령을 실행하는 메인
+세션이 Bash로 미리 계산해서 에이전트에 값으로 전달한다(`recommend.md`와 동일 절차, 2026-08-04 도입).
+프로필이 없으면 이 단계는 건너뛰고 "(프로필 없음)"을 그대로 전달한다.
+
+```
+1. profile.md frontmatter에서 사용자 응답 필드 10개 추출:
+   birth_year, residence, family_status, capital_krw, monthly_income_krw,
+   time_available_hr, skills, domain_interests, risk_appetite, past_business
+
+2. 필드명 알파벳순 정렬 후 "필드명=값" 형식으로 줄바꿈(\n) 결합해 정규화 문자열 생성
+   - 배열 필드는 JSON 배열 표기로, null은 문자열 "null" 그대로, 숫자는 그대로
+
+3. Bash로 SHA-256 계산:
+   node -e "console.log(require('crypto').createHash('sha256').update(<정규화문자열>,'utf8').digest('hex'))"
+
+4. 결과값을 "sha256:{64자리 hex}" 형식으로 Step 3 호출에 전달
+```
+
 ## Step 3: bc-idea-evaluator 호출 (1회만)
 
 `agents/bc-idea-evaluator.md` 에이전트를 **정확히 1회** 호출한다.
@@ -62,6 +83,7 @@ version: "1.0"
 아이디어: {명확화된 아이디어 원문}
 모드: {입력에 "전체"·"상세"·"full"·"detail"·--full 있으면 "전체", 없으면 "기본(카드)"}
 프로필 컨텍스트: {~/Documents/business-counselor/profile.md 전체 내용 또는 "(프로필 없음)"}
+프로필 스냅샷 해시: {Step 2.5에서 계산한 sha256:... 값 또는 "(프로필 없음)"}
 ```
 
 ### 단일 호출 강제

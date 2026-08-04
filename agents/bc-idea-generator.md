@@ -28,7 +28,13 @@ model: sonnet
 ```
 개수: {N}
 프로필 컨텍스트: {~/Documents/business-counselor/profile.md 전체 내용}
+프로필 스냅샷 해시: {recommend.md가 Bash로 미리 계산한 sha256:... 값}
 ```
+
+- `profile_snapshot_hash`는 **호출자(recommend.md)가 계산해서 전달한 값을 그대로 frontmatter에 기록**한다.
+  이 에이전트는 `Read, Write, Glob`만 가지고 있어 실제 SHA-256 계산이 불가능(LLM은 암호화 해시를
+  암산으로 정확히 계산할 수 없음) — 직접 새 값을 지어내지 말 것(2026-08-04 발견·수정: 이전엔 에이전트가
+  그럴듯한 문자열을 지어내 저장해 매번 다른 아이디어 5개가 전부 같은 가짜 해시를 갖고 있었음)
 
 ---
 
@@ -55,7 +61,7 @@ schema_version: "1.2"
 timestamp: {YYYY-MM-DDTHH:MM:SS}
 generated_at: {YYYY-MM-DDTHH:MM:SS}
 source: profile-main
-profile_snapshot_hash: "sha256:{해시값}"
+profile_snapshot_hash: "{호출 시 전달받은 값을 그대로 기록 — 에이전트가 직접 계산 금지, 2026-08-04 수정}"
 title: "{아이디어 한 줄}"
 fit_score: {N}          # 0~100, 사용자 적합도
 persona_13_score: {N.N} # 13명 다관점 평균 (1~5)

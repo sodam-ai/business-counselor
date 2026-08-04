@@ -2,16 +2,20 @@
 # frontmatter-linter.sh
 # data/ 폴더 내 모든 .md 파일의 frontmatter 필수 필드를 "파일 유형별"로 검증한다.
 #
-# 검증 규칙 (02_DATA_MODEL.md 정합):
+# 검증 규칙 (02_DATA_MODEL.md 정합, 2026-08-04 수정 — evaluated/와 generated/ 필드셋 분리):
 #   - 모든 .md (프로필·세션·리서치 등): disclaimer + schema_version
-#   - ideas/evaluated/, ideas/generated/ (AI 판독·추천 출력):
+#   - ideas/evaluated/ (EvaluatedIdea, AI 판독 출력):
 #       위 + success_criteria + consistency_score + model_id + temperature + debate_mode
+#   - ideas/generated/ (GeneratedIdea, AI 추천 출력 — 적대 토론·verdict 단계 없음):
+#       위 + model_id + temperature만 (success_criteria·consistency_score·debate_mode 의도적 제외,
+#       02_DATA_MODEL.md 2026-08-03 정정 참조)
 #
 # 사용법: bash tests/frontmatter-linter.sh [data_dir]
 # 예시:   bash tests/frontmatter-linter.sh data/
 
 BASE_FIELDS="disclaimer schema_version"
 EVAL_EXTRA="success_criteria consistency_score model_id temperature debate_mode"
+GEN_EXTRA="model_id temperature"
 DATA_DIR="${1:-$HOME/Documents/business-counselor}"
 FAIL=0
 COUNT=0
@@ -25,10 +29,12 @@ fi
 for f in $(find "$DATA_DIR" -name "*.md" 2>/dev/null); do
   COUNT=$((COUNT + 1))
 
-  # 파일 유형 판별: AI 출력(평가·추천)이면 6필드 전체, 그 외 데이터 파일은 기본 2필드
+  # 파일 유형 판별: evaluated/=6필드 전체, generated/=model_id+temperature만, 그 외=기본 2필드
   case "$f" in
-    */ideas/evaluated/*|*/ideas/generated/*)
+    */ideas/evaluated/*)
       REQUIRED="$BASE_FIELDS $EVAL_EXTRA" ;;
+    */ideas/generated/*)
+      REQUIRED="$BASE_FIELDS $GEN_EXTRA" ;;
     *)
       REQUIRED="$BASE_FIELDS" ;;
   esac

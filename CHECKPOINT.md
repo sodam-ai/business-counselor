@@ -139,9 +139,15 @@ git 클론 갱신만으로는 부족했다는 뜻.
 (`installed_plugins.json.bak-before-bc-v063-fix-20260803`) 후 포인터를 `0.6.3`으로 갱신 → 캐시 폴더 안에
 이번 수정(`raw_idea`/`title` 이스케이프 규칙)이 실제로 들어있는지 grep으로 직접 확인 완료.
 
-**이 조치가 실제로 문제를 해결했는지는 여전히 사용자의 다음 실사용 재시도로만 최종 확인 가능** —
-2026-08-03 기준 미검증(1·2차 조치 때도 "이번엔 됐다"고 판단했다가 재현된 전례가 있어, 과신하지 않고
-사용자 재시도 결과를 기다리는 중).
+**✅ 실사용 확인됨 (2026-08-04)**: 사용자가 완전 재시작 + 새 세션에서 `/business-counselor:recommend 5`를
+직접 실행 — 정상 작동 확인(Unknown command 재현 없음, `bc-idea-generator` 1회 호출·9 tool uses·56.2k
+토큰·3분 9초, `idea-2026-08-04-001~005` 5개 파일 번호 충돌 없이 정상 저장, 완료 메시지 형식 `recommend.md`
+스펙과 일치). **v0.6.4 설치 동기화 3차 조치가 실제로 통했음을 최초로 실측 확인** — 1·2차와 달리 이번엔
+재현되지 않음. 상세는 메모리 [[claude-code-plugin-update-silent-failure]]에도 반영.
+
+**남은 확인 항목**: 이번 확인은 `recommend`뿐 — `list`·`show`(v0.6.4에서 고친 generated 아이디어 교차
+조회)·`decide`·`evaluate <추천받은 아이디어>`는 아직 실사용 미확인. PRD Phase 2 완료 기준("5개 추천 후
+1개를 evaluate→decide까지 완전 진행", "decisions.jsonl 5줄 이상")도 아직 미충족.
 
 ---
 

@@ -4,6 +4,48 @@
 
 ---
 
+## [플러그인] v0.6.5 — 2026-08-04 (`profile_snapshot_hash` 가짜값 수정 + 린터 오탐 수정)
+
+### 배경
+`recommend 5` 실사용 성공(v0.6.4) 직후 `/business-counselor:show idea-...`로 실제 생성된 파일을 열어보니,
+5개 파일 전부 `profile_snapshot_hash`가 동일한 값이었고 AI 스스로 "실제 SHA-256이 아니라 코드 실행 불가로
+생성된 플레이스홀더"라고 밝힘. 실제 파일(`~/Documents/business-counselor/ideas/generated/*.md`)을 직접
+열어 확인 — 진짜 문제였음.
+
+### 근본 원인
+`bc-idea-generator`·`bc-idea-evaluator` 두 에이전트 모두 `tools: Read, Write, Glob`만 가지고 있어 코드
+실행이 불가능한데, frontmatter 스펙은 "SHA-256을 계산해서 기록하라"고만 지시하고 있었음 — LLM은 암호화
+해시 함수를 암산으로 정확히 계산할 수 없으므로, 애초에 요구사항 자체가 에이전트 혼자서는 이행 불가능한
+구조였음(구현 실수가 아니라 설계 단계의 구조적 공백).
+
+### 수정 (Fixed)
+- **`commands/recommend.md`·`commands/evaluate.md`**: 에이전트 호출 전 메인 세션이 Bash(`node -e` +
+  `crypto` 모듈)로 실제 SHA-256을 계산해서 값으로 전달하는 Step 추가. 정규화 알고리즘(필드 10개 알파벳순
+  정렬 → `필드명=값` 줄바꿈 결합 → SHA-256)은 실제 profile.md로 직접 검증 완료
+- **`agents/bc-idea-generator.md`·`agents/bc-idea-evaluator.md`**: frontmatter 템플릿을 "전달받은 값을
+  그대로 기록, 직접 계산 금지"로 수정. `bc-idea-evaluator.md`는 기존 `"(미구현, Phase 2)"` 리터럴 문자열도
+  함께 정리(Phase 2가 활성화됐으므로)
+- **`tests/frontmatter-linter.ps1`·`tests/frontmatter-linter.sh`**: 위 검증 과정에서 린터 자체의 오탐도
+  함께 발견 — `ideas/generated/`(GeneratedIdea)에 `ideas/evaluated/`(EvaluatedIdea)와 동일한 6필드 전체를
+  요구하고 있었음. `02_DATA_MODEL.md`가 이미 확정한 대로 GeneratedIdea는 `success_criteria`·
+  `consistency_score`·`debate_mode`를 의도적으로 제외(적대 토론·verdict 단계 없음)하므로, generated/는
+  `model_id`+`temperature`만 요구하도록 필드셋 분리
+
+### 확인됨 (실측 + 정적 검증)
+- 정규화 알고리즘을 실제 `profile.md`(10개 필드, null 포함)로 직접 실행해 유효한 SHA-256 산출 확인
+- 린터 수정 후 실제 사용자 데이터(12개 파일, evaluated 5 + generated 5 + profile + session) 전부 PASS —
+  수정 전에는 generated/ 5개 파일이 (린터 오탐으로) FAIL 표시됐었음
+- 변경분 시크릿 노출 스캔 0건
+
+### 참고 (범위 밖으로 남겨둔 항목)
+- 기존에 이미 생성된 5개 추천 파일의 가짜 해시값은 이번 수정으로 소급 정정되지 않음(향후 새로 생성되는
+  파일부터 적용) — 사용자 데이터 파일이라 별도 요청 없이는 임의로 덮어쓰지 않음
+- `profile.md`의 `skills`/`domain_interests` 필드가 콤마 포함 항목을 따옴표 없이 배열에 넣고 있어 엄격한
+  YAML 파서 기준 잠재적 파싱 모호성 발견(실제 파일에서 확인) — `raw_idea`/`title`/`note`와 같은 유형이나
+  `start.md`/`resume.md` 범위라 이번 수정에는 포함하지 않음, 별도 확인 필요
+
+---
+
 ## [플러그인] v0.6.4 — 2026-08-03 (`list`·`show`가 Phase 2 추천 아이디어를 못 찾던 결함 수정)
 
 ### 배경

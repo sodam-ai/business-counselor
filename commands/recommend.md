@@ -32,6 +32,30 @@ version: "1.0"
    - 있으면: profile.md 전체 내용 로드
 ```
 
+## Step 1.5: profile_snapshot_hash 계산 (에이전트 호출 전 필수)
+
+`bc-idea-generator`는 `tools: Read, Write, Glob`만 가지고 있어 실제 SHA-256을 계산할 수 없다
+(LLM은 암산으로 암호화 해시 함수를 정확히 계산할 수 없음 — 반드시 코드 실행이 필요).
+**따라서 명령을 실행하는 메인 세션이 Bash로 미리 계산해서 에이전트에 값으로 전달한다.**
+(2026-08-04 발견 — 이전엔 에이전트가 스스로 그럴듯한 문자열을 지어내 저장했음, 5개 파일이 전부
+동일한 가짜 해시값을 갖고 있던 것으로 실측 확인)
+
+```
+1. profile.md frontmatter에서 사용자 응답 필드 10개 추출:
+   birth_year, residence, family_status, capital_krw, monthly_income_krw,
+   time_available_hr, skills, domain_interests, risk_appetite, past_business
+
+2. 필드명 알파벳순 정렬 후 "필드명=값" 형식으로 줄바꿈(\n) 결합해 정규화 문자열 생성
+   - 배열 필드(skills, domain_interests)는 JSON 배열 표기로: ["항목1","항목2"]
+   - null 값은 문자열 "null" 그대로
+   - 숫자는 그대로, 문자열은 그대로(따옴표 없이)
+
+3. Bash로 SHA-256 계산:
+   node -e "console.log(require('crypto').createHash('sha256').update(<정규화문자열>,'utf8').digest('hex'))"
+
+4. 결과값을 "sha256:{64자리 hex}" 형식으로 Step 2 호출에 전달
+```
+
 ## Step 2: bc-idea-generator 호출 (1회만)
 
 `agents/bc-idea-generator.md`를 **정확히 1회** 호출한다.
@@ -40,6 +64,7 @@ version: "1.0"
 호출 형식:
 개수: {N}
 프로필 컨텍스트: {profile.md 전체 내용}
+프로필 스냅샷 해시: {Step 1.5에서 계산한 sha256:... 값}
 ```
 
 ### 단일 호출 강제
