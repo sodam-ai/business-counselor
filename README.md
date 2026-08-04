@@ -1,6 +1,6 @@
 # AI 사업 카운슬러 (business-counselor)
 
-> **Claude Code 플러그인** · v0.5.2 · Phase 1 MVP · Apache-2.0(오픈소스, 상업적 이용 가능)
+> **Claude Code 플러그인** · v0.6.5 · Phase 1 + Phase 2(추천 포함) 실사용 확인됨 · Apache-2.0(오픈소스, 상업적 이용 가능)
 > 사업 아이디어를 입력하면 AI가 13명 전문가 관점으로 **5단계 냉철 분석**을 즉시 제공합니다.
 
 **코딩을 전혀 몰라도 됩니다.** 컴퓨터·스마트폰을 다루는 게 아직 어색한 분도 그대로 따라 하면 됩니다. Claude Code 채팅창에 명령어만 입력하면 끝입니다.
@@ -34,6 +34,7 @@
 ---
 
 <a id="read-me-first"></a>
+
 ## 0. 이 문서를 처음 보신다면
 
 이 문서는 **컴퓨터·AI 도구를 처음 써보는 분**도 끝까지 따라 할 수 있도록 썼습니다. 아래 3가지만 미리 알아두면 나머지는 다 순서대로 읽으면 됩니다.
@@ -47,6 +48,7 @@
 ---
 
 <a id="overview"></a>
+
 ## 1. 이게 뭔가요? (개요)
 
 사업/창업 아이디어가 떠올랐을 때, **"이거 될까?"를 13명의 전문가가 냉정하게 따져주는 도구**입니다.
@@ -87,6 +89,7 @@
 ---
 
 <a id="prerequisites"></a>
+
 ## 2. 사전 준비물 · 필요 프로그램
 
 ### 필요 프로그램
@@ -108,6 +111,7 @@
 ---
 
 <a id="download"></a>
+
 ## 3. 다운로드 방법
 
 "다운로드"(코드를 내 컴퓨터로 가져오는 것)와 "설치"(Claude Code에 등록해서 실제로 쓸 수 있게 만드는 것)는 다른 단계입니다. 아래 3가지 방법 중 **방법 A는 다운로드와 설치가 한 번에** 끝나고, 방법 B·C는 다운로드를 먼저 한 뒤 설치 명령을 한 번 더 실행합니다.
@@ -123,6 +127,7 @@
 ---
 
 <a id="install"></a>
+
 ## 4. 설치 방법
 
 ### 방법 A — GitHub에서 바로 설치 (권장, git clone 불필요)
@@ -205,6 +210,7 @@ claude plugin marketplace remove business-counselor-marketplace
 ---
 
 <a id="quickstart"></a>
+
 ## 5. 빠른 시작 (3줄 요약)
 
 이미 [Claude Code](https://claude.ai/download)가 설치돼 있다면, 터미널에서:
@@ -221,6 +227,7 @@ claude plugin install business-counselor@business-counselor-marketplace
 ---
 
 <a id="run"></a>
+
 ## 6. 실행 방법
 
 설치가 끝났다면 실제로 실행해보는 단계입니다.
@@ -238,6 +245,7 @@ claude plugin install business-counselor@business-counselor-marketplace
 ---
 
 <a id="usage"></a>
+
 ## 7. 사용 방법 (단계별 가이드)
 
 ### 1단계 — (선택) 나에 대한 인터뷰
@@ -330,6 +338,7 @@ claude plugin install business-counselor@business-counselor-marketplace
 ---
 
 <a id="commands"></a>
+
 ## 8. 명령어 전체
 
 | 명령어 | 설명 | 데이터 변경 여부 |
@@ -350,9 +359,11 @@ claude plugin install business-counselor@business-counselor-marketplace
 ---
 
 <a id="how-it-works"></a>
+
 ## 9. 작동 방법 (내부 동작 원리)
 
-- **단일 호출 원칙**: `/business-counselor:evaluate` 한 번 = 내부 서브에이전트(`bc-idea-evaluator`) 호출 한 번. 13명 평가·Lean Canvas·Mom Test·Pre-mortem·적대 토론 5단계를 **모두 이 한 번의 호출 안에서** 처리합니다. 응답마다 별도의 서브에이전트를 여러 번 부르지 않기 때문에 속도가 빠르고 비용이 절약됩니다.
+- **단일 호출 원칙**: `/business-counselor:evaluate` 한 번 = 내부 서브에이전트(`bc-idea-evaluator`) 호출 한 번, `/business-counselor:recommend` 한 번 = 내부 서브에이전트(`bc-idea-generator`) 호출 한 번. 13명 평가·Lean Canvas·Mom Test·Pre-mortem·적대 토론 5단계(또는 추천의 경우 Lean Canvas 포함 아이디어 N개)를 **모두 이 한 번의 호출 안에서** 처리합니다. 응답마다 별도의 서브에이전트를 여러 번 부르지 않기 때문에 속도가 빠르고 비용이 절약됩니다.
+- **프로필 스냅샷 확인값 계산**: 평가·추천 결과 파일에는 "이 결과가 어느 시점의 내 프로필을 기준으로 만들어졌는지" 확인할 수 있는 값(`profile_snapshot_hash`)이 함께 저장됩니다. 이 값은 분석을 담당하는 서브에이전트가 아니라, 그 서브에이전트를 호출하기 **직전에 명령 실행 단계에서 실제로 계산**해서 전달합니다(서브에이전트는 계산 도구가 없어 스스로 계산할 수 없기 때문 — v0.6.5에서 실측 확인 후 이 방식으로 확정).
 - **냉철(cold) 모드**: 이 도구는 "잘 될 것 같다"는 긍정 편향을 의도적으로 차단하도록 설계됐습니다. 13명 중 법무(#11)·투자자(#13) 관점이 강한 부정 신호를 주면, 나머지 관점 점수가 높아도 최종 판정은 강제로 `iterate` 또는 `no-go` 쪽으로 기웁니다.
 - **모호한 입력 처리**: 아이디어 문장이 너무 짧거나 불명확하면 AI가 임의로 가정해서 진행하지 않고, 먼저 1~2개의 보강 질문을 합니다.
 - **프로필 반영**: `/business-counselor:start`·`resume`으로 답한 내 자본·시간·역량 정보가 있으면, 평가가 내 상황에 맞춰 더 구체적으로 나옵니다. 프로필이 없어도 평가는 가능합니다(일반 기준 적용).
@@ -361,6 +372,7 @@ claude plugin install business-counselor@business-counselor-marketplace
 ---
 
 <a id="workflow"></a>
+
 ## 10. 워크플로우 (전체 흐름도)
 
 ```
@@ -384,9 +396,31 @@ claude plugin install business-counselor@business-counselor-marketplace
 - **단일 호출**: 한 명령 = 한 번의 분석(추가 호출 0). 빠르고 비용 절약.
 - **냉철 모드**: 긍정 편향을 막고 약점·위험을 먼저 들춰냅니다. 법무·투자 위험은 ⚠️ 로 강조.
 
+### 두 번째 흐름 — AI가 먼저 추천 (Phase 2)
+
+```
+/business-counselor:recommend [N]  (프로필 필요, 기본 5개)
+            │
+            ▼
+        AI가 단 한 번의 호출로 프로필 기반 아이디어 N개 + 각 Lean Canvas 생성
+            │
+            ▼
+        화면: 표(ID·제목·적합도)   저장: 추천 결과 파일(.md, ideas/generated/)
+            │
+            ├─ 마음에 든 것 심층 판독 → /business-counselor:evaluate "<제목>"
+            └─ 바로 결정 기록      → /business-counselor:decide <id> <go|drop|iterate|defer> ["메모"]
+                                              │
+                                              ▼
+                                    decisions.jsonl 에 1줄 추가(append-only, 삭제·수정 안 됨)
+
+/business-counselor:list  →  판독 기록·추천 기록 두 표로 한눈에 확인
+/business-counselor:show <id>  →  eval-*·idea-* 아이디 둘 다 조회 가능
+```
+
 ---
 
 <a id="files"></a>
+
 ## 11. 파일 · 문서 위치
 
 **플러그인 폴더** (설치한 곳 — 코드·설정, 직접 수정할 필요 없음):
@@ -421,6 +455,7 @@ business-counselor/
 ---
 
 <a id="architecture"></a>
+
 ## 12. 아키텍처
 
 이 플러그인은 **별도의 서버나 데이터베이스가 없습니다.** 전부 텍스트 파일(Markdown)과 Claude Code라는 하나의 프로그램 위에서 동작합니다.
@@ -470,6 +505,7 @@ commands/*.md  (명령 정의 9개 — 각 명령의 행동 규칙을 적은 문
 ---
 
 <a id="security"></a>
+
 ## 13. 보안 · 데이터 흐름
 
 ### 데이터가 어디로 가는지 (한눈에)
@@ -509,9 +545,58 @@ bc-idea-evaluator 서브에이전트 (로컬 실행, Read·Write·Glob 권한만
 ---
 
 <a id="changelog"></a>
+
 ## 14. 업데이트 내용 요약
 
 아래는 요약입니다. 전체 원문(수정 이유·원인 분석 포함)은 [`CHANGELOG.md`](./CHANGELOG.md)에서 볼 수 있습니다. 각 항목을 눌러 펼쳐보세요.
+
+<details>
+<summary><strong>v0.6.5</strong> — 2026-08-04 · <code>profile_snapshot_hash</code> 가짜값 수정 + 검증 도구 오탐 수정</summary>
+
+- 추천·판독 결과 파일의 `profile_snapshot_hash` 필드가 실제 SHA-256 계산값이 아니라 AI가 지어낸 문자열이었던 결함 발견·수정 — 이제 명령을 실행하는 쪽이 실제로 계산해서 넘겨줌
+- 검증 도구(frontmatter 린터)가 추천 결과와 판독 결과에 서로 다른 필수 항목을 요구해야 하는데 똑같이 요구하던 오탐도 함께 수정
+- 기능 변경 없음(내부 정확성 수정)
+
+</details>
+
+<details>
+<summary><strong>v0.6.4</strong> — 2026-08-03 · <code>list</code>·<code>show</code>가 추천 아이디어를 못 찾던 결함 수정 + <code>recommend</code> 실사용 최초 성공 확인</summary>
+
+- `list`·`show`가 판독 결과(`evaluated/`)만 찾고 추천 결과(`generated/`)는 못 찾던 결함 수정 — 이제 두 종류 모두 정상 조회됨
+- `/business-counselor:recommend`가 실제 사용자 환경에서 처음으로 성공 확인(이전 버전들의 설치 동기화 수정이 유효했음을 실측 확인)
+
+</details>
+
+<details>
+<summary><strong>v0.6.3</strong> — 2026-08-03 · 설치 동기화 문제 근본 원인 재조사 + 아이디어 설명 특수문자 결함 수정</summary>
+
+- v0.6.2에서 진단한 원인이 불완전했음을 재확인 — 실제로는 설치 관리 파일의 버전 표시가 갱신 안 되는 것이 근본 원인이었음(자세한 경위는 아래 v0.6.2, 원문은 `CHANGELOG.md`)
+- 아이디어 설명에 큰따옴표가 포함되면 저장 파일이 깨질 수 있던 결함 2건(판독·추천 양쪽) 수정
+
+</details>
+
+<details>
+<summary><strong>v0.6.2</strong> — 2026-08-03 · 경계값 입력 검토 + 설치 동기화 문제 최초 발견</summary>
+
+- 결정 기록(`decide`)의 메모에 특수문자가 있으면 기록 파일이 깨질 수 있던 결함, 추천 개수 입력값 검증 모호함 등 경계값 결함 2건 수정
+- 실사용 중 "업데이트했는데 새 명령이 안 보이는" 문제를 최초 발견 — 설치 파일 동기화 문제로 확인
+
+</details>
+
+<details>
+<summary><strong>v0.6.1</strong> — 2026-08-03 · 문서-구현 전수 감사 + Phase 2 반영 누락 문서 5곳 수정</summary>
+
+- Phase 2(추천 기능) 코드는 이미 있었지만 `help`·README 등 안내 문서 5곳이 여전히 "추천 기능 없음"으로 안내하던 불일치 발견·수정
+
+</details>
+
+<details>
+<summary><strong>v0.6.0</strong> — 2026-08-02 · Phase 2(추천·결정 기록) 정식 활성화</summary>
+
+- `/business-counselor:recommend`·`/business-counselor:decide` 명령, 두 번째 분석 엔진(`bc-idea-generator`) 정식 활성화
+- 명령 7개 → 9개로 확장
+
+</details>
 
 <details>
 <summary><strong>v0.5.2</strong> — 2026-07-27 · 비개발자용 종합 README(한/영, md+html) 신규 작성</summary>
@@ -583,6 +668,7 @@ bc-idea-evaluator 서브에이전트 (로컬 실행, Read·Write·Glob 권한만
 ---
 
 <a id="troubleshooting"></a>
+
 ## 15. 문제 · 오류 대처 방법
 
 | 증상 | 원인 | 해결 |
@@ -591,7 +677,7 @@ bc-idea-evaluator 서브에이전트 (로컬 실행, Read·Write·Glob 권한만
 | `plugin list`에 enabled 안 뜸 | 등록/설치 누락 | `marketplace add sodam-ai/business-counselor` → `install ...@business-counselor-marketplace` 다시 실행 |
 | `claude: command not found` | Claude Code 미설치/경로 문제 | [claude.ai/download](https://claude.ai/download)에서 설치 후 재시작 |
 | `git: command not found` | Git 미설치 | [git-scm.com](https://git-scm.com/downloads) 설치 또는 [ZIP 방법(C)](#download) 사용 |
-| 업데이트했는데 새 명령이 안 보임 | 버전 갱신 명령을 하나만 실행했거나 재시작 안 함 | [업데이트 방법](#install) 두 줄 모두 실행 + 재시작 |
+| 업데이트했는데 새 명령이 안 보임 | 버전 갱신 명령을 하나만 실행했거나 재시작 안 함, 또는 Claude Code 내부 캐시가 갱신 안 됨(실제 발생 사례 있음) | [업데이트 방법](#install) 두 줄 모두 실행 + **완전** 재시작(단순 창 닫기 아님) + **새 대화창**에서 확인. 그래도 안 보이면 캐시 동기화 문제일 수 있으니 [GitHub Issues](https://github.com/sodam-ai/business-counselor/issues)에 문의하세요 |
 | 평가가 5~8분 걸림 | 깊은 분석은 원래 오래 걸림 | 정상입니다. 기다리거나, 다음에는 시간 여유 있을 때 실행하세요 |
 | 결과가 카드만 짧게 나옴 | 기본이 카드 모드 | 전체는 `/business-counselor:evaluate "..." 전체` 또는 `/business-counselor:show <id>` |
 | `show`에서 "찾을 수 없음" | 존재하지 않는 id를 입력함(이 문서의 예시 id 포함) | `/business-counselor:list`로 실제 id를 먼저 확인 후 복사해서 입력 |
@@ -605,6 +691,7 @@ bc-idea-evaluator 서브에이전트 (로컬 실행, Read·Write·Glob 권한만
 ---
 
 <a id="faq"></a>
+
 ## 16. FAQ (자주 묻는 질문)
 
 **Q. 이 도구는 유료인가요?**
@@ -646,6 +733,7 @@ A. [GitHub 저장소](https://github.com/sodam-ai/business-counselor)의 Issues 
 ---
 
 <a id="legal"></a>
+
 ## 17. 법률 · 저작권 · 라이선스 · 상업적 용도
 
 > 아래 내용은 일반 정보 제공용이며 법률 자문이 아닙니다. 실제 상업적 이용·재배포·법적 판단이 필요한 경우 변호사 등 전문가 확인을 권장합니다.
@@ -706,6 +794,7 @@ A. [GitHub 저장소](https://github.com/sodam-ai/business-counselor)의 Issues 
 ---
 
 <a id="appendix"></a>
+
 ## 18. 부록 (용어 풀이)
 
 | 용어 | 뜻 |

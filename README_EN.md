@@ -1,6 +1,6 @@
 # AI Business Counselor (business-counselor)
 
-> **Claude Code Plugin** · v0.5.2 · Phase 1 MVP · Apache-2.0 (open source, commercial use allowed)
+> **Claude Code Plugin** · v0.6.5 · Phase 1 + Phase 2 (recommendations included) confirmed working in real use · Apache-2.0 (open source, commercial use allowed)
 > Enter a business idea and AI instantly delivers a **5-stage cold analysis** from 13 expert perspectives.
 
 **No coding required.** Even if you're still new to computers or smartphones, you can just follow along. Type commands in the Claude Code chat window — that's it.
@@ -34,6 +34,7 @@
 ---
 
 <a id="read-me-first"></a>
+
 ## 0. Read This First
 
 This document is written so that **anyone new to computers or AI tools** can follow it start to finish. Three things to know before you begin:
@@ -47,6 +48,7 @@ If you get stuck, feel free to jump straight to [Troubleshooting](#troubleshooti
 ---
 
 <a id="overview"></a>
+
 ## 1. What Is This? (Overview)
 
 When a business idea strikes, this tool makes **13 experts coldly assess "will this actually work?"**
@@ -87,6 +89,7 @@ Who this is for: a **solo-use tool** for individual founders, side-hustlers, and
 ---
 
 <a id="prerequisites"></a>
+
 ## 2. Prerequisites / Required Software
 
 ### Required Software
@@ -108,6 +111,7 @@ Who this is for: a **solo-use tool** for individual founders, side-hustlers, and
 ---
 
 <a id="download"></a>
+
 ## 3. Download
 
 "Downloading" (getting the code onto your machine) and "installing" (registering it with Claude Code so you can actually use it) are different steps. Of the three methods below, **Method A combines download and install into one step**; Methods B and C download first, then run one more install command.
@@ -123,6 +127,7 @@ All three continue into [Installation](#install) below. GitHub repository addres
 ---
 
 <a id="install"></a>
+
 ## 4. Installation
 
 ### Method A — Install directly from GitHub (Recommended, no clone needed)
@@ -205,6 +210,7 @@ claude plugin marketplace remove business-counselor-marketplace
 ---
 
 <a id="quickstart"></a>
+
 ## 5. Quick Start (3 lines)
 
 If [Claude Code](https://claude.ai/download) is already installed, in your terminal:
@@ -221,6 +227,7 @@ New to this? Follow the **[Installation](#install)** and **[Usage Guide](#usage)
 ---
 
 <a id="run"></a>
+
 ## 6. How to Run
 
 Once installed, here's how to actually try it.
@@ -238,6 +245,7 @@ Once installed, here's how to actually try it.
 ---
 
 <a id="usage"></a>
+
 ## 7. Usage Guide (step by step)
 
 ### Step 1 — (Optional) Interview about you
@@ -331,6 +339,7 @@ Shows all commands, the recommended flow, and a glossary on one screen. Feel fre
 ---
 
 <a id="commands"></a>
+
 ## 8. All Commands
 
 | Command | Description | Changes data? |
@@ -351,9 +360,11 @@ Shows all commands, the recommended flow, and a glossary on one screen. Feel fre
 ---
 
 <a id="how-it-works"></a>
+
 ## 9. How It Works (internals)
 
-- **Single-call principle**: one `/business-counselor:evaluate` call = one call to the internal subagent (`bc-idea-evaluator`). All 5 stages (13-persona review, Lean Canvas, Mom Test, Pre-mortem, adversarial debate) run **inside that single call**. No repeated per-response subagent calls, which keeps it fast and cost-efficient.
+- **Single-call principle**: one `/business-counselor:evaluate` call = one call to the internal subagent (`bc-idea-evaluator`), and one `/business-counselor:recommend` call = one call to the internal subagent (`bc-idea-generator`). All 5 stages (13-persona review, Lean Canvas, Mom Test, Pre-mortem, adversarial debate) — or, for recommendations, N ideas with Lean Canvas each — run **inside that single call**. No repeated per-response subagent calls, which keeps it fast and cost-efficient.
+- **Profile snapshot fingerprint**: every evaluation/recommendation output file stores a value (`profile_snapshot_hash`) that lets you tell which version of your profile it was based on. This value is **actually computed at the command-orchestration step, right before calling the subagent** — not by the subagent itself, since the subagent has no way to run a real computation (confirmed in v0.6.5 and fixed to work this way).
 - **Cold mode**: this tool is deliberately designed to block "this seems great!" positivity bias. If the legal (#11) or investor (#13) persona flags a strong negative signal, the final verdict is forced toward `iterate` or `no-go` even if other scores are high.
 - **Handling vague input**: if the idea is too short or unclear, the AI does not silently guess — it asks 1–2 clarifying questions first.
 - **Profile personalization**: if you've answered the `/business-counselor:start`/`resume` interview, the evaluation is tailored to your actual capital, time, and skills. Evaluation still works without a profile (general criteria apply).
@@ -362,6 +373,7 @@ Shows all commands, the recommended flow, and a glossary on one screen. Feel fre
 ---
 
 <a id="workflow"></a>
+
 ## 10. Workflow (full diagram)
 
 ```
@@ -385,9 +397,31 @@ Shows all commands, the recommended flow, and a glossary on one screen. Feel fre
 - **Single call**: one command = one analysis (zero extra calls). Fast & cost-saving.
 - **Cold mode**: blocks positivity bias and surfaces weaknesses/risks first. Legal/investment risks flagged with ⚠️.
 
+### Second flow — AI recommends ideas first (Phase 2)
+
+```
+/business-counselor:recommend [N]  (needs a profile, default 5)
+            │
+            ▼
+        AI generates N profile-based ideas + a Lean Canvas each, in one call
+            │
+            ▼
+        Screen: table (ID · title · fit score)   Saved: recommendation file (.md, ideas/generated/)
+            │
+            ├─ Want to dig deeper on one → /business-counselor:evaluate "<title>"
+            └─ Want to record a decision → /business-counselor:decide <id> <go|drop|iterate|defer> ["note"]
+                                              │
+                                              ▼
+                                    1 line appended to decisions.jsonl (append-only, never edited/deleted)
+
+/business-counselor:list  →  two tables: evaluation history + recommendation history, at a glance
+/business-counselor:show <id>  →  works for both eval-* and idea-* IDs
+```
+
 ---
 
 <a id="files"></a>
+
 ## 11. File / Document Locations
 
 **Plugin folder** (where you installed — code/config, no need to edit directly):
@@ -422,6 +456,7 @@ business-counselor/
 ---
 
 <a id="architecture"></a>
+
 ## 12. Architecture
 
 This plugin has **no separate server or database.** Everything runs on plain text files (Markdown) plus the single Claude Code program.
@@ -471,6 +506,7 @@ commands/*.md  (9 command definitions — documents describing each command's be
 ---
 
 <a id="security"></a>
+
 ## 13. Security / Data Flow
 
 ### Where your data goes (at a glance)
@@ -510,9 +546,58 @@ bc-idea-evaluator subagent (runs locally, Read/Write/Glob permissions only)
 ---
 
 <a id="changelog"></a>
+
 ## 14. Update Summary
 
 Below is a condensed summary. The full original text (with root-cause analysis) lives in [`CHANGELOG.md`](./CHANGELOG.md). Click each entry to expand.
+
+<details>
+<summary><strong>v0.6.5</strong> — 2026-08-04 · Fixed fake <code>profile_snapshot_hash</code> value + linter false-positive fix</summary>
+
+- Found and fixed a defect where `profile_snapshot_hash` in recommendation/evaluation output files was not a real SHA-256 computation but a string the AI made up — the value is now actually computed by the calling command and passed in
+- Also fixed a false-positive in the verification tool (frontmatter linter), which was requiring the same set of fields for recommendation and evaluation outputs even though they intentionally differ
+- No feature change (internal correctness fix)
+
+</details>
+
+<details>
+<summary><strong>v0.6.4</strong> — 2026-08-03 · Fixed <code>list</code>/<code>show</code> missing generated ideas + first confirmed real-world success of <code>recommend</code></summary>
+
+- `list`/`show` previously only found evaluation results (`evaluated/`) and missed generated ideas (`generated/`) — fixed to find both
+- `/business-counselor:recommend` was confirmed working for the first time in real user usage, validating the earlier install-sync fixes
+
+</details>
+
+<details>
+<summary><strong>v0.6.3</strong> — 2026-08-03 · Re-investigated install-sync root cause + fixed special-character defect in idea descriptions</summary>
+
+- The diagnosis from v0.6.2 turned out to be incomplete — the real root cause was that the install manager's version pointer wasn't being promoted (full detail in v0.6.2 below and in `CHANGELOG.md`)
+- Fixed 2 defects (in both evaluation and recommendation output) where a double quote in the idea description could corrupt the saved file
+
+</details>
+
+<details>
+<summary><strong>v0.6.2</strong> — 2026-08-03 · Boundary-value input review + first discovery of install-sync issue</summary>
+
+- Fixed 2 boundary-value defects: a `decide` note with special characters could corrupt the record file; ambiguous validation of the recommendation count input
+- First discovered, during real usage, that "updated but new commands don't show up" was actually an install-file sync issue
+
+</details>
+
+<details>
+<summary><strong>v0.6.1</strong> — 2026-08-03 · Full doc-vs-implementation audit + fixed 5 docs that hadn't caught up to Phase 2</summary>
+
+- Phase 2 (recommendation feature) code already existed, but `help` and README still told users "no recommendation feature" in 5 places — found and fixed
+
+</details>
+
+<details>
+<summary><strong>v0.6.0</strong> — 2026-08-02 · Phase 2 (recommendations + decision logging) officially activated</summary>
+
+- `/business-counselor:recommend` and `/business-counselor:decide` commands, plus a second analysis engine (`bc-idea-generator`), officially activated
+- Commands expanded from 7 to 9
+
+</details>
 
 <details>
 <summary><strong>v0.5.2</strong> — 2026-07-27 · New comprehensive beginner-friendly README (KR/EN, md+html)</summary>
@@ -584,6 +669,7 @@ Below is a condensed summary. The full original text (with root-cause analysis) 
 ---
 
 <a id="troubleshooting"></a>
+
 ## 15. Troubleshooting
 
 | Symptom | Cause | Fix |
@@ -592,7 +678,7 @@ Below is a condensed summary. The full original text (with root-cause analysis) 
 | `plugin list` shows no enabled | Missing register/install | Re-run `marketplace add sodam-ai/business-counselor` → `install ...@business-counselor-marketplace` |
 | `claude: command not found` | Claude Code missing/path issue | Install from [claude.ai/download](https://claude.ai/download), restart |
 | `git: command not found` | Git missing | Install [git-scm.com](https://git-scm.com/downloads) or use the [ZIP method (C)](#download) |
-| Updated but new commands still missing | Only ran one of the two update commands, or didn't restart | Run both lines under [How to Update](#install) + restart |
+| Updated but new commands still missing | Only ran one of the two update commands, or didn't restart, or Claude Code's internal cache didn't refresh (this has happened in real usage) | Run both lines under [How to Update](#install) + a **full** restart (not just closing a window) + check in a **brand-new chat**. If it still doesn't show up, this may be a cache-sync issue — please report it at [GitHub Issues](https://github.com/sodam-ai/business-counselor/issues) |
 | Evaluation takes 5–8 min | Deep analysis is naturally slow | Normal. Wait it out, or run it when you have time to spare |
 | Result is just a short card | Default is card mode | Full: `/business-counselor:evaluate "..." full` or `/business-counselor:show <id>` |
 | `show` says "not found" | You typed an id that doesn't exist (including this doc's example id) | Check your real id with `/business-counselor:list` first, then copy it in |
@@ -606,6 +692,7 @@ Below is a condensed summary. The full original text (with root-cause analysis) 
 ---
 
 <a id="faq"></a>
+
 ## 16. FAQ
 
 **Q. Is this tool paid?**
@@ -647,6 +734,7 @@ A. File an issue at the [GitHub repository](https://github.com/sodam-ai/business
 ---
 
 <a id="legal"></a>
+
 ## 17. Legal / Copyright / License / Commercial Use
 
 > The following is general information, not legal advice. For actual commercial use, redistribution, or legal decisions, consulting a qualified professional (e.g. a lawyer) is recommended.
@@ -707,6 +795,7 @@ This tool does **NOT** constitute:
 ---
 
 <a id="appendix"></a>
+
 ## 18. Appendix (Glossary)
 
 | Term | Meaning |
