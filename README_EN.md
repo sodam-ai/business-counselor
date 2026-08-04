@@ -536,6 +536,7 @@ bc-idea-evaluator subagent (runs locally, Read/Write/Glob permissions only)
 - **Minimal PII collection**: the interview only asks about birth year, residence (city/province level), family status, capital/monthly income, available time, skills, domain interests, and risk appetite. Sensitive identifiers like national ID numbers or bank account numbers are never part of the question set.
 - **No telemetry**: this plugin itself has no executable code — it's a markdown/prompt specification — and does not send usage data to any separate analytics or logging server. The only network communication is Claude Code's own model calls (needed to generate any AI response), which is Claude Code's own behavior, not something this plugin adds.
 - **Phase 3 exception (planned, not implemented)**: a future external market-research feature (`research` command) would need internet search. Even then, the plan is for it to be **disabled by default**, activating only when the user explicitly types that command — but this does not exist in the current version.
+- **Environment variables**: this plugin requires no separate environment variables. You never need to set an API key, password, or anything else — nothing beyond your existing Claude Code login.
 
 ### Deletion and backup
 
