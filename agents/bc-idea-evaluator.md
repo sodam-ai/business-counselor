@@ -46,7 +46,12 @@ frontmatter `mode` 필드에 `summary`(카드) 또는 `full`(전체) 기록.
 아이디어: {raw_idea}
 모드: {기본(카드) | 전체}   # "전체"/"상세"/--full 없으면 기본
 프로필 컨텍스트: {~/Documents/business-counselor/profile.md 전체 내용}
+프로필 스냅샷 해시: {evaluate.md가 Bash로 미리 계산한 sha256:... 값 또는 "(프로필 없음)"}
 ```
+
+- `profile_snapshot_hash`는 **호출자(evaluate.md)가 계산해서 전달한 값을 그대로 frontmatter에 기록**한다.
+  이 에이전트는 `Read, Write, Glob`만 가지고 있어 실제 SHA-256 계산이 불가능 — 직접 새 값을 지어내지
+  말 것(`bc-idea-generator.md`와 동일 원칙, 2026-08-04 도입)
 
 ---
 
@@ -71,7 +76,7 @@ id: eval-{YYYY-MM-DD}-{NNN}
 schema_version: "1.2"
 timestamp: {YYYY-MM-DDTHH:MM:SS}
 raw_idea: "{아이디어 원문 그대로}"
-profile_snapshot_hash: "(미구현, Phase 2)"
+profile_snapshot_hash: "{호출 시 전달받은 값을 그대로 기록, 프로필 없으면 (프로필 없음) — 2026-08-04 Phase 2 도입}"
 persona_13_scores:
   시니어개발자: {N}
   시니어보안: {N}
