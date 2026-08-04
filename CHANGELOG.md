@@ -4,6 +4,31 @@
 
 ---
 
+## [플러그인] v0.6.8 — 2026-08-04 (GUIDE 파일 점검 + 환경변수 명시 + GitHub 저장소 최종 점검, 문서 전용 릴리스)
+
+### 배경
+GUIDE.md/GUIDE.html/GUIDE_EN.md/GUIDE_EN.html 제거 요청 → git 전체 이력(`--all`)과 GitHub API 양쪽으로
+직접 확인한 결과 **이 저장소에는 해당 파일이 로컬·원격·git 이력 어디에도 존재한 적이 없음**을 확인(삭제할
+대상 자체가 없어 조치 불필요). GitHub 저장소 공개 상태도 `gh repo view`로 직접 확인한 결과 **이미
+PUBLIC**(`isPrivate: false`)이라 전환 조치 불필요.
+
+### 보완 (Added)
+- **README.md·README_EN.md**: §13 보안 섹션에 "환경변수: 없음" 항목 명시적 추가(기존엔 "API 키 불필요"로만
+  간접 서술돼 있어 명시적 용어 누락으로 판단)
+- README.html·README_EN.html은 기존과 동일하게 pandoc으로 정본 md에서 재생성
+
+### 확인됨 (GitHub 저장소 실측)
+- 공개 상태: PUBLIC, 기본 브랜치: main, 로컬 main = origin/main 완전 동기화
+- LICENSE: Apache License 2.0 원문, 저작권 고지 정상
+- 민감정보 스캔(git ls-files 위험 패턴 + 전체 시크릿 패턴): 0건
+- GitHub About 설명이 Phase 2(추천 기능) 반영 안 된 상태로 확인 → 별도로 `gh repo edit`로 갱신 예정(git
+  커밋 대상 아님, 저장소 메타데이터)
+
+### 제외 (Out of scope)
+- CHECKPOINT.md는 사용자 지시에 따라 이번 커밋에서 제외(로컬 전용 유지)
+
+---
+
 ## [플러그인] v0.6.7 — 2026-08-04 (법률/저작권/라이선스/상업적 용도 전수 점검, 문서 전용 릴리스)
 
 ### 배경
