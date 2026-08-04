@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Business Counselor (business-counselor) — User Guide</title>
-<meta name="description" content="business-counselor Claude Code plugin comprehensive guide: install, usage, commands, architecture, security, legal/license">
+<meta name="description" content="business-counselor Claude Code plugin
+comprehensive guide: install, usage, commands, architecture, security,
+legal/license">
 <style>
   :root{
     --bg:#faf9f6; --bg-alt:#f0ede6; --text:#231f1c; --text-dim:#5c564d;
@@ -36,21 +38,14 @@
   html{scroll-behavior:smooth;}
   body{
     margin:0; background:var(--bg); color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
     line-height:1.7; font-size:16px;
   }
   .wrap{max-width:860px; margin:0 auto; padding:2.5rem 1.25rem 5rem;}
-  header.top{border-bottom:2px solid var(--border); padding-bottom:1.5rem; margin-bottom:2rem;}
   h1{font-size:1.9rem; margin:0 0 .5rem; text-wrap:balance;}
-  .badge{display:inline-block; font-size:.8rem; color:var(--text-dim); background:var(--bg-alt); border:1px solid var(--border); border-radius:999px; padding:.2rem .8rem; margin-bottom:.6rem;}
-  .tagline{font-size:1.05rem; color:var(--text-dim); margin:.4rem 0 1rem;}
-  .lead{font-weight:600;}
-  .langline{font-size:.92rem; color:var(--text-dim);}
-  .langline a{margin:0 .15rem;}
   a{color:var(--link); text-decoration:underline; text-decoration-color:var(--border); text-underline-offset:2px;}
   a:hover{text-decoration-color:var(--link);}
   h2{font-size:1.4rem; margin:2.6rem 0 1rem; padding-top:.5rem; border-top:1px solid var(--border); scroll-margin-top:1rem;}
-  h2 .num{color:var(--accent); font-variant-numeric:tabular-nums; margin-right:.4rem;}
   h3{font-size:1.12rem; margin:1.8rem 0 .7rem;}
   p{margin:.8rem 0;}
   ul,ol{padding-left:1.4rem;}
@@ -58,8 +53,7 @@
   code{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace; background:var(--code-bg); padding:.12rem .38rem; border-radius:4px; font-size:.9em;}
   pre{background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:1rem 1.1rem; overflow-x:auto; font-size:.87rem; line-height:1.55;}
   pre code{background:none; padding:0; border-radius:0;}
-  .tblwrap{overflow-x:auto; margin:1rem 0; border:1px solid var(--border); border-radius:8px;}
-  table{border-collapse:collapse; width:100%; font-size:.92rem;}
+  table{border-collapse:collapse; width:100%; font-size:.92rem; display:block; overflow-x:auto; border:1px solid var(--border); border-radius:8px; margin:1rem 0;}
   th,td{padding:.55rem .8rem; border-bottom:1px solid var(--border); text-align:left; vertical-align:top;}
   thead th{background:var(--table-head); font-weight:700; white-space:nowrap;}
   tbody tr:last-child td{border-bottom:none;}
@@ -69,369 +63,749 @@
   details summary{cursor:pointer; font-weight:600;}
   details[open] summary{margin-bottom:.5rem;}
   details ul{margin:.4rem 0;}
-  nav.toc{background:var(--bg-alt); border:1px solid var(--border); border-radius:10px; padding:1.2rem 1.5rem; margin:1.5rem 0 2.5rem;}
-  nav.toc ol{padding-left:1.3rem; columns:1;}
-  nav.toc li{margin:.3rem 0;}
   hr{border:none; border-top:1px solid var(--border); margin:2.5rem 0;}
-  footer.bottom{margin-top:3rem; padding-top:1.5rem; border-top:2px solid var(--border); font-size:.9rem; color:var(--text-dim); text-align:center;}
-  .faq dt{font-weight:700; margin-top:1.1rem;}
-  .faq dd{margin:.3rem 0 0; color:var(--text);}
-  .glossary-term{font-weight:600;}
+  #TOC{background:var(--bg-alt); border:1px solid var(--border); border-radius:10px; padding:1.2rem 1.5rem; margin:1.5rem 0 2.5rem;}
+  #TOC ul{padding-left:1.3rem; list-style:decimal;}
+  #TOC li{margin:.3rem 0;}
   @media (max-width:640px){ .wrap{padding:1.5rem 1rem 4rem;} h1{font-size:1.5rem;} }
 </style>
 </head>
 <body>
 <div class="wrap">
-
-<header class="top">
-  <span class="badge">Claude Code Plugin · v0.5.2 · Phase 1 MVP · Apache-2.0</span>
-  <h1>AI Business Counselor (business-counselor)</h1>
-  <p class="tagline">Enter a business idea and AI instantly delivers a <strong>5-stage cold analysis</strong> from 13 expert perspectives.</p>
-  <p class="lead">No coding required. Even if you're still new to computers or smartphones, you can just follow along. Type commands in the Claude Code chat window — that's it.</p>
-  <p class="langline">🇺🇸 English · 🇰🇷 <a href="./README.md">한국어 README</a> (primary) · 📄 <a href="./README_EN.md">Markdown version</a></p>
-</header>
-
-<nav class="toc" aria-label="Table of Contents">
-  <strong>Table of Contents</strong>
-  <ol>
-    <li><a href="#read-me-first">Read This First</a></li>
-    <li><a href="#overview">What Is This? (Overview)</a></li>
-    <li><a href="#prerequisites">Prerequisites / Required Software</a></li>
-    <li><a href="#download">Download</a></li>
-    <li><a href="#install">Installation</a></li>
-    <li><a href="#quickstart">Quick Start (3 lines)</a></li>
-    <li><a href="#run">How to Run</a></li>
-    <li><a href="#usage">Usage Guide (step by step)</a></li>
-    <li><a href="#commands">All Commands</a></li>
-    <li><a href="#how-it-works">How It Works (internals)</a></li>
-    <li><a href="#workflow">Workflow (full diagram)</a></li>
-    <li><a href="#files">File / Document Locations</a></li>
-    <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#security">Security / Data Flow</a></li>
-    <li><a href="#changelog">Update Summary</a></li>
-    <li><a href="#troubleshooting">Troubleshooting</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#legal">Legal / Copyright / License / Commercial Use</a></li>
-    <li><a href="#appendix">Appendix (Glossary)</a></li>
-  </ol>
-</nav>
-
-<main>
-
-<section id="read-me-first">
-<h2><span class="num">0.</span>Read This First</h2>
-<p>This document is written so that <strong>anyone new to computers or AI tools</strong> can follow it start to finish. Three things to know before you begin:</p>
+<h1 id="ai-business-counselor-business-counselor">AI Business Counselor
+(business-counselor)</h1>
+<blockquote>
+<p><strong>Claude Code Plugin</strong> · v0.6.5 · Phase 1 + Phase 2
+(recommendations included) confirmed working in real use · Apache-2.0
+(open source, commercial use allowed) Enter a business idea and AI
+instantly delivers a <strong>5-stage cold analysis</strong> from 13
+expert perspectives.</p>
+</blockquote>
+<p><strong>No coding required.</strong> Even if you’re still new to
+computers or smartphones, you can just follow along. Type commands in
+the Claude Code chat window — that’s it.</p>
+<blockquote>
+<p>🇺🇸 English · 🇰🇷 <a href="./README.md">한국어 README</a> (primary) · 🖥
+<a href="./README_EN.html">View as HTML</a></p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol start="0" type="1">
+<li><a href="#read-me-first">Read This First</a></li>
+<li><a href="#overview">What Is This? (Overview)</a></li>
+<li><a href="#prerequisites">Prerequisites / Required Software</a></li>
+<li><a href="#download">Download</a></li>
+<li><a href="#install">Installation</a></li>
+<li><a href="#quickstart">Quick Start (3 lines)</a></li>
+<li><a href="#run">How to Run</a></li>
+<li><a href="#usage">Usage Guide (step by step)</a></li>
+<li><a href="#commands">All Commands</a></li>
+<li><a href="#how-it-works">How It Works (internals)</a></li>
+<li><a href="#workflow">Workflow (full diagram)</a></li>
+<li><a href="#files">File / Document Locations</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#security">Security / Data Flow</a></li>
+<li><a href="#changelog">Update Summary</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#legal">Legal / Copyright / License / Commercial
+Use</a></li>
+<li><a href="#appendix">Appendix (Glossary)</a></li>
+</ol>
+<hr />
+<p><a id="read-me-first"></a></p>
+<h2 id="read-this-first">0. Read This First</h2>
+<p>This document is written so that <strong>anyone new to computers or
+AI tools</strong> can follow it start to finish. Three things to know
+before you begin:</p>
 <ul>
-  <li><strong>"Terminal"</strong> = a text-based screen where you type commands instead of clicking icons. You'll get one when you install Claude Code.</li>
-  <li><strong>"Command (slash command)"</strong> = text starting with a slash (<code>/</code>), like <code>/business-counselor:evaluate</code>. You type it directly into the Claude Code <strong>chat window</strong> and press Enter. Note: the chat window, not the terminal.</li>
-  <li><strong>"Plugin"</strong> = an add-on that gives Claude Code a new capability. <code>business-counselor</code>, the subject of this document, is exactly that. Once installed, you get new commands starting with <code>/business-counselor:</code>.</li>
+<li><strong>“Terminal”</strong> = a text-based screen where you type
+commands instead of clicking icons. You’ll get one when you install
+Claude Code.</li>
+<li><strong>“Command (slash command)”</strong> = text starting with a
+slash (<code>/</code>), like <code>/business-counselor:evaluate</code>.
+You type it directly into the Claude Code <strong>chat window</strong>
+and press Enter. Note: the chat window, not the terminal.</li>
+<li><strong>“Plugin”</strong> = an add-on that gives Claude Code a new
+capability. <code>business-counselor</code>, the subject of this
+document, is exactly that. Once installed, you get new commands starting
+with <code>/business-counselor:</code>.</li>
 </ul>
-<p>If you get stuck, feel free to jump straight to <a href="#troubleshooting">Troubleshooting</a> or the <a href="#faq">FAQ</a>.</p>
-</section>
-
-<section id="overview">
-<h2><span class="num">1.</span>What Is This? (Overview)</h2>
-<p>When a business idea strikes, this tool makes <strong>13 experts coldly assess "will this actually work?"</strong></p>
+<p>If you get stuck, feel free to jump straight to <a
+href="#troubleshooting">Troubleshooting</a> or the <a
+href="#faq">FAQ</a>.</p>
+<hr />
+<p><a id="overview"></a></p>
+<h2 id="what-is-this-overview">1. What Is This? (Overview)</h2>
+<p>When a business idea strikes, this tool makes <strong>13 experts
+coldly assess “will this actually work?”</strong></p>
 <ul>
-  <li>Alone, it's easy to fall into "this seems great!" self-confidence bias.</li>
-  <li>This tool exposes weaknesses via <strong>13 expert lenses (developer, security, legal, investor, …) + adversarial debate (pro vs con vs judge)</strong>.</li>
-  <li>The result is a one-line verdict: <strong>go / iterate / no-go.</strong></li>
+<li>Alone, it’s easy to fall into “this seems great!” self-confidence
+bias.</li>
+<li>This tool exposes weaknesses via <strong>13 expert lenses
+(developer, security, legal, investor, …) + adversarial debate (pro vs
+con vs judge)</strong>.</li>
+<li>The result is a one-line verdict: <strong>go / iterate /
+no-go.</strong></li>
 </ul>
-<p>It's not a separate app or website — it runs <strong>inside Claude Code via commands</strong>. All results are stored <strong>on your local machine only</strong> (zero external transmission).</p>
-
-<h3>Key Features</h3>
-<p>A single input triggers a <strong>one-call analysis</strong> (no extra API calls — see <a href="#security">Security / Data Flow</a>).</p>
-<p><strong>Top "At-a-Glance Summary" card</strong> (always shown) — verdict, confidence, strength, blocker, next action:</p>
+<p>It’s not a separate app or website — it runs <strong>inside Claude
+Code via commands</strong>. All results are stored <strong>on your local
+machine only</strong> (zero external transmission).</p>
+<h3 id="key-features">Key Features</h3>
+<p>A single input triggers a <strong>one-call analysis</strong> (no
+extra API calls — see <a href="#security">Security / Data Flow</a>).</p>
+<p><strong>Top “At-a-Glance Summary” card</strong> (always shown) —
+verdict, confidence, strength, blocker, next action:</p>
 <pre><code>## At-a-Glance Summary
 - Verdict: ⛔ no-go  ·  Confidence: 78/100
 - Strength: ...
 - Blocker: ...
 - Next action: ...</code></pre>
-<p>Below it, the <strong>5-stage detail</strong> (only when you want it — see <a href="#usage">Usage Guide</a>):</p>
-<div class="tblwrap"><table>
-<thead><tr><th>Stage</th><th>Name</th><th>Description</th></tr></thead>
+<p>Below it, the <strong>5-stage detail</strong> (only when you want it
+— see <a href="#usage">Usage Guide</a>):</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 23%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>§ 1</td><td><strong>13-Persona Evaluation</strong></td><td>13 experts (dev, security, legal, investor, …) score 1–5 + ⚠️ risk flags</td></tr>
-<tr><td>§1 add-on</td><td><strong>🗣 Target Customer's Voice</strong></td><td>The actual paying customer's 1st-person reaction (would I buy, dealbreaker, alternative)</td></tr>
-<tr><td>§ 2</td><td><strong>Lean Canvas</strong></td><td>Auto-generated 9-block business model (problem, customer, revenue, …)</td></tr>
-<tr><td>§ 3</td><td><strong>Mom Test Questions</strong></td><td>5 past-behavior-based customer interview questions</td></tr>
-<tr><td>§ 4</td><td><strong>Pre-mortem</strong></td><td>Top 3 failure causes + probability + mitigation, assuming it already failed</td></tr>
-<tr><td>§ 5</td><td><strong>Adversarial Debate</strong></td><td>Bull (pro) · Bear (con) · Judge (ruling) → go / iterate / no-go</td></tr>
-</tbody></table></div>
-<p>Who this is for: a <strong>solo-use tool</strong> for individual founders, side-hustlers, and side-project planners who want to stress-test a business idea. There is no team/multi-user feature (no shared accounts, no shared dashboard).</p>
-</section>
-
-<section id="prerequisites">
-<h2><span class="num">2.</span>Prerequisites / Required Software</h2>
-<h3>Required Software</h3>
-<div class="tblwrap"><table>
-<thead><tr><th>Requirement</th><th>Purpose</th><th>Required?</th><th>Download</th></tr></thead>
+<tr>
+<td>§ 1</td>
+<td><strong>13-Persona Evaluation</strong></td>
+<td>13 experts (dev, security, legal, investor, …) score 1–5 + ⚠️ risk
+flags</td>
+</tr>
+<tr>
+<td>§1 add-on</td>
+<td><strong>🗣 Target Customer’s Voice</strong></td>
+<td>The actual paying customer’s 1st-person reaction (would I buy,
+dealbreaker, alternative)</td>
+</tr>
+<tr>
+<td>§ 2</td>
+<td><strong>Lean Canvas</strong></td>
+<td>Auto-generated 9-block business model (problem, customer, revenue,
+…)</td>
+</tr>
+<tr>
+<td>§ 3</td>
+<td><strong>Mom Test Questions</strong></td>
+<td>5 past-behavior-based customer interview questions</td>
+</tr>
+<tr>
+<td>§ 4</td>
+<td><strong>Pre-mortem</strong></td>
+<td>Top 3 failure causes + probability + mitigation, assuming it already
+failed</td>
+</tr>
+<tr>
+<td>§ 5</td>
+<td><strong>Adversarial Debate</strong></td>
+<td>Bull (pro) · Bear (con) · Judge (ruling) → go / iterate / no-go</td>
+</tr>
+</tbody>
+</table>
+<p>Who this is for: a <strong>solo-use tool</strong> for individual
+founders, side-hustlers, and side-project planners who want to
+stress-test a business idea. There is no team/multi-user feature (no
+shared accounts, no shared dashboard).</p>
+<hr />
+<p><a id="prerequisites"></a></p>
+<h2 id="prerequisites-required-software">2. Prerequisites / Required
+Software</h2>
+<h3 id="required-software">Required Software</h3>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 24%" />
+<col style="width: 13%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Purpose</th>
+<th style="text-align: center;">Required?</th>
+<th>Download</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>Claude Code</strong></td><td>The program this plugin runs inside</td><td><strong>Required</strong></td><td><a href="https://claude.ai/download">claude.ai/download</a></td></tr>
-<tr><td><strong>Claude account</strong></td><td>To log into Claude Code (this plugin has no separate login)</td><td><strong>Required</strong></td><td>Prompted on first Claude Code launch</td></tr>
-<tr><td><strong>Git</strong></td><td>Needed for <a href="#install">Installation</a> methods A/B</td><td>Optional (Method C doesn't need it)</td><td><a href="https://git-scm.com/downloads">git-scm.com/downloads</a></td></tr>
-</tbody></table></div>
-<h3>Before You Start</h3>
+<tr>
+<td><strong>Claude Code</strong></td>
+<td>The program this plugin runs inside</td>
+<td style="text-align: center;"><strong>Required</strong></td>
+<td><a href="https://claude.ai/download">claude.ai/download</a></td>
+</tr>
+<tr>
+<td><strong>Claude account</strong></td>
+<td>To log into Claude Code (this plugin has no separate login)</td>
+<td style="text-align: center;"><strong>Required</strong></td>
+<td>Prompted on first Claude Code launch</td>
+</tr>
+<tr>
+<td><strong>Git</strong></td>
+<td>Needed for <a href="#install">Installation</a> methods A/B</td>
+<td style="text-align: center;">Optional (Method C doesn’t need it)</td>
+<td><a
+href="https://git-scm.com/downloads">git-scm.com/downloads</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="before-you-start">Before You Start</h3>
 <ul>
-  <li><strong>Operating system</strong>: Windows and macOS are both supported. Linux is expected to work wherever Claude Code itself runs, but this project has not specifically tested it.</li>
-  <li><strong>Internet</strong>: Needed for install, and for Claude Code's own AI responses. Beyond that, this plugin does not separately transmit your data anywhere during interviews/evaluations.</li>
-  <li><strong>Cost</strong>: The plugin itself is free and open source. Any subscription/usage cost for Claude Code follows Claude Code's own pricing — this plugin adds no separate charge.</li>
-  <li><strong>Sign-up / API key / payment</strong>: Not required by this plugin. Only your existing Claude Code login is used.</li>
-  <li><strong>Disk space</strong>: The plugin's code is a few hundred KB of markdown files, and your accumulated data (interviews, evaluations) is plain text — negligible storage impact.</li>
+<li><strong>Operating system</strong>: Windows and macOS are both
+supported. Linux is expected to work wherever Claude Code itself runs,
+but this project has not specifically tested it.</li>
+<li><strong>Internet</strong>: Needed for install, and for Claude Code’s
+own AI responses. Beyond that, this plugin does not separately transmit
+your data anywhere during interviews/evaluations.</li>
+<li><strong>Cost</strong>: The plugin itself is free and open source.
+Any subscription/usage cost for Claude Code follows Claude Code’s own
+pricing — this plugin adds no separate charge.</li>
+<li><strong>Sign-up / API key / payment</strong>: Not required by this
+plugin. Only your existing Claude Code login is used.</li>
+<li><strong>Disk space</strong>: The plugin’s code is a few hundred KB
+of markdown files, and your accumulated data (interviews, evaluations)
+is plain text — negligible storage impact.</li>
 </ul>
-</section>
-
-<section id="download">
-<h2><span class="num">3.</span>Download</h2>
-<p>"Downloading" (getting the code onto your machine) and "installing" (registering it with Claude Code so you can actually use it) are different steps. Of the three methods below, <strong>Method A combines download and install into one step</strong>; Methods B and C download first, then run one more install command.</p>
-<div class="tblwrap"><table>
-<thead><tr><th>Method</th><th>How it downloads</th><th>Best for</th></tr></thead>
+<hr />
+<p><a id="download"></a></p>
+<h2 id="download">3. Download</h2>
+<p>“Downloading” (getting the code onto your machine) and “installing”
+(registering it with Claude Code so you can actually use it) are
+different steps. Of the three methods below, <strong>Method A combines
+download and install into one step</strong>; Methods B and C download
+first, then run one more install command.</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 51%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr>
+<th>Method</th>
+<th>How it downloads</th>
+<th>Best for</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><strong>A. Install directly from GitHub (Recommended)</strong></td><td>No separate download step — the registration command downloads it</td><td>Most users, especially first-timers</td></tr>
-<tr><td><strong>B. Git clone</strong></td><td><code>git clone</code> pulls down the full repository</td><td>Users who want to read or edit the code directly</td></tr>
-<tr><td><strong>C. ZIP download</strong></td><td>Download a .zip from the GitHub web page</td><td>Users who don't want to install Git</td></tr>
-</tbody></table></div>
-<p>All three continue into <a href="#install">Installation</a> below. GitHub repository address: <code>https://github.com/sodam-ai/business-counselor</code> (Public, accessible to anyone).</p>
-</section>
-
-<section id="install">
-<h2><span class="num">4.</span>Installation</h2>
-<h3>Method A — Install directly from GitHub (Recommended, no clone needed)</h3>
+<tr>
+<td><strong>A. Install directly from GitHub (Recommended)</strong></td>
+<td>No separate download step — the registration command downloads
+it</td>
+<td>Most users, especially first-timers</td>
+</tr>
+<tr>
+<td><strong>B. Git clone</strong></td>
+<td><code>git clone</code> pulls down the full repository</td>
+<td>Users who want to read or edit the code directly</td>
+</tr>
+<tr>
+<td><strong>C. ZIP download</strong></td>
+<td>Download a .zip from the GitHub web page</td>
+<td>Users who don’t want to install Git</td>
+</tr>
+</tbody>
+</table>
+<p>All three continue into <a href="#install">Installation</a> below.
+GitHub repository address:
+<code>https://github.com/sodam-ai/business-counselor</code> (Public,
+accessible to anyone).</p>
+<hr />
+<p><a id="install"></a></p>
+<h2 id="installation">4. Installation</h2>
+<h3
+id="method-a-install-directly-from-github-recommended-no-clone-needed">Method
+A — Install directly from GitHub (Recommended, no clone needed)</h3>
 <p>Paste one line at a time into your terminal:</p>
-<pre><code># 1. Register the marketplace (references the GitHub repo directly — no clone needed)
-claude plugin marketplace add sodam-ai/business-counselor
-
-# 2. Install the plugin
-claude plugin install business-counselor@business-counselor-marketplace
-
-# 3. Verify
-claude plugin list</code></pre>
-<p>→ Success when you see <code>business-counselor@business-counselor-marketplace  √ enabled</code>.</p>
-
-<h3>Method B — Clone with Git (when editing the code directly)</h3>
-<blockquote><p><strong>Note:</strong> After <code>git clone</code>, do NOT enter the cloned folder — run the next commands from the location where the folder is visible.</p></blockquote>
-<pre><code># 1. Download the repository
-git clone https://github.com/sodam-ai/business-counselor.git
-
-# 2. Register marketplace from the local path (from where the folder is visible)
-claude plugin marketplace add ./business-counselor
-
-# 3. Install the plugin
-claude plugin install business-counselor@business-counselor-marketplace
-
-# 4. Verify
-claude plugin list</code></pre>
-
-<h3>Method C — Install via ZIP (No Git)</h3>
-<ol>
-  <li><a href="https://github.com/sodam-ai/business-counselor">GitHub page</a> → green <strong>Code</strong> button → <strong>Download ZIP</strong></li>
-  <li>Extract the ZIP</li>
-  <li>Rename the folder to <strong><code>business-counselor</code></strong> (remove <code>-main</code> if present)</li>
-  <li>Open a terminal where the folder is visible and run:</li>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Register the marketplace (references the GitHub repo directly — no clone needed)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin marketplace add sodam-ai/business-counselor</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Install the plugin</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin install business-counselor@business-counselor-marketplace</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Verify</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin list</span></code></pre></div>
+<p>→ Success when you see
+<code>business-counselor@business-counselor-marketplace  √ enabled</code>.</p>
+<h3 id="method-b-clone-with-git-when-editing-the-code-directly">Method B
+— Clone with Git (when editing the code directly)</h3>
+<blockquote>
+<p><strong>Note:</strong> After <code>git clone</code>, do NOT enter the
+cloned folder — run the next commands from the location where the folder
+is visible.</p>
+</blockquote>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Download the repository</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/sodam-ai/business-counselor.git</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Register marketplace from the local path (from where the folder is visible)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin marketplace add ./business-counselor</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Install the plugin</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin install business-counselor@business-counselor-marketplace</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Verify</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin list</span></code></pre></div>
+<h3 id="method-c-install-via-zip-no-git">Method C — Install via ZIP (No
+Git)</h3>
+<ol type="1">
+<li><a href="https://github.com/sodam-ai/business-counselor">GitHub
+page</a> → green <strong>Code</strong> button → <strong>Download
+ZIP</strong></li>
+<li>Extract the ZIP</li>
+<li>Rename the folder to
+<strong><code>business-counselor</code></strong> (remove
+<code>-main</code> if present)</li>
+<li>Open a terminal where the folder is visible and run:</li>
 </ol>
-<pre><code>claude plugin marketplace add ./business-counselor
-claude plugin install business-counselor@business-counselor-marketplace
-claude plugin list</code></pre>
-<p><strong>Fully quit and relaunch Claude Code</strong> after install to activate <code>/business-counselor:*</code> commands.</p>
-
-<h3>How to Update</h3>
-<p>When a new version is released (see <a href="#changelog">Update Summary</a>), run both commands in order:</p>
-<pre><code>claude plugin marketplace update business-counselor-marketplace
-claude plugin update business-counselor@business-counselor-marketplace</code></pre>
-<blockquote><p><strong>Why two lines?</strong> Updating only the marketplace metadata without updating the plugin itself will not bring in new behavior (confirmed by direct testing). Always run <strong>both, in order</strong>. Restart Claude Code afterward as well.</p></blockquote>
-
-<h3>How to Uninstall</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin marketplace add ./business-counselor</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin install business-counselor@business-counselor-marketplace</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin list</span></code></pre></div>
+<p><strong>Fully quit and relaunch Claude Code</strong> after install to
+activate <code>/business-counselor:*</code> commands.</p>
+<h3 id="how-to-update">How to Update</h3>
+<p>When a new version is released (see <a href="#changelog">Update
+Summary</a>), run both commands in order:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin marketplace update business-counselor-marketplace</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin update business-counselor@business-counselor-marketplace</span></code></pre></div>
+<blockquote>
+<p><strong>Why two lines?</strong> Updating only the marketplace
+metadata without updating the plugin itself will not bring in new
+behavior (confirmed by direct testing). Always run <strong>both, in
+order</strong>. Restart Claude Code afterward as well.</p>
+</blockquote>
+<h3 id="how-to-uninstall">How to Uninstall</h3>
 <p>To disable just the plugin:</p>
-<pre><code>claude plugin uninstall business-counselor@business-counselor-marketplace</code></pre>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin uninstall business-counselor@business-counselor-marketplace</span></code></pre></div>
 <p>To also remove the marketplace registration entirely:</p>
-<pre><code>claude plugin marketplace remove business-counselor-marketplace</code></pre>
-<blockquote><p>Exact option names may vary by your installed Claude Code version — run <code>claude plugin --help</code> to check the current command list. <strong>Note</strong>: uninstalling the plugin does <strong>not</strong> automatically delete your profile/evaluation history stored at <code>~/Documents/business-counselor/</code> — that data lives in a separate Documents folder, not inside the plugin folder (see <a href="#files">File / Document Locations</a>). To remove your profile itself, use <a href="#commands"><code>/business-counselor:edit</code></a> or delete that folder directly.</p></blockquote>
-</section>
-
-<section id="quickstart">
-<h2><span class="num">5.</span>Quick Start (3 lines)</h2>
-<p>If <a href="https://claude.ai/download">Claude Code</a> is already installed, in your terminal:</p>
-<pre><code>claude plugin marketplace add sodam-ai/business-counselor
-claude plugin install business-counselor@business-counselor-marketplace</code></pre>
-<p>→ Restart Claude Code → type <code>/business-counselor:evaluate "my idea in one line"</code>. Done.</p>
-<p>New to this? Follow the <strong><a href="#install">Installation</a></strong> and <strong><a href="#usage">Usage Guide</a></strong> below step by step.</p>
-</section>
-
-<section id="run">
-<h2><span class="num">6.</span>How to Run</h2>
-<p>Once installed, here's how to actually try it.</p>
-<ol>
-  <li><strong>Open Claude Code.</strong> Launch the desktop app, or type <code>claude</code> in a terminal (varies by setup — follow <a href="https://claude.ai/download">claude.ai/download</a>).</li>
-  <li><strong>Confirm you see a chat window.</strong> All commands go here from now on (not the terminal).</li>
-  <li><strong>Double-check install status</strong> — not in the chat window, but back in the terminal, run <code>claude plugin list</code> and confirm <code>business-counselor</code> shows <code>enabled</code>.</li>
-  <li><strong>Type your first command.</strong> In the chat window, type exactly:
-    <pre><code>/business-counselor:help</code></pre>
-    This command doesn't save or change anything — it just shows usage info — so it's the safest first thing to try.
-  </li>
-  <li>If <code>/business-counselor:help</code> shows the command/glossary summary correctly, both installation and execution succeeded. Move on to <a href="#usage">Usage Guide</a>.</li>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin marketplace remove business-counselor-marketplace</span></code></pre></div>
+<blockquote>
+<p>Exact option names may vary by your installed Claude Code version —
+run <code>claude plugin --help</code> to check the current command list.
+<strong>Note</strong>: uninstalling the plugin does <strong>not</strong>
+automatically delete your profile/evaluation history stored at
+<code>~/Documents/business-counselor/</code> — that data lives in a
+separate Documents folder, not inside the plugin folder (see <a
+href="#files">File / Document Locations</a>). To remove your profile
+itself, use <a
+href="#commands"><code>/business-counselor:edit</code></a> or delete
+that folder directly.</p>
+</blockquote>
+<hr />
+<p><a id="quickstart"></a></p>
+<h2 id="quick-start-3-lines">5. Quick Start (3 lines)</h2>
+<p>If <a href="https://claude.ai/download">Claude Code</a> is already
+installed, in your terminal:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin marketplace add sodam-ai/business-counselor</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> plugin install business-counselor@business-counselor-marketplace</span></code></pre></div>
+<p>→ Restart Claude Code → type
+<code>/business-counselor:evaluate "my idea in one line"</code>.
+Done.</p>
+<p>New to this? Follow the <strong><a
+href="#install">Installation</a></strong> and <strong><a
+href="#usage">Usage Guide</a></strong> below step by step.</p>
+<hr />
+<p><a id="run"></a></p>
+<h2 id="how-to-run">6. How to Run</h2>
+<p>Once installed, here’s how to actually try it.</p>
+<ol type="1">
+<li><p><strong>Open Claude Code.</strong> Launch the desktop app, or
+type <code>claude</code> in a terminal (varies by setup — follow <a
+href="https://claude.ai/download">claude.ai/download</a>).</p></li>
+<li><p><strong>Confirm you see a chat window.</strong> All commands go
+here from now on (not the terminal).</p></li>
+<li><p><strong>Double-check install status</strong> — not in the chat
+window, but back in the terminal, run <code>claude plugin list</code>
+and confirm <code>business-counselor</code> shows
+<code>enabled</code>.</p></li>
+<li><p><strong>Type your first command.</strong> In the chat window,
+type exactly:</p>
+<pre><code>/business-counselor:help</code></pre>
+<p>This command doesn’t save or change anything — it just shows usage
+info — so it’s the safest first thing to try.</p></li>
+<li><p>If <code>/business-counselor:help</code> shows the
+command/glossary summary correctly, both installation and execution
+succeeded. Move on to <a href="#usage">Usage Guide</a>.</p></li>
 </ol>
-</section>
-
-<section id="usage">
-<h2><span class="num">7.</span>Usage Guide (step by step)</h2>
-<h3>Step 1 — (Optional) Interview about you</h3>
+<hr />
+<p><a id="usage"></a></p>
+<h2 id="usage-guide-step-by-step">7. Usage Guide (step by step)</h2>
+<h3 id="step-1-optional-interview-about-you">Step 1 — (Optional)
+Interview about you</h3>
 <pre><code>/business-counselor:start</code></pre>
-<p>Answer ~12 questions (capital, time, skills, interests) in plain language (1–2 at a time, ~30–40 min). This personalizes future analyses. (You can skip and evaluate directly — it uses general criteria.)</p>
+<p>Answer ~12 questions (capital, time, skills, interests) in plain
+language (1–2 at a time, ~30–40 min). This personalizes future analyses.
+(You can skip and evaluate directly — it uses general criteria.)</p>
 <p>If you paused mid-interview, continue with:</p>
 <pre><code>/business-counselor:resume</code></pre>
-<p><code>resume</code> only re-asks the fields you <strong>haven't answered yet</strong> — it never re-asks fields you already filled in.</p>
-
-<h3>Step 2 — (Optional) Edit or delete what you already answered</h3>
-<p>To <strong>change the value</strong> of an already-answered field, or clear it:</p>
-<pre><code>/business-counselor:edit "change my capital to 30 million KRW"
-/business-counselor:edit "clear my domain interests"</code></pre>
+<p><code>resume</code> only re-asks the fields you <strong>haven’t
+answered yet</strong> — it never re-asks fields you already filled
+in.</p>
+<h3 id="step-2-optional-edit-or-delete-what-you-already-answered">Step 2
+— (Optional) Edit or delete what you already answered</h3>
+<p>To <strong>change the value</strong> of an already-answered field, or
+clear it:</p>
+<pre><code>/business-counselor:edit &quot;change my capital to 30 million KRW&quot;
+/business-counselor:edit &quot;clear my domain interests&quot;</code></pre>
 <p>To <strong>delete your entire profile</strong>:</p>
-<pre><code>/business-counselor:edit "delete my whole profile"</code></pre>
-<p>Full deletion is <strong>irreversible.</strong> The AI shows an irreversibility warning first, and nothing is actually deleted until you clearly confirm (e.g. "yes/delete"). Your past <strong>idea evaluations are preserved</strong> even after full profile deletion (only the profile itself is removed).</p>
-
-<h3>Step 3 — Analyze an idea</h3>
-<pre><code>/business-counselor:evaluate "an AI service that analyzes real estate listings"</code></pre>
-<p>Wrap the idea in <strong>quotes (<code>"</code>)</strong>. If the idea is too short or vague, AI asks 1–2 clarifying questions first. The result appears as a top <strong>"At-a-Glance Summary" card</strong>.</p>
-
-<h3>Default (card) / Full (detail) mode</h3>
+<pre><code>/business-counselor:edit &quot;delete my whole profile&quot;</code></pre>
+<p>Full deletion is <strong>irreversible.</strong> The AI shows an
+irreversibility warning first, and nothing is actually deleted until you
+clearly confirm (e.g. “yes/delete”). Your past <strong>idea evaluations
+are preserved</strong> even after full profile deletion (only the
+profile itself is removed).</p>
+<h3 id="step-3-analyze-an-idea">Step 3 — Analyze an idea</h3>
+<pre><code>/business-counselor:evaluate &quot;an AI service that analyzes real estate listings&quot;</code></pre>
+<p>Wrap the idea in <strong>quotes (<code>"</code>)</strong>. If the
+idea is too short or vague, AI asks 1–2 clarifying questions first. The
+result appears as a top <strong>“At-a-Glance Summary” card</strong>.</p>
+<h3 id="default-card-full-detail-mode">Default (card) / Full (detail)
+mode</h3>
 <ul>
-  <li><strong>Default</strong>: <code>/business-counselor:evaluate "idea"</code> → <strong>summary card only</strong> (fast, short — usually tens of seconds to a few minutes).</li>
-  <li><strong>Full</strong>: <code>/business-counselor:evaluate "idea" full</code> → <strong>full §1–§5 detail</strong> generated & saved (internally, default mode also reasons through all 5 stages — only the on-screen display differs, analysis depth is the same either way. Taking 5–8 minutes is normal).</li>
-  <li>Re-view saved full analysis later: <code>/business-counselor:show &lt;id&gt;</code></li>
+<li><strong>Default</strong>:
+<code>/business-counselor:evaluate "idea"</code> → <strong>summary card
+only</strong> (fast, short — usually tens of seconds to a few
+minutes).</li>
+<li><strong>Full</strong>:
+<code>/business-counselor:evaluate "idea" full</code> → <strong>full
+§1–§5 detail</strong> generated &amp; saved (internally, default mode
+also reasons through all 5 stages — only the on-screen display differs,
+analysis depth is the same either way. Taking 5–8 minutes is
+normal).</li>
+<li>Re-view saved full analysis later:
+<code>/business-counselor:show &lt;id&gt;</code></li>
 </ul>
-
-<h3>Step 4 — Review past records</h3>
+<h3 id="step-4-review-past-records">Step 4 — Review past records</h3>
 <pre><code>/business-counselor:list</code></pre>
 <p>Shows all past analyses with id, verdict, and confidence.</p>
 <pre><code>/business-counselor:show eval-2026-07-27-001</code></pre>
-<p>Use the real id shown in your <code>list</code> output. <strong>Note</strong>: the example id <code>eval-2026-07-27-001</code> in this document is a fictional placeholder for illustration — it does not actually exist, and typing it as-is will return "not found." Always copy an id that actually appears in your own <code>/business-counselor:list</code> output.</p>
-
-<h3>If you get stuck</h3>
+<p>Use the real id shown in your <code>list</code> output.
+<strong>Note</strong>: the example id <code>eval-2026-07-27-001</code>
+in this document is a fictional placeholder for illustration — it does
+not actually exist, and typing it as-is will return “not found.” Always
+copy an id that actually appears in your own
+<code>/business-counselor:list</code> output.</p>
+<h3 id="step-5-optional-let-ai-recommend-ideas-first">Step 5 —
+(Optional) Let AI recommend ideas first</h3>
+<p>If you don’t have an idea to bring and want the AI to propose some
+based on your profile:</p>
+<pre><code>/business-counselor:recommend 5</code></pre>
+<p>Recommends 5 ideas (default, adjustable 1–10) based on your profile,
+each with a Lean Canvas. You can deep-evaluate a favorite with
+<code>/business-counselor:evaluate</code>, or record a decision
+directly:</p>
+<pre><code>/business-counselor:decide idea-2026-08-02-001 go &quot;starting with customer interviews&quot;</code></pre>
+<p><code>&lt;id&gt;</code> can be either <code>eval-*</code>
+(evaluation) or <code>idea-*</code> (recommendation), and
+<code>&lt;action&gt;</code> is one of
+<code>go</code>/<code>drop</code>/<code>iterate</code>/<code>defer</code>.
+Decisions accumulate append-only in <code>decisions.jsonl</code>,
+viewable later via <code>/business-counselor:show &lt;id&gt;</code>.</p>
+<h3 id="if-you-get-stuck">If you get stuck</h3>
 <pre><code>/business-counselor:help</code></pre>
-<p>Shows all commands, the recommended flow, and a glossary on one screen. Feel free to run this any time.</p>
-</section>
-
-<section id="commands">
-<h2><span class="num">8.</span>All Commands</h2>
-<div class="tblwrap"><table>
-<thead><tr><th>Command</th><th>Description</th><th>Changes data?</th></tr></thead>
+<p>Shows all commands, the recommended flow, and a glossary on one
+screen. Feel free to run this any time.</p>
+<hr />
+<p><a id="commands"></a></p>
+<h2 id="all-commands">8. All Commands</h2>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 50%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+<th style="text-align: center;">Changes data?</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><code>/business-counselor:help</code></td><td>Usage, commands &amp; glossary on one screen</td><td>No</td></tr>
-<tr><td><code>/business-counselor:start</code></td><td>Start the AI interview about you (first time)</td><td>Creates profile.md</td></tr>
-<tr><td><code>/business-counselor:resume</code></td><td>Continue the interview (fill missing info only)</td><td>Updates profile.md</td></tr>
-<tr><td><code>/business-counselor:edit "request"</code></td><td>Change or clear an already-answered field, or delete the whole profile (confirmation required)</td><td>Changes/deletes profile.md</td></tr>
-<tr><td><code>/business-counselor:evaluate "idea"</code></td><td>Analyze — default is the summary card</td><td>Creates an evaluation file</td></tr>
-<tr><td><code>/business-counselor:evaluate "idea" full</code></td><td>Analyze — full §1–§5 detail shown on screen</td><td>Creates an evaluation file</td></tr>
-<tr><td><code>/business-counselor:list</code></td><td>List past analyses (id · verdict · confidence)</td><td>No</td></tr>
-<tr><td><code>/business-counselor:show &lt;id&gt;</code></td><td>Re-view a specific full analysis</td><td>No</td></tr>
-</tbody></table></div>
-<blockquote><p>Stuck? Type <code>/business-counselor:help</code> first.</p></blockquote>
-</section>
-
-<section id="how-it-works">
-<h2><span class="num">9.</span>How It Works (internals)</h2>
+<tr>
+<td><code>/business-counselor:help</code></td>
+<td>Usage, commands &amp; glossary on one screen</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><code>/business-counselor:start</code></td>
+<td>Start the AI interview about you (first time)</td>
+<td style="text-align: center;">Creates profile.md</td>
+</tr>
+<tr>
+<td><code>/business-counselor:resume</code></td>
+<td>Continue the interview (fill missing info only)</td>
+<td style="text-align: center;">Updates profile.md</td>
+</tr>
+<tr>
+<td><code>/business-counselor:edit "request"</code></td>
+<td>Change or clear an already-answered field, or delete the whole
+profile (confirmation required)</td>
+<td style="text-align: center;">Changes/deletes profile.md</td>
+</tr>
+<tr>
+<td><code>/business-counselor:evaluate "idea"</code></td>
+<td>Analyze — default is the summary card</td>
+<td style="text-align: center;">Creates an evaluation file</td>
+</tr>
+<tr>
+<td><code>/business-counselor:evaluate "idea" full</code></td>
+<td>Analyze — full §1–§5 detail shown on screen</td>
+<td style="text-align: center;">Creates an evaluation file</td>
+</tr>
+<tr>
+<td><code>/business-counselor:recommend [N]</code></td>
+<td>Recommend N ideas (default 5) based on your profile, each with a
+Lean Canvas</td>
+<td style="text-align: center;">Creates recommendation file(s)</td>
+</tr>
+<tr>
+<td><code>/business-counselor:decide &lt;id&gt; &lt;action&gt;</code></td>
+<td>Record a decision (go/drop/iterate/defer) on an evaluation or
+recommendation</td>
+<td style="text-align: center;">Appends to decisions.jsonl</td>
+</tr>
+<tr>
+<td><code>/business-counselor:list</code></td>
+<td>List past analyses &amp; recommendations (id · verdict ·
+confidence)</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><code>/business-counselor:show &lt;id&gt;</code></td>
+<td>Re-view a specific analysis or recommendation</td>
+<td style="text-align: center;">No</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Stuck? Type <code>/business-counselor:help</code> first.</p>
+</blockquote>
+<hr />
+<p><a id="how-it-works"></a></p>
+<h2 id="how-it-works-internals">9. How It Works (internals)</h2>
 <ul>
-  <li><strong>Single-call principle</strong>: one <code>/business-counselor:evaluate</code> call = one call to the internal subagent (<code>bc-idea-evaluator</code>). All 5 stages (13-persona review, Lean Canvas, Mom Test, Pre-mortem, adversarial debate) run <strong>inside that single call</strong>. No repeated per-response subagent calls, which keeps it fast and cost-efficient.</li>
-  <li><strong>Cold mode</strong>: this tool is deliberately designed to block "this seems great!" positivity bias. If the legal (#11) or investor (#13) persona flags a strong negative signal, the final verdict is forced toward <code>iterate</code> or <code>no-go</code> even if other scores are high.</li>
-  <li><strong>Handling vague input</strong>: if the idea is too short or unclear, the AI does not silently guess — it asks 1–2 clarifying questions first.</li>
-  <li><strong>Profile personalization</strong>: if you've answered the <code>/business-counselor:start</code>/<code>resume</code> interview, the evaluation is tailored to your actual capital, time, and skills. Evaluation still works without a profile (general criteria apply).</li>
-  <li><strong>Anti-hallucination rule</strong>: market-size figures or statistics without a clear source are designed to be explicitly labeled "(estimated, unverified)." This is a design principle for response quality, not a guarantee of zero errors — always verify independently before an important decision.</li>
+<li><strong>Single-call principle</strong>: one
+<code>/business-counselor:evaluate</code> call = one call to the
+internal subagent (<code>bc-idea-evaluator</code>), and one
+<code>/business-counselor:recommend</code> call = one call to the
+internal subagent (<code>bc-idea-generator</code>). All 5 stages
+(13-persona review, Lean Canvas, Mom Test, Pre-mortem, adversarial
+debate) — or, for recommendations, N ideas with Lean Canvas each — run
+<strong>inside that single call</strong>. No repeated per-response
+subagent calls, which keeps it fast and cost-efficient.</li>
+<li><strong>Profile snapshot fingerprint</strong>: every
+evaluation/recommendation output file stores a value
+(<code>profile_snapshot_hash</code>) that lets you tell which version of
+your profile it was based on. This value is <strong>actually computed at
+the command-orchestration step, right before calling the
+subagent</strong> — not by the subagent itself, since the subagent has
+no way to run a real computation (confirmed in v0.6.5 and fixed to work
+this way).</li>
+<li><strong>Cold mode</strong>: this tool is deliberately designed to
+block “this seems great!” positivity bias. If the legal (#11) or
+investor (#13) persona flags a strong negative signal, the final verdict
+is forced toward <code>iterate</code> or <code>no-go</code> even if
+other scores are high.</li>
+<li><strong>Handling vague input</strong>: if the idea is too short or
+unclear, the AI does not silently guess — it asks 1–2 clarifying
+questions first.</li>
+<li><strong>Profile personalization</strong>: if you’ve answered the
+<code>/business-counselor:start</code>/<code>resume</code> interview,
+the evaluation is tailored to your actual capital, time, and skills.
+Evaluation still works without a profile (general criteria apply).</li>
+<li><strong>Anti-hallucination rule</strong>: market-size figures or
+statistics without a clear source are designed to be explicitly labeled
+“(estimated, unverified).” This is a design principle for response
+quality, not a guarantee of zero errors — always verify independently
+before an important decision.</li>
 </ul>
-</section>
-
-<section id="workflow">
-<h2><span class="num">10.</span>Workflow (full diagram)</h2>
+<hr />
+<p><a id="workflow"></a></p>
+<h2 id="workflow-full-diagram">10. Workflow (full diagram)</h2>
 <pre><code>[once]   /business-counselor:start  →  answer interview  →  save your profile (profile.md)
                                   │
                      (edit anytime with /business-counselor:edit)
                                   │
-[each time]  /business-counselor:evaluate "idea"
+[each time]  /business-counselor:evaluate &quot;idea&quot;
             │
             ├─ if vague → AI asks 1–2 clarifying questions → answer
             │
             ▼
         In a single call, AI internally runs:
-        13-persona → target customer's voice → Lean Canvas → Mom Test → Pre-mortem → adversarial debate
+        13-persona → target customer&#39;s voice → Lean Canvas → Mom Test → Pre-mortem → adversarial debate
             │
             ▼
-        Screen: "At-a-Glance Summary" card (verdict · confidence · strength · blocker · next)
+        Screen: &quot;At-a-Glance Summary&quot; card (verdict · confidence · strength · blocker · next)
         Saved : result file (.md)  →  /business-counselor:list to list, /business-counselor:show to re-view</code></pre>
 <ul>
-  <li><strong>Single call</strong>: one command = one analysis (zero extra calls). Fast &amp; cost-saving.</li>
-  <li><strong>Cold mode</strong>: blocks positivity bias and surfaces weaknesses/risks first. Legal/investment risks flagged with ⚠️.</li>
+<li><strong>Single call</strong>: one command = one analysis (zero extra
+calls). Fast &amp; cost-saving.</li>
+<li><strong>Cold mode</strong>: blocks positivity bias and surfaces
+weaknesses/risks first. Legal/investment risks flagged with ⚠️.</li>
 </ul>
-</section>
+<h3 id="second-flow-ai-recommends-ideas-first-phase-2">Second flow — AI
+recommends ideas first (Phase 2)</h3>
+<pre><code>/business-counselor:recommend [N]  (needs a profile, default 5)
+            │
+            ▼
+        AI generates N profile-based ideas + a Lean Canvas each, in one call
+            │
+            ▼
+        Screen: table (ID · title · fit score)   Saved: recommendation file (.md, ideas/generated/)
+            │
+            ├─ Want to dig deeper on one → /business-counselor:evaluate &quot;&lt;title&gt;&quot;
+            └─ Want to record a decision → /business-counselor:decide &lt;id&gt; &lt;go|drop|iterate|defer&gt; [&quot;note&quot;]
+                                              │
+                                              ▼
+                                    1 line appended to decisions.jsonl (append-only, never edited/deleted)
 
-<section id="files">
-<h2><span class="num">11.</span>File / Document Locations</h2>
-<p><strong>Plugin folder</strong> (where you installed — code/config, no need to edit directly):</p>
+/business-counselor:list  →  two tables: evaluation history + recommendation history, at a glance
+/business-counselor:show &lt;id&gt;  →  works for both eval-* and idea-* IDs</code></pre>
+<hr />
+<p><a id="files"></a></p>
+<h2 id="file-document-locations">11. File / Document Locations</h2>
+<p><strong>Plugin folder</strong> (where you installed — code/config, no
+need to edit directly):</p>
 <pre><code>business-counselor/
 ├── plugin.json          ← Plugin manifest
 ├── CLAUDE.md            ← AI behavior rules
 ├── AGENTS.md            ← AI agent entry point
 ├── CHANGELOG.md         ← Full change history (all versions, detailed)
 ├── LICENSE              ← Full license text (Apache-2.0)
-├── commands/            ← 7 commands (start·resume·edit·evaluate·list·show·help)
-├── skills/               ← analysis skills (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven)
-├── agents/               ← bc-idea-evaluator (core analysis engine)
+├── commands/            ← 9 commands (start·resume·edit·evaluate·recommend·decide·list·show·help)
+├── skills/               ← analysis skills (13-personas·lean-canvas·mom-test·adversarial-debate·goal-driven·pre-mortem)
+├── agents/               ← bc-idea-evaluator (evaluate) · bc-idea-generator (recommend) — 2 core engines
 ├── templates/            ← output templates
 ├── tests/                ← linters &amp; scenarios
 └── PRD/                  ← planning docs (01_PRD·02_DATA_MODEL·03_PHASES·04_PROJECT_SPEC)</code></pre>
-<p><strong>Your data</strong> (auto-created after install, stored <strong>on your local machine only</strong>):</p>
+<p><strong>Your data</strong> (auto-created after install, stored
+<strong>on your local machine only</strong>):</p>
 <pre><code>~/Documents/business-counselor/
 ├── profile.md            ← Your profile (interview result)
 ├── sessions/              ← Interview logs (one file per session)
-└── ideas/evaluated/       ← Idea analysis results (one file per evaluation)</code></pre>
-<blockquote><p><code>~</code> is your home folder. On Windows it's usually <code>C:\Users\(you)\Documents\business-counselor\</code>. On macOS it's <code>/Users/(you)/Documents/business-counselor/</code>. You can open this folder directly in File Explorer (Windows) or Finder (macOS) — every file is plain text (.md).</p></blockquote>
-<p><strong>Why <code>Documents</code> instead of the <code>.claude/</code> folder?</strong> Data was originally stored inside the plugin's install folder (<code>~/.claude/plugins/...</code>), but real-world use revealed that the entire <code>~/.claude/</code> folder is protected as a "system configuration area," blocking the AI from writing new files there. To preserve the original goal — that a person can easily find and open their own data in File Explorer — the data was moved to the unprotected <code>Documents</code> folder (v0.4.0; see <a href="#changelog">Update Summary</a> for details).</p>
-</section>
-
-<section id="architecture">
-<h2><span class="num">12.</span>Architecture</h2>
-<p>This plugin has <strong>no separate server or database.</strong> Everything runs on plain text files (Markdown) plus the single Claude Code program.</p>
+├── ideas/evaluated/       ← Idea analysis results (one file per evaluation)
+├── ideas/generated/       ← AI-recommended ideas (one file per idea)
+└── decisions.jsonl        ← go/drop/iterate/defer decision log (append-only)</code></pre>
+<blockquote>
+<p><code>~</code> is your home folder. On Windows it’s usually
+<code>C:\Users\(you)\Documents\business-counselor\</code>. On macOS it’s
+<code>/Users/(you)/Documents/business-counselor/</code>. You can open
+this folder directly in File Explorer (Windows) or Finder (macOS) —
+every file is plain text (.md).</p>
+</blockquote>
+<p><strong>Why <code>Documents</code> instead of the
+<code>.claude/</code> folder?</strong> Data was originally stored inside
+the plugin’s install folder (<code>~/.claude/plugins/...</code>), but
+real-world use revealed that the entire <code>~/.claude/</code> folder
+is protected as a “system configuration area,” blocking the AI from
+writing new files there. To preserve the original goal — that a person
+can easily find and open their own data in File Explorer — the data was
+moved to the unprotected <code>Documents</code> folder (v0.4.0; see <a
+href="#changelog">Update Summary</a> for details).</p>
+<hr />
+<p><a id="architecture"></a></p>
+<h2 id="architecture">12. Architecture</h2>
+<p>This plugin has <strong>no separate server or database.</strong>
+Everything runs on plain text files (Markdown) plus the single Claude
+Code program.</p>
 <pre><code>User (typing in the Claude Code chat window)
         │  natural-language commands/answers
         ▼
-Claude Code (host program — uses the user's own login and model calls)
+Claude Code (host program — uses the user&#39;s own login and model calls)
         │  plugin routing: /business-counselor:&lt;command filename&gt;
         ▼
-commands/*.md  (7 command definitions — documents describing each command's behavior)
+commands/*.md  (9 command definitions — documents describing each command&#39;s behavior)
         │
         ├─ start·resume·edit  →  read/write profile.md directly
-        ├─ list·show           →  read saved evaluation files
-        └─ evaluate             →  delegated to the subagent below
+        ├─ list·show·decide    →  read/append saved evaluation, recommendation &amp; decision files
+        ├─ evaluate             →  delegated to bc-idea-evaluator
+        └─ recommend            →  delegated to bc-idea-generator
                     │
                     ▼
-        agents/bc-idea-evaluator.md  (one isolated subagent)
-        Tool permissions: Read · Write · Glob **only**
+        agents/bc-idea-evaluator.md · bc-idea-generator.md  (2 isolated subagents, each single-call)
+        Tool permissions: both Read · Write · Glob **only**
         (No Task/WebFetch/WebSearch permission at all →
          neither external internet calls nor extra subagent calls
-         are "blocked by policy" — the tools simply don't exist)
+         are &quot;blocked by policy&quot; — the tools simply don&#39;t exist)
                     │
                     ▼
-        References 5 skills/*.md files — analysis methodology knowledge (13-personas, etc.)
+        References 6 skills/*.md files — analysis methodology knowledge (13-personas, pre-mortem, etc.)
                     │
                     ▼
         Saves results as text files (~/Documents/business-counselor/)
                     │
                     ▼
-        Displays the "At-a-Glance Summary" card on screen</code></pre>
-<h3>Tech stack summary</h3>
-<div class="tblwrap"><table>
-<thead><tr><th>Component</th><th>Format</th><th>Notes</th></tr></thead>
+        Displays the &quot;At-a-Glance Summary&quot; card on screen</code></pre>
+<p><strong>Tech stack summary</strong></p>
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 30%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>Component</th>
+<th>Format</th>
+<th>Notes</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>Plugin manifest</td><td><code>plugin.json</code> (Claude Code native format)</td><td>No separate build/compile step</td></tr>
-<tr><td>Commands</td><td><code>commands/*.md</code> (Markdown)</td><td>Instructions to the AI, not executable code</td></tr>
-<tr><td>Knowledge/methodology</td><td><code>skills/*.md</code> (Open Agent Skills standard)</td><td>Defines the 5 analysis frameworks</td></tr>
-<tr><td>Execution engine</td><td><code>agents/bc-idea-evaluator.md</code> (subagent)</td><td>Restricted tool permissions enforce single-call + external blocking</td></tr>
-<tr><td>Data storage</td><td>Markdown + YAML frontmatter</td><td>No database (no SQLite/Postgres etc.)</td></tr>
-<tr><td>Authentication</td><td>None (reuses Claude Code's own login)</td><td>No separate sign-up/API key needed</td></tr>
-</tbody></table></div>
-</section>
-
-<section id="security">
-<h2><span class="num">13.</span>Security / Data Flow</h2>
-<h3>Where your data goes (at a glance)</h3>
+<tr>
+<td>Plugin manifest</td>
+<td><code>plugin.json</code> (Claude Code native format)</td>
+<td>No separate build/compile step</td>
+</tr>
+<tr>
+<td>Commands</td>
+<td><code>commands/*.md</code> (Markdown)</td>
+<td>Instructions to the AI, not executable code</td>
+</tr>
+<tr>
+<td>Knowledge/methodology</td>
+<td><code>skills/*.md</code> (Open Agent Skills standard)</td>
+<td>Defines the 5 analysis frameworks</td>
+</tr>
+<tr>
+<td>Execution engine</td>
+<td><code>agents/bc-idea-evaluator.md</code> (subagent)</td>
+<td>Restricted tool permissions enforce single-call + external
+blocking</td>
+</tr>
+<tr>
+<td>Data storage</td>
+<td>Markdown + YAML frontmatter</td>
+<td>No database (no SQLite/Postgres etc.)</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td>None (reuses Claude Code’s own login)</td>
+<td>No separate sign-up/API key needed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="security"></a></p>
+<h2 id="security-data-flow">13. Security / Data Flow</h2>
+<h3 id="where-your-data-goes-at-a-glance">Where your data goes (at a
+glance)</h3>
 <pre><code>[Your input: idea · profile answers]
         │
         ▼
@@ -440,244 +814,654 @@ Claude Code (runs locally, your own account login) ── talks to the Anthropic
         ▼
 bc-idea-evaluator subagent (runs locally, Read/Write/Glob permissions only)
         │
-        ├─ Separately transmitted externally: nothing (Phase 1·2 policy — this plugin's
+        ├─ Separately transmitted externally: nothing (Phase 1·2 policy — this plugin&#39;s
         │   code is never given an internet-calling tool in the first place)
         │
         └─ What stays on your machine (all plain text files):
              ~/Documents/business-counselor/profile.md
              ~/Documents/business-counselor/sessions/*.md
              ~/Documents/business-counselor/ideas/evaluated/*.md</code></pre>
-<h3>Security design principles</h3>
+<h3 id="security-design-principles">Security design principles</h3>
 <ul>
-  <li><strong>Local-only storage</strong>: your profile and evaluation results live only in <code>~/Documents/business-counselor/</code> on your machine. Nothing is backed up or synced to a separate cloud server (unless you personally place that folder inside your own cloud-sync folder).</li>
-  <li><strong>Runtime-enforced external blocking</strong>: "we don't send it externally" is not just a promise written in a prompt — it's implemented by giving the analysis subagent (<code>bc-idea-evaluator</code>) <strong>only Read/Write/Glob tools</strong>, with no internet-capable tools (WebFetch/WebSearch) and no extra-call tool (Task) at all. Even if the AI "wanted to" break the rule, it physically cannot — the tools don't exist for it to use.</li>
-  <li><strong>Minimal PII collection</strong>: the interview only asks about birth year, residence (city/province level), family status, capital/monthly income, available time, skills, domain interests, and risk appetite. Sensitive identifiers like national ID numbers or bank account numbers are never part of the question set.</li>
-  <li><strong>No telemetry</strong>: this plugin itself has no executable code — it's a markdown/prompt specification — and does not send usage data to any separate analytics or logging server. The only network communication is Claude Code's own model calls (needed to generate any AI response), which is Claude Code's own behavior, not something this plugin adds.</li>
-  <li><strong>Phase 3 exception (planned, not implemented)</strong>: a future external market-research feature (<code>research</code> command) would need internet search. Even then, the plan is for it to be <strong>disabled by default</strong>, activating only when the user explicitly types that command — but this does not exist in the current version.</li>
+<li><strong>Local-only storage</strong>: your profile and evaluation
+results live only in <code>~/Documents/business-counselor/</code> on
+your machine. Nothing is backed up or synced to a separate cloud server
+(unless you personally place that folder inside your own cloud-sync
+folder).</li>
+<li><strong>Runtime-enforced external blocking</strong>: “we don’t send
+it externally” is not just a promise written in a prompt — it’s
+implemented by giving the analysis subagent
+(<code>bc-idea-evaluator</code>) <strong>only Read/Write/Glob
+tools</strong>, with no internet-capable tools (WebFetch/WebSearch) and
+no extra-call tool (Task) at all. Even if the AI “wanted to” break the
+rule, it physically cannot — the tools don’t exist for it to use.</li>
+<li><strong>Minimal PII collection</strong>: the interview only asks
+about birth year, residence (city/province level), family status,
+capital/monthly income, available time, skills, domain interests, and
+risk appetite. Sensitive identifiers like national ID numbers or bank
+account numbers are never part of the question set.</li>
+<li><strong>No telemetry</strong>: this plugin itself has no executable
+code — it’s a markdown/prompt specification — and does not send usage
+data to any separate analytics or logging server. The only network
+communication is Claude Code’s own model calls (needed to generate any
+AI response), which is Claude Code’s own behavior, not something this
+plugin adds.</li>
+<li><strong>Phase 3 exception (planned, not implemented)</strong>: a
+future external market-research feature (<code>research</code> command)
+would need internet search. Even then, the plan is for it to be
+<strong>disabled by default</strong>, activating only when the user
+explicitly types that command — but this does not exist in the current
+version.</li>
 </ul>
-<h3>Deletion and backup</h3>
+<h3 id="deletion-and-backup">Deletion and backup</h3>
 <ul>
-  <li>To delete your profile: <code>/business-counselor:edit "delete my whole profile"</code> (with confirmation) or delete <code>~/Documents/business-counselor/profile.md</code> directly.</li>
-  <li>This plugin has no automatic backup feature. If you want to preserve your data, manually copy the <code>~/Documents/business-counselor/</code> folder yourself.</li>
-  <li>Uninstalling the plugin leaves this data folder untouched (see the "Uninstall" section under <a href="#install">Installation</a>).</li>
+<li>To delete your profile:
+<code>/business-counselor:edit "delete my whole profile"</code> (with
+confirmation) or delete
+<code>~/Documents/business-counselor/profile.md</code> directly.</li>
+<li>This plugin has no automatic backup feature. If you want to preserve
+your data, manually copy the
+<code>~/Documents/business-counselor/</code> folder yourself.</li>
+<li>Uninstalling the plugin leaves this data folder untouched (see the
+“Uninstall” section under <a href="#install">Installation</a>).</li>
 </ul>
-</section>
-
-<section id="changelog">
-<h2><span class="num">14.</span>Update Summary</h2>
-<p>Below is a condensed summary. The full original text (with root-cause analysis) lives in <a href="./CHANGELOG.md"><code>CHANGELOG.md</code></a>. Click each entry to expand.</p>
-
+<hr />
+<p><a id="changelog"></a></p>
+<h2 id="update-summary">14. Update Summary</h2>
+<p>Below is a condensed summary. The full original text (with root-cause
+analysis) lives in <a
+href="./CHANGELOG.md"><code>CHANGELOG.md</code></a>. Click each entry to
+expand.</p>
 <details>
-<summary><strong>v0.5.2</strong> — 2026-07-27 · New comprehensive beginner-friendly README (KR/EN, md+html)</summary>
+<summary>
+<strong>v0.6.5</strong> — 2026-08-04 · Fixed fake
+<code>profile_snapshot_hash</code> value + linter false-positive fix
+</summary>
 <ul>
-  <li>README fully rewritten as a comprehensive guide covering TOC, install, prerequisites, download, quick start, run/usage/how-it-works, commands, architecture, security, troubleshooting, FAQ, and legal/license</li>
-  <li>Provided in both Korean (README.md) and English (README_EN.md), each in both md and html format (4 files total), with matching content</li>
-  <li>No functional changes (documentation-only release)</li>
+<li>Found and fixed a defect where <code>profile_snapshot_hash</code> in
+recommendation/evaluation output files was not a real SHA-256
+computation but a string the AI made up — the value is now actually
+computed by the calling command and passed in</li>
+<li>Also fixed a false-positive in the verification tool (frontmatter
+linter), which was requiring the same set of fields for recommendation
+and evaluation outputs even though they intentionally differ</li>
+<li>No feature change (internal correctness fix)</li>
 </ul>
 </details>
-
 <details>
-<summary><strong>v0.5.1</strong> — 2026-07-27 · Fixed 3 doc-vs-implementation mismatches found during verification</summary>
+<summary>
+<strong>v0.6.4</strong> — 2026-08-03 · Fixed
+<code>list</code>/<code>show</code> missing generated ideas + first
+confirmed real-world success of <code>recommend</code>
+</summary>
 <ul>
-  <li>Corrected <code>risk_appetite</code> documentation to match the actual implementation values (<code>low</code>/<code>medium</code>/<code>high</code>)</li>
-  <li>Corrected <code>capital_krw</code>/<code>monthly_income_krw</code> unit documentation to match actual storage (raw KRW integers)</li>
-  <li>Fixed stale command-count comment in README file trees (6 → 7)</li>
-  <li>Added a rule so <code>resume</code> redirects users to <code>edit</code> when they try to spontaneously correct an already-filled field</li>
+<li><code>list</code>/<code>show</code> previously only found evaluation
+results (<code>evaluated/</code>) and missed generated ideas
+(<code>generated/</code>) — fixed to find both</li>
+<li><code>/business-counselor:recommend</code> was confirmed working for
+the first time in real user usage, validating the earlier install-sync
+fixes</li>
 </ul>
 </details>
-
 <details>
-<summary><strong>v0.5.0</strong> — 2026-07-27 · New <code>/business-counselor:edit</code> command</summary>
+<summary>
+<strong>v0.6.3</strong> — 2026-08-03 · Re-investigated install-sync root
+cause + fixed special-character defect in idea descriptions
+</summary>
 <ul>
-  <li>Added the ability to change, clear, or fully delete already-answered profile fields</li>
-  <li>Full deletion requires an irreversibility warning + explicit confirmation; evaluation history (<code>ideas/evaluated/</code>) is preserved separately</li>
-  <li>System-managed fields (id, schema_version, last_updated, profile_updates, disclaimer) are excluded from editing</li>
-  <li>Commands expanded from 6 to 7</li>
+<li>The diagnosis from v0.6.2 turned out to be incomplete — the real
+root cause was that the install manager’s version pointer wasn’t being
+promoted (full detail in v0.6.2 below and in
+<code>CHANGELOG.md</code>)</li>
+<li>Fixed 2 defects (in both evaluation and recommendation output) where
+a double quote in the idea description could corrupt the saved file</li>
 </ul>
 </details>
-
 <details>
-<summary><strong>v0.4.0</strong> — 2026-07-27 · Moved data storage outside <code>~/.claude/</code></summary>
+<summary>
+<strong>v0.6.2</strong> — 2026-08-03 · Boundary-value input review +
+first discovery of install-sync issue
+</summary>
 <ul>
-  <li>Confirmed by direct testing that the entire <code>~/.claude/</code> folder is protected against AI writes → moved data storage to <code>~/Documents/business-counselor/</code></li>
-  <li>Migrated 3 existing real evaluation records to the new location with zero data loss (byte-identical verification)</li>
-  <li>Synchronized all related documentation (2 READMEs, 4 PRD docs, 6 commands, etc.) to the new path</li>
+<li>Fixed 2 boundary-value defects: a <code>decide</code> note with
+special characters could corrupt the record file; ambiguous validation
+of the recommendation count input</li>
+<li>First discovered, during real usage, that “updated but new commands
+don’t show up” was actually an install-file sync issue</li>
 </ul>
 </details>
-
 <details>
-<summary><strong>v0.3.0</strong> — 2026-07-27 · Simplified command names (removed <code>counsel-</code> prefix)</summary>
+<summary>
+<strong>v0.6.1</strong> — 2026-08-03 · Full doc-vs-implementation audit
++ fixed 5 docs that hadn’t caught up to Phase 2
+</summary>
 <ul>
-  <li>Simplified all 6 commands, e.g. <code>/business-counselor:counsel-evaluate</code> → <code>/business-counselor:evaluate</code></li>
-  <li>Removed the redundant prefix since the plugin name itself already acts as the namespace</li>
+<li>Phase 2 (recommendation feature) code already existed, but
+<code>help</code> and README still told users “no recommendation
+feature” in 5 places — found and fixed</li>
 </ul>
 </details>
-
 <details>
-<summary><strong>v0.2.0 – v0.2.2</strong> — 2026-06-15 – 2026-07-27 · Usability improvements + fixes found during real E2E testing</summary>
+<summary>
+<strong>v0.6.0</strong> — 2026-08-02 · Phase 2 (recommendations +
+decision logging) officially activated
+</summary>
 <ul>
-  <li>Added the "At-a-Glance Summary" card, the <code>/business-counselor:help</code> command, and the "Target Customer's Voice" add-on</li>
-  <li>Introduced a 2-tier output mode: default (card) vs. full (detail)</li>
-  <li>Fixed a command-namespace documentation error found in real use (a form that had never actually worked)</li>
-  <li>Improved marketplace registration to support direct GitHub registration</li>
+<li><code>/business-counselor:recommend</code> and
+<code>/business-counselor:decide</code> commands, plus a second analysis
+engine (<code>bc-idea-generator</code>), officially activated</li>
+<li>Commands expanded from 7 to 9</li>
 </ul>
 </details>
-
 <details>
-<summary><strong>v0.1.0 – v0.1.1</strong> — 2026-05-08 – 2026-06-15 · Initial Phase 1 implementation + stabilization</summary>
+<summary>
+<strong>v0.5.2</strong> — 2026-07-27 · New comprehensive
+beginner-friendly README (KR/EN, md+html)
+</summary>
 <ul>
-  <li>First implementation of the plugin skeleton, 5 commands, 5 skills, 1 subagent</li>
-  <li>Fixed 6 consistency defects including linter over-validation and a numbering collision bug</li>
-  <li>Added a Windows-native PowerShell linter</li>
+<li>README fully rewritten as a comprehensive guide covering TOC,
+install, prerequisites, download, quick start, run/usage/how-it-works,
+commands, architecture, security, troubleshooting, FAQ, and
+legal/license</li>
+<li>Provided in both Korean (README.md) and English (README_EN.md), each
+in both md and html format (4 files total), with matching content</li>
+<li>No functional changes (documentation-only release)</li>
 </ul>
 </details>
-
-<blockquote><p>How to read version numbers: <code>MAJOR.MINOR.PATCH</code> format, where a minor bump means a new feature was added and a patch bump means a fix with no new feature (loosely follows Semantic Versioning conventions, not strictly enforced).</p></blockquote>
-</section>
-
-<section id="troubleshooting">
-<h2><span class="num">15.</span>Troubleshooting</h2>
-<div class="tblwrap"><table>
-<thead><tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr></thead>
+<details>
+<summary>
+<strong>v0.5.1</strong> — 2026-07-27 · Fixed 3 doc-vs-implementation
+mismatches found during verification
+</summary>
+<ul>
+<li>Corrected <code>risk_appetite</code> documentation to match the
+actual implementation values
+(<code>low</code>/<code>medium</code>/<code>high</code>)</li>
+<li>Corrected <code>capital_krw</code>/<code>monthly_income_krw</code>
+unit documentation to match actual storage (raw KRW integers)</li>
+<li>Fixed stale command-count comment in README file trees (6 → 7)</li>
+<li>Added a rule so <code>resume</code> redirects users to
+<code>edit</code> when they try to spontaneously correct an
+already-filled field</li>
+</ul>
+</details>
+<details>
+<summary>
+<strong>v0.5.0</strong> — 2026-07-27 · New
+<code>/business-counselor:edit</code> command
+</summary>
+<ul>
+<li>Added the ability to change, clear, or fully delete already-answered
+profile fields</li>
+<li>Full deletion requires an irreversibility warning + explicit
+confirmation; evaluation history (<code>ideas/evaluated/</code>) is
+preserved separately</li>
+<li>System-managed fields (id, schema_version, last_updated,
+profile_updates, disclaimer) are excluded from editing</li>
+<li>Commands expanded from 6 to 7</li>
+</ul>
+</details>
+<details>
+<summary>
+<strong>v0.4.0</strong> — 2026-07-27 · Moved data storage outside
+<code>~/.claude/</code>
+</summary>
+<ul>
+<li>Confirmed by direct testing that the entire <code>~/.claude/</code>
+folder is protected against AI writes → moved data storage to
+<code>~/Documents/business-counselor/</code></li>
+<li>Migrated 3 existing real evaluation records to the new location with
+zero data loss (byte-identical verification)</li>
+<li>Synchronized all related documentation (2 READMEs, 4 PRD docs, 6
+commands, etc.) to the new path</li>
+</ul>
+</details>
+<details>
+<summary>
+<strong>v0.3.0</strong> — 2026-07-27 · Simplified command names (removed
+<code>counsel-</code> prefix)
+</summary>
+<ul>
+<li>Simplified all 6 commands,
+e.g. <code>/business-counselor:counsel-evaluate</code> →
+<code>/business-counselor:evaluate</code></li>
+<li>Removed the redundant prefix since the plugin name itself already
+acts as the namespace</li>
+</ul>
+</details>
+<details>
+<summary>
+<strong>v0.2.0 – v0.2.2</strong> — 2026-06-15 – 2026-07-27 · Usability
+improvements + fixes found during real E2E testing
+</summary>
+<ul>
+<li>Added the “At-a-Glance Summary” card, the
+<code>/business-counselor:help</code> command, and the “Target
+Customer’s Voice” add-on</li>
+<li>Introduced a 2-tier output mode: default (card) vs. full
+(detail)</li>
+<li>Fixed a command-namespace documentation error found in real use (a
+form that had never actually worked)</li>
+<li>Improved marketplace registration to support direct GitHub
+registration</li>
+</ul>
+</details>
+<details>
+<summary>
+<strong>v0.1.0 – v0.1.1</strong> — 2026-05-08 – 2026-06-15 · Initial
+Phase 1 implementation + stabilization
+</summary>
+<ul>
+<li>First implementation of the plugin skeleton, 5 commands, 5 skills, 1
+subagent</li>
+<li>Fixed 6 consistency defects including linter over-validation and a
+numbering collision bug</li>
+<li>Added a Windows-native PowerShell linter</li>
+</ul>
+</details>
+<blockquote>
+<p>How to read version numbers: <code>MAJOR.MINOR.PATCH</code> format,
+where a minor bump means a new feature was added and a patch bump means
+a fix with no new feature (loosely follows Semantic Versioning
+conventions, not strictly enforced).</p>
+</blockquote>
+<hr />
+<p><a id="troubleshooting"></a></p>
+<h2 id="troubleshooting">15. Troubleshooting</h2>
+<table>
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 33%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
 <tbody>
-<tr><td><code>/business-counselor:*</code> commands not showing</td><td>Not restarted after install</td><td><strong>Fully quit and relaunch Claude Code</strong></td></tr>
-<tr><td><code>plugin list</code> shows no enabled</td><td>Missing register/install</td><td>Re-run <code>marketplace add sodam-ai/business-counselor</code> → <code>install ...@business-counselor-marketplace</code></td></tr>
-<tr><td><code>claude: command not found</code></td><td>Claude Code missing/path issue</td><td>Install from <a href="https://claude.ai/download">claude.ai/download</a>, restart</td></tr>
-<tr><td><code>git: command not found</code></td><td>Git missing</td><td>Install <a href="https://git-scm.com/downloads">git-scm.com</a> or use the <a href="#download">ZIP method (C)</a></td></tr>
-<tr><td>Updated but new commands still missing</td><td>Only ran one of the two update commands, or didn't restart</td><td>Run both lines under <a href="#install">How to Update</a> + restart</td></tr>
-<tr><td>Evaluation takes 5–8 min</td><td>Deep analysis is naturally slow</td><td>Normal. Wait it out, or run it when you have time to spare</td></tr>
-<tr><td>Result is just a short card</td><td>Default is card mode</td><td>Full: <code>/business-counselor:evaluate "..." full</code> or <code>/business-counselor:show &lt;id&gt;</code></td></tr>
-<tr><td><code>show</code> says "not found"</td><td>You typed an id that doesn't exist (including this doc's example id)</td><td>Check your real id with <code>/business-counselor:list</code> first, then copy it in</td></tr>
-<tr><td>Evaluated without a profile</td><td>Interview skipped</td><td>Uses general criteria. For tailored results, run <code>/business-counselor:start</code> first</td></tr>
-<tr><td>A field I cleared with <code>edit</code> seems unchanged</td><td>You didn't confirm "yes," or you cancelled</td><td>Re-run <code>/business-counselor:edit</code> with a clearer request, and respond clearly to the confirmation prompt</td></tr>
-<tr><td>I accidentally deleted my entire profile</td><td>The confirmation flow completed and it was really deleted</td><td>This cannot be undone. Start a fresh interview with <code>/business-counselor:start</code>. Your past idea evaluations are not deleted and remain intact</td></tr>
-<tr><td>Errors like <code>uv: command not found</code> from another tool</td><td><strong>Unrelated to this plugin</strong></td><td>Ignore (another tool's notice)</td></tr>
-</tbody></table></div>
-<blockquote><p>For anything not listed here, type <code>/business-counselor:help</code> to check current usage, or file an issue at <a href="https://github.com/sodam-ai/business-counselor/issues">GitHub Issues</a>.</p></blockquote>
-</section>
-
-<section id="faq">
-<h2><span class="num">16.</span>FAQ</h2>
-<dl class="faq">
-<dt>Q. Is this tool paid?</dt>
-<dd>A. The plugin itself is free and open source (Apache-2.0). Whatever cost Claude Code itself requires follows Claude Code's own pricing; this plugin adds no separate charge.</dd>
-<dt>Q. Does my business idea or financial information leak out anywhere?</dt>
-<dd>A. No. As explained in <a href="#security">Security / Data Flow</a>, Phase 1·2 (the current version) has no code-level capability to transmit data externally on its own. What you type exists only in Claude Code's normal AI response process (same as any Claude Code conversation) and in local files on your machine.</dd>
-<dt>Q. Can I trust the AI's evaluation 100%?</dt>
-<dd>A. No. This tool provides a <strong>reference opinion</strong>, not a guarantee of business success. For anything requiring legal, investment, or tax judgment, always consult a qualified professional. See <a href="#legal">Legal / Copyright / License / Commercial Use</a> for details.</dd>
-<dt>Q. Does the AI pick business ideas for me automatically?</dt>
-<dd>A. Not yet. The current version (Phase 1) only <strong>evaluates an idea you bring</strong>. AI-driven idea recommendation based on your profile (<code>recommend</code>) is a planned future step (Phase 2) and is not part of this version.</dd>
-<dt>Q. Can I use this without internet?</dt>
-<dd>A. No. Claude Code itself needs to talk to the AI model to generate any response, so an internet connection is required. That said, this plugin itself does not separately search external websites or transmit your data.</dd>
-<dt>Q. If I move to a different computer, does my data come with me?</dt>
-<dd>A. Not automatically. Your data lives in <code>~/Documents/business-counselor/</code>, so copy that folder yourself and paste it into the same location on the new machine to continue where you left off.</dd>
-<dt>Q. Can I recover a deleted profile or evaluation?</dt>
-<dd>A. This plugin has no recovery feature (no trash/undo). Full deletion via <code>/business-counselor:edit</code> goes through a confirmation step, but once confirmed, it cannot be undone. Back up the folder yourself beforehand if you want a safety net.</dd>
-<dt>Q. Is this tool legal advice or investment advice?</dt>
-<dd>A. No. As stated in <a href="#legal">Legal / Copyright / License / Commercial Use</a>, it is a reference-opinion tool and does not constitute investment advisory, business consulting, tax advisory, or legal advisory services.</dd>
-<dt>Q. Can I evaluate multiple ideas at once?</dt>
-<dd>A. Evaluations run one at a time, in sequence. Run <code>/business-counselor:evaluate</code> once per idea; each is saved as a separate file and all appear together under <code>/business-counselor:list</code>.</dd>
-<dt>Q. Can I use the evaluation results (the analysis text) elsewhere, including commercially?</dt>
-<dd>A. Yes. The analysis is your own material, generated from the idea you entered — this tool claims no ownership over that output. However, its accuracy is not guaranteed, so verify independently before relying on it for an important commercial decision. See <a href="#legal">Legal / Copyright / License / Commercial Use</a> for details.</dd>
-<dt>Q. Can I use this plugin's source code itself in my own product?</dt>
-<dd>A. Yes — under the Apache License 2.0, you may use, modify, and distribute it, including commercially, subject to a few conditions (include a copy of the license, mark changed files, etc.). See <a href="#legal">Legal / Copyright / License / Commercial Use</a> and the <a href="./LICENSE"><code>LICENSE</code></a> text.</dd>
-<dt>Q. Where do I report a bug or unexpected behavior?</dt>
-<dd>A. File an issue at the <a href="https://github.com/sodam-ai/business-counselor">GitHub repository</a>'s Issues page.</dd>
-</dl>
-</section>
-
-<section id="legal">
-<h2><span class="num">17.</span>Legal / Copyright / License / Commercial Use</h2>
-<blockquote><p>The following is general information, not legal advice. For actual commercial use, redistribution, or legal decisions, consulting a qualified professional (e.g. a lawyer) is recommended.</p></blockquote>
-
-<h3>17.1 License for this software (the plugin code)</h3>
-<p>This plugin (<code>business-counselor</code>) is distributed under the <strong>Apache License 2.0</strong>.</p>
+<tr>
+<td><code>/business-counselor:*</code> commands not showing</td>
+<td>Not restarted after install</td>
+<td><strong>Fully quit and relaunch Claude Code</strong></td>
+</tr>
+<tr>
+<td><code>plugin list</code> shows no enabled</td>
+<td>Missing register/install</td>
+<td>Re-run <code>marketplace add sodam-ai/business-counselor</code> →
+<code>install ...@business-counselor-marketplace</code></td>
+</tr>
+<tr>
+<td><code>claude: command not found</code></td>
+<td>Claude Code missing/path issue</td>
+<td>Install from <a
+href="https://claude.ai/download">claude.ai/download</a>, restart</td>
+</tr>
+<tr>
+<td><code>git: command not found</code></td>
+<td>Git missing</td>
+<td>Install <a href="https://git-scm.com/downloads">git-scm.com</a> or
+use the <a href="#download">ZIP method (C)</a></td>
+</tr>
+<tr>
+<td>Updated but new commands still missing</td>
+<td>Only ran one of the two update commands, or didn’t restart, or
+Claude Code’s internal cache didn’t refresh (this has happened in real
+usage)</td>
+<td>Run both lines under <a href="#install">How to Update</a> + a
+<strong>full</strong> restart (not just closing a window) + check in a
+<strong>brand-new chat</strong>. If it still doesn’t show up, this may
+be a cache-sync issue — please report it at <a
+href="https://github.com/sodam-ai/business-counselor/issues">GitHub
+Issues</a></td>
+</tr>
+<tr>
+<td>Evaluation takes 5–8 min</td>
+<td>Deep analysis is naturally slow</td>
+<td>Normal. Wait it out, or run it when you have time to spare</td>
+</tr>
+<tr>
+<td>Result is just a short card</td>
+<td>Default is card mode</td>
+<td>Full: <code>/business-counselor:evaluate "..." full</code> or
+<code>/business-counselor:show &lt;id&gt;</code></td>
+</tr>
+<tr>
+<td><code>show</code> says “not found”</td>
+<td>You typed an id that doesn’t exist (including this doc’s example
+id)</td>
+<td>Check your real id with <code>/business-counselor:list</code> first,
+then copy it in</td>
+</tr>
+<tr>
+<td>Evaluated without a profile</td>
+<td>Interview skipped</td>
+<td>Uses general criteria. For tailored results, run
+<code>/business-counselor:start</code> first</td>
+</tr>
+<tr>
+<td>A field I cleared with <code>edit</code> seems unchanged</td>
+<td>You didn’t confirm “yes,” or you cancelled</td>
+<td>Re-run <code>/business-counselor:edit</code> with a clearer request,
+and respond clearly to the confirmation prompt</td>
+</tr>
+<tr>
+<td>I accidentally deleted my entire profile</td>
+<td>The confirmation flow completed and it was really deleted</td>
+<td>This cannot be undone. Start a fresh interview with
+<code>/business-counselor:start</code>. Your past idea evaluations are
+not deleted and remain intact</td>
+</tr>
+<tr>
+<td>Errors like <code>uv: command not found</code> from another
+tool</td>
+<td><strong>Unrelated to this plugin</strong></td>
+<td>Ignore (another tool’s notice)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>For anything not listed here, type
+<code>/business-counselor:help</code> to check current usage, or file an
+issue at <a
+href="https://github.com/sodam-ai/business-counselor/issues">GitHub
+Issues</a>.</p>
+</blockquote>
+<hr />
+<p><a id="faq"></a></p>
+<h2 id="faq">16. FAQ</h2>
+<p><strong>Q. Is this tool paid?</strong> A. The plugin itself is free
+and open source (Apache-2.0). Whatever cost Claude Code itself requires
+follows Claude Code’s own pricing; this plugin adds no separate
+charge.</p>
+<p><strong>Q. Does my business idea or financial information leak out
+anywhere?</strong> A. No. As explained in <a href="#security">Security /
+Data Flow</a>, Phase 1·2 (the current version) has no code-level
+capability to transmit data externally on its own. What you type exists
+only in Claude Code’s normal AI response process (same as any Claude
+Code conversation) and in local files on your machine.</p>
+<p><strong>Q. Can I trust the AI’s evaluation 100%?</strong> A. No. This
+tool provides a <strong>reference opinion</strong>, not a guarantee of
+business success. For anything requiring legal, investment, or tax
+judgment, always consult a qualified professional. See <a
+href="#legal">Legal / Copyright / License / Commercial Use</a> for
+details.</p>
+<p><strong>Q. Does the AI pick business ideas for me
+automatically?</strong> A. Yes. Use
+<code>/business-counselor:recommend</code> to get AI-picked ideas based
+on your profile (Phase 2, v0.6.0+). You can still bring your own idea
+with <code>/business-counselor:evaluate</code> — both paths are
+supported.</p>
+<p><strong>Q. Can I use this without internet?</strong> A. No. Claude
+Code itself needs to talk to the AI model to generate any response, so
+an internet connection is required. That said, this plugin itself does
+not separately search external websites or transmit your data.</p>
+<p><strong>Q. If I move to a different computer, does my data come with
+me?</strong> A. Not automatically. Your data lives in
+<code>~/Documents/business-counselor/</code>, so copy that folder
+yourself and paste it into the same location on the new machine to
+continue where you left off.</p>
+<p><strong>Q. Can I recover a deleted profile or evaluation?</strong> A.
+This plugin has no recovery feature (no trash/undo). Full deletion via
+<code>/business-counselor:edit</code> goes through a confirmation step,
+but once confirmed, it cannot be undone. Back up the folder yourself
+beforehand if you want a safety net.</p>
+<p><strong>Q. Is this tool legal advice or investment advice?</strong>
+A. No. As stated in <a href="#legal">Legal / Copyright / License /
+Commercial Use</a>, it is a reference-opinion tool and does not
+constitute investment advisory, business consulting, tax advisory, or
+legal advisory services.</p>
+<p><strong>Q. Can I evaluate multiple ideas at once?</strong> A.
+Evaluations run one at a time, in sequence. Run
+<code>/business-counselor:evaluate</code> once per idea; each is saved
+as a separate file and all appear together under
+<code>/business-counselor:list</code>.</p>
+<p><strong>Q. Can I use the evaluation results (the analysis text)
+elsewhere, including commercially?</strong> A. Yes. The analysis is your
+own material, generated from the idea you entered — this tool claims no
+ownership over that output. However, its accuracy is not guaranteed, so
+verify independently before relying on it for an important commercial
+decision. See <a href="#legal">Legal / Copyright / License / Commercial
+Use</a> for details.</p>
+<p><strong>Q. Can I use this plugin’s source code itself in my own
+product?</strong> A. Yes — under the Apache License 2.0, you may use,
+modify, and distribute it, including commercially, subject to a few
+conditions (include a copy of the license, mark changed files, etc.).
+See <a href="#legal">Legal / Copyright / License / Commercial Use</a>
+and the <a href="./LICENSE"><code>LICENSE</code></a> text.</p>
+<p><strong>Q. Where do I report a bug or unexpected behavior?</strong>
+A. File an issue at the <a
+href="https://github.com/sodam-ai/business-counselor">GitHub
+repository</a>’s Issues page.</p>
+<hr />
+<p><a id="legal"></a></p>
+<h2 id="legal-copyright-license-commercial-use">17. Legal / Copyright /
+License / Commercial Use</h2>
+<blockquote>
+<p>The following is general information, not legal advice. For actual
+commercial use, redistribution, or legal decisions, consulting a
+qualified professional (e.g. a lawyer) is recommended.</p>
+</blockquote>
+<h3 id="license-for-this-software-the-plugin-code">17.1 License for this
+software (the plugin code)</h3>
+<p>This plugin (<code>business-counselor</code>) is distributed under
+the <strong>Apache License 2.0</strong>.</p>
 <ul>
-  <li><strong>Copyright holder</strong>: Copyright 2026 SoDam AI Studio</li>
-  <li><strong>Full license text</strong>: <a href="./LICENSE"><code>LICENSE</code></a> (standard Apache-2.0 text)</li>
-</ul>
-<p><strong>What's permitted</strong> (summary — the license text governs):</p>
+<li><strong>Copyright holder</strong>: Copyright 2026 SoDam AI
+Studio</li>
+<li><strong>Full license text</strong>: <a
+href="./LICENSE"><code>LICENSE</code></a> (standard Apache-2.0
+text)</li>
+<li><strong>What’s permitted</strong> (summary — the license text
+governs):
 <ul>
-  <li>Commercial use (bundling into a product, selling, running as a SaaS, etc.)</li>
-  <li>Modification</li>
-  <li>Distribution / redistribution</li>
-  <li>Patent license grant (including from contributors)</li>
-  <li>Private use</li>
-</ul>
-<p><strong>Conditions</strong>:</p>
+<li>Commercial use (bundling into a product, selling, running as a SaaS,
+etc.)</li>
+<li>Modification</li>
+<li>Distribution / redistribution</li>
+<li>Patent license grant (including from contributors)</li>
+<li>Private use</li>
+</ul></li>
+<li><strong>Conditions</strong>:
 <ul>
-  <li>You must include a copy of the license and the copyright notice when you distribute it.</li>
-  <li>Modified files must carry a notice stating that you changed them.</li>
-  <li>If a <code>NOTICE</code> file exists, its contents must be included when redistributing.</li>
-</ul>
-<p><strong>What is NOT provided</strong>:</p>
+<li>You must include a copy of the license and the copyright notice when
+you distribute it.</li>
+<li>Modified files must carry a notice stating that you changed
+them.</li>
+<li>If a <code>NOTICE</code> file exists, its contents must be included
+when redistributing.</li>
+</ul></li>
+<li><strong>What is NOT provided</strong>:
 <ul>
-  <li><strong>No warranty ("AS IS")</strong>: the software is provided without any warranty, including merchantability or fitness for a particular purpose.</li>
-  <li><strong>Limitation of liability</strong>: contributors are not liable for damages arising from use of the software, except as required by law.</li>
-  <li><strong>No trademark grant</strong>: this license does not grant rights to use the "SoDam AI Studio" or "business-counselor" names/marks (customary attribution use is excepted).</li>
+<li><strong>No warranty (“AS IS”)</strong>: the software is provided
+without any warranty, including merchantability or fitness for a
+particular purpose.</li>
+<li><strong>Limitation of liability</strong>: contributors are not
+liable for damages arising from use of the software, except as required
+by law.</li>
+<li><strong>No trademark grant</strong>: this license does not grant
+rights to use the “SoDam AI Studio” or “business-counselor” names/marks
+(customary attribution use is excepted).</li>
+</ul></li>
 </ul>
-
-<h3>17.2 About the output this tool produces (the analysis text)</h3>
+<h3 id="about-the-output-this-tool-produces-the-analysis-text">17.2
+About the output this tool produces (the analysis text)</h3>
 <ul>
-  <li>Evaluation results (§1–§5 analysis, the "At-a-Glance Summary" card, etc.) are <strong>your own material, generated from the business idea you personally entered</strong>. This project (SoDam AI Studio) claims no ownership over, and places no usage restriction on, that output.</li>
-  <li>However, the output's <strong>accuracy, completeness, and currency are not guaranteed.</strong> Verify the facts independently before using it in a commercial decision, an investor pitch, or a business plan.</li>
-  <li>Market-size figures or statistics in the output may be AI-generated estimates; figures without a clear source are designed to be labeled "(estimated, unverified)," but this labeling is not guaranteed to be perfect.</li>
+<li>Evaluation results (§1–§5 analysis, the “At-a-Glance Summary” card,
+etc.) are <strong>your own material, generated from the business idea
+you personally entered</strong>. This project (SoDam AI Studio) claims
+no ownership over, and places no usage restriction on, that output.</li>
+<li>However, the output’s <strong>accuracy, completeness, and currency
+are not guaranteed.</strong> Verify the facts independently before using
+it in a commercial decision, an investor pitch, or a business plan.</li>
+<li>Market-size figures or statistics in the output may be AI-generated
+estimates; figures without a clear source are designed to be labeled
+“(estimated, unverified),” but this labeling is not guaranteed to be
+perfect.</li>
 </ul>
-
-<h3>17.3 Disclaimer of legal character (what this tool is NOT)</h3>
+<h3 id="disclaimer-of-legal-character-what-this-tool-is-not">17.3
+Disclaimer of legal character (what this tool is NOT)</h3>
 <p>This tool does <strong>NOT</strong> constitute:</p>
 <ul>
-  <li><strong>Investment advisory services</strong> (Korean Financial Investment Services and Capital Markets Act, Article 6(5)) or <strong>discretionary investment management</strong> (same Act, Article 17)</li>
-  <li>Business consulting services</li>
-  <li>Tax advisory</li>
-  <li>Legal advisory</li>
+<li><strong>Investment advisory services</strong> (Korean Financial
+Investment Services and Capital Markets Act, Article 6(5)) or
+<strong>discretionary investment management</strong> (same Act, Article
+17)</li>
+<li>Business consulting services</li>
+<li>Tax advisory</li>
+<li>Legal advisory</li>
 </ul>
-<p><strong>All analysis output is a reference opinion.</strong> It does not recommend any specific security, financial product, or investment product, and does not guarantee business success or profit. Before making an important decision, consulting a qualified professional (lawyer, tax accountant, financial advisor, etc.) is recommended. All profit, loss, and legal responsibility arising from decisions made using this tool rest solely with the user; the tool's creator bears no responsibility.</p>
-
-<h3>17.4 Privacy / data</h3>
+<p><strong>All analysis output is a reference opinion.</strong> It does
+not recommend any specific security, financial product, or investment
+product, and does not guarantee business success or profit. Before
+making an important decision, consulting a qualified professional
+(lawyer, tax accountant, financial advisor, etc.) is recommended. All
+profit, loss, and legal responsibility arising from decisions made using
+this tool rest solely with the user; the tool’s creator bears no
+responsibility.</p>
+<h3 id="privacy-data">17.4 Privacy / data</h3>
 <ul>
-  <li>See <a href="#security">Security / Data Flow</a> for how data is handled.</li>
-  <li>This tool does not separately collect, sell, or share personal data with third parties (local storage only).</li>
-  <li>Interview questions do not include sensitive unique identifiers (e.g. national ID or bank account numbers), but be careful not to voluntarily type sensitive personal information into the free-text answer fields yourself.</li>
+<li>See <a href="#security">Security / Data Flow</a> for how data is
+handled.</li>
+<li>This tool does not separately collect, sell, or share personal data
+with third parties (local storage only).</li>
+<li>Interview questions do not include sensitive unique identifiers
+(e.g. national ID or bank account numbers), but be careful not to
+voluntarily type sensitive personal information into the free-text
+answer fields yourself.</li>
 </ul>
-
-<h3>17.5 Commercial use summary</h3>
-<div class="tblwrap"><table>
-<thead><tr><th>Item</th><th>Commercial use allowed?</th><th>Notes</th></tr></thead>
+<h3 id="commercial-use-summary">17.5 Commercial use summary</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 27%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>Item</th>
+<th style="text-align: center;">Commercial use allowed?</th>
+<th>Notes</th>
+</tr>
+</thead>
 <tbody>
-<tr><td>Embedding the plugin code, as-is or modified, into your own product/service</td><td>Yes</td><td>Subject to Apache-2.0 conditions (license notice, marking changes)</td></tr>
-<tr><td>Using this tool's business analysis output in a business plan or investor pitch</td><td>Yes</td><td>No accuracy guarantee — independent verification required</td></tr>
-<tr><td>Reselling this tool as a paid service</td><td>Yes</td><td>Apache-2.0 does not prohibit resale. However, presenting it as if officially affiliated with or endorsed by "SoDam AI Studio"/"business-counselor" is not recommended</td></tr>
-<tr><td>Offering this tool's analysis as actual investment or legal advisory services</td><td><strong>Not recommended / risky</strong></td><td>See §17.3 — this may require separate licensing/qualification</td></tr>
-</tbody></table></div>
-</section>
-
-<section id="appendix">
-<h2><span class="num">18.</span>Appendix (Glossary)</h2>
-<div class="tblwrap"><table>
-<thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+<tr>
+<td>Embedding the plugin code, as-is or modified, into your own
+product/service</td>
+<td style="text-align: center;">Yes</td>
+<td>Subject to Apache-2.0 conditions (license notice, marking
+changes)</td>
+</tr>
+<tr>
+<td>Using this tool’s business analysis output in a business plan or
+investor pitch</td>
+<td style="text-align: center;">Yes</td>
+<td>No accuracy guarantee — independent verification required</td>
+</tr>
+<tr>
+<td>Reselling this tool as a paid service</td>
+<td style="text-align: center;">Yes</td>
+<td>Apache-2.0 does not prohibit resale. However, presenting it as if
+officially affiliated with or endorsed by “SoDam AI
+Studio”/“business-counselor” is not recommended</td>
+</tr>
+<tr>
+<td>Offering this tool’s analysis as actual investment or legal advisory
+services</td>
+<td style="text-align: center;"><strong>Not recommended /
+risky</strong></td>
+<td>See §17.3 — this may require separate licensing/qualification</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="appendix"></a></p>
+<h2 id="appendix-glossary">18. Appendix (Glossary)</h2>
+<table>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
 <tbody>
-<tr><td class="glossary-term">Claude Code</td><td>Anthropic's program for working with AI via a terminal/chat window. The "host" this plugin runs inside.</td></tr>
-<tr><td class="glossary-term">Plugin</td><td>An add-on that gives Claude Code a new capability. <code>business-counselor</code> is the name of this plugin.</td></tr>
-<tr><td class="glossary-term">Slash command</td><td>A command starting with <code>/</code>, like <code>/business-counselor:evaluate</code>, typed into the Claude Code chat window.</td></tr>
-<tr><td class="glossary-term">Marketplace</td><td>A registry concept for publishing/distributing plugins. Registered via <code>claude plugin marketplace add</code>.</td></tr>
-<tr><td class="glossary-term">Subagent</td><td>An internal AI execution unit dedicated to one task (here, idea analysis) with restricted tool permissions.</td></tr>
-<tr><td class="glossary-term">Profile (profile.md)</td><td>The file where your accumulated interview answers about yourself are stored.</td></tr>
-<tr><td class="glossary-term">Verdict</td><td>The final conclusion of an evaluation: one of go / iterate / no-go.</td></tr>
-<tr><td class="glossary-term">Lean Canvas</td><td>A well-known planning tool that summarizes a business model into 9 blocks (problem, customer, revenue structure, etc.).</td></tr>
-<tr><td class="glossary-term">Mom Test</td><td>An interview technique that avoids "questions your mom would always say yes to," instead validating real demand through past-behavior-based questions.</td></tr>
-<tr><td class="glossary-term">Pre-mortem</td><td>The opposite of a "post-mortem" (analyzing causes after the fact) — you assume the project has already failed and work backward to find the causes in advance.</td></tr>
-<tr><td class="glossary-term">Frontmatter</td><td>A standard way of writing structured metadata (title, date, version, etc.) at the top of a markdown file, wrapped in <code>---</code>.</td></tr>
-</tbody></table></div>
-</section>
-
-</main>
-
-<footer class="bottom">
-  <p>License Summary — Apache License 2.0 · Copyright 2026 SoDam AI Studio · Full text: <a href="./LICENSE">LICENSE</a> · Commercial-use terms: <a href="#legal">§17</a>.</p>
-  <p>🇰🇷 <a href="./README.md">한국어 README</a> (primary) · 📄 <a href="./README_EN.md">Markdown version</a> · Full change history: <a href="./CHANGELOG.md">CHANGELOG.md</a> · Contact: <a href="https://github.com/sodam-ai/business-counselor/issues">GitHub Issues</a></p>
-</footer>
-
+<tr>
+<td>Claude Code</td>
+<td>Anthropic’s program for working with AI via a terminal/chat window.
+The “host” this plugin runs inside.</td>
+</tr>
+<tr>
+<td>Plugin</td>
+<td>An add-on that gives Claude Code a new capability.
+<code>business-counselor</code> is the name of this plugin.</td>
+</tr>
+<tr>
+<td>Slash command</td>
+<td>A command starting with <code>/</code>, like
+<code>/business-counselor:evaluate</code>, typed into the Claude Code
+chat window.</td>
+</tr>
+<tr>
+<td>Marketplace</td>
+<td>A registry concept for publishing/distributing plugins. Registered
+via <code>claude plugin marketplace add</code>.</td>
+</tr>
+<tr>
+<td>Subagent</td>
+<td>An internal AI execution unit dedicated to one task (here, idea
+analysis) with restricted tool permissions.</td>
+</tr>
+<tr>
+<td>Profile (profile.md)</td>
+<td>The file where your accumulated interview answers about yourself are
+stored.</td>
+</tr>
+<tr>
+<td>Verdict</td>
+<td>The final conclusion of an evaluation: one of go / iterate /
+no-go.</td>
+</tr>
+<tr>
+<td>Lean Canvas</td>
+<td>A well-known planning tool that summarizes a business model into 9
+blocks (problem, customer, revenue structure, etc.).</td>
+</tr>
+<tr>
+<td>Mom Test</td>
+<td>An interview technique that avoids “questions your mom would always
+say yes to,” instead validating real demand through past-behavior-based
+questions.</td>
+</tr>
+<tr>
+<td>Pre-mortem</td>
+<td>The opposite of a “post-mortem” (analyzing causes after the fact) —
+you assume the project has already failed and work backward to find the
+causes in advance.</td>
+</tr>
+<tr>
+<td>Frontmatter</td>
+<td>A standard way of writing structured metadata (title, date, version,
+etc.) at the top of a markdown file, wrapped in <code>---</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="license-summary">License Summary</h2>
+<p>Apache License 2.0 · Copyright 2026 SoDam AI Studio · Full text: <a
+href="./LICENSE">LICENSE</a> · Commercial-use terms: <a
+href="#legal">§17</a>.</p>
+<hr />
+<p>🇰🇷 <a href="./README.md">한국어 README</a> (primary) · 🖥 <a
+href="./README_EN.html">HTML version</a> · Full change history: <a
+href="./CHANGELOG.md">CHANGELOG.md</a> · Contact: <a
+href="https://github.com/sodam-ai/business-counselor/issues">GitHub
+Issues</a></p>
 </div>
 </body>
 </html>
