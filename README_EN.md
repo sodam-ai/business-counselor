@@ -737,6 +737,12 @@ A. File an issue at the [GitHub repository](https://github.com/sodam-ai/business
 
 ## 17. Legal / Copyright / License / Commercial Use
 
+### 17.0 Plain-Language Summary (details in 17.1–17.6 below)
+
+- ✅ **What you can do**: use the code as-is or modified in your own product, copy/fork it, redistribute it, sell it or run it as a paid service, and use its analysis output in business plans, teaching material, or client deliverables — all **allowed**, as long as you follow the Apache-2.0 conditions.
+- 🔍 **What you must check yourself**: whether the analysis/recommendation output is actually accurate, whether it accidentally overlaps with an existing company/product name, and what Claude Code's own pricing/terms are — this project does not guarantee any of that for you, so **you** need to check.
+- ⛔ **What you should not do (or is risky)**: presenting this tool's analysis as real investment, legal, or tax advice; using the "SoDam AI Studio" / "business-counselor" names as if they implied an official partnership or endorsement.
+
 > The following is general information, not legal advice. For actual commercial use, redistribution, or legal decisions, consulting a qualified professional (e.g. a lawyer) is recommended.
 
 ### 17.1 License for this software (the plugin code)
@@ -755,6 +761,12 @@ This plugin (`business-counselor`) is distributed under the **Apache License 2.0
   - You must include a copy of the license and the copyright notice when you distribute it.
   - Modified files must carry a notice stating that you changed them.
   - If a `NOTICE` file exists, its contents must be included when redistributing.
+- **NOTICE file**: this repository does **not** include a separate `NOTICE` file. Apache-2.0 §4(d) requires
+  passing one along only if the original work included one; this project is an original work from the start,
+  not a fork/modification of another Apache-2.0 project, so we assessed that condition as not applicable
+  (checked 2026-08-04). *This assessment is not a legal conclusion — if you plan to redistribute or use this
+  commercially, please re-verify whether a NOTICE is needed, or consult legal counsel —
+  [needs legal/expert review].*
 - **What is NOT provided**:
   - **No warranty ("AS IS")**: the software is provided without any warranty, including merchantability or fitness for a particular purpose.
   - **Limitation of liability**: contributors are not liable for damages arising from use of the software, except as required by law.
@@ -765,6 +777,14 @@ This plugin (`business-counselor`) is distributed under the **Apache License 2.0
 - Evaluation results (§1–§5 analysis, the "At-a-Glance Summary" card, etc.) are **your own material, generated from the business idea you personally entered**. This project (SoDam AI Studio) claims no ownership over, and places no usage restriction on, that output.
 - However, the output's **accuracy, completeness, and currency are not guaranteed.** Verify the facts independently before using it in a commercial decision, an investor pitch, or a business plan.
 - Market-size figures or statistics in the output may be AI-generated estimates; figures without a clear source are designed to be labeled "(estimated, unverified)," but this labeling is not guaranteed to be perfect.
+- **Duty to review AI-generated content**: this tool's output (§1–§5 analysis, Lean Canvas, recommended-idea
+  titles/descriptions, etc.) is AI-generated content. **Before actually sharing it externally or using it
+  commercially** — e.g. in a business plan, investor materials, or a client deliverable — please verify
+  yourself: (1) that no real company/product/trademark name was accidentally included, (2) that it isn't
+  suspiciously close to an existing business model, brand, or copyrighted work, and (3) that any statistics
+  come from a genuinely reliable source. This project does not warrant that AI-generated output is free of
+  third-party copyright or trademark infringement. [Needs legal/expert review — copyright ownership and
+  infringement determinations for AI-generated content vary by jurisdiction and case law.]
 
 ### 17.3 Disclaimer of legal character (what this tool is NOT)
 
@@ -788,9 +808,31 @@ This tool does **NOT** constitute:
 | Item | Commercial use allowed? | Notes |
 |------|:---:|-------|
 | Embedding the plugin code, as-is or modified, into your own product/service | Yes | Subject to Apache-2.0 conditions (license notice, marking changes) |
-| Using this tool's business analysis output in a business plan or investor pitch | Yes | No accuracy guarantee — independent verification required |
-| Reselling this tool as a paid service | Yes | Apache-2.0 does not prohibit resale. However, presenting it as if officially affiliated with or endorsed by "SoDam AI Studio"/"business-counselor" is not recommended |
+| Copying/forking the code (including a GitHub Fork) | Yes | Explicitly permitted by Apache-2.0. Recommended to avoid naming your fork in a way that could be confused with the original project |
+| Using this tool's business analysis output in a business plan or investor pitch | Yes | No accuracy guarantee — independent verification required (see "Duty to review AI-generated content" in §17.2) |
+| Reselling this tool, or running it as a paid SaaS | Yes | Apache-2.0 does not prohibit resale or running it as a service. However, presenting it as if officially affiliated with or endorsed by "SoDam AI Studio"/"business-counselor" is not recommended |
+| Using this tool (code or output) as teaching/course material | Yes | Subject to Apache-2.0 conditions (license notice). Recommended to disclose that output used as course material is AI-generated |
+| Delivering this tool's analysis output to a company/client as a deliverable | Yes | Ownership of the output belongs to the user (§17.2). Since accuracy/completeness is not guaranteed, independent verification before delivery and disclosing to the client that it is "AI-generated, for reference" is recommended |
 | Offering this tool's analysis as actual investment or legal advisory services | **Not recommended / risky** | See §17.3 — this may require separate licensing/qualification |
+
+### 17.6 External service terms you must check separately
+
+This plugin itself does not charge anything (see §2), but **using Claude Code / the Claude model itself is
+governed by Anthropic's own terms of service, usage policy, and pricing.** This project (SoDam AI Studio)
+does not guarantee or summarize Anthropic's terms on your behalf — you need to check the following directly
+through Anthropic's official channels (the terms presented during Claude Code setup/login, or
+[anthropic.com](https://www.anthropic.com)):
+
+- Your Claude Code / Claude account's pricing plan and usage limits
+- Claude's model Usage Policy — in particular, whether Anthropic places any conditions on commercially
+  redistributing or reselling model output, if you plan to do that with this tool's results
+- Data retention / training-use policy (this applies broadly to anything you type into Claude Code, is
+  Anthropic's own policy, and is not something this plugin separately controls)
+
+This plugin does not bundle any external media assets — images, fonts, icons, video, or audio (confirmed by
+a full repository scan on 2026-08-04: zero files under `assets`/`public` or with image/font extensions). So,
+as of the current version, there is no separate font/image license to check. If images or fonts are added in
+the future, their licenses will need to be reviewed separately at that time.
 
 ---
 

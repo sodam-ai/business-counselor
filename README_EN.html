@@ -1239,6 +1239,24 @@ repository</a>’s Issues page.</p>
 <p><a id="legal"></a></p>
 <h2 id="legal-copyright-license-commercial-use">17. Legal / Copyright /
 License / Commercial Use</h2>
+<h3 id="plain-language-summary-details-in-17.117.6-below">17.0
+Plain-Language Summary (details in 17.1–17.6 below)</h3>
+<ul>
+<li>✅ <strong>What you can do</strong>: use the code as-is or modified
+in your own product, copy/fork it, redistribute it, sell it or run it as
+a paid service, and use its analysis output in business plans, teaching
+material, or client deliverables — all <strong>allowed</strong>, as long
+as you follow the Apache-2.0 conditions.</li>
+<li>🔍 <strong>What you must check yourself</strong>: whether the
+analysis/recommendation output is actually accurate, whether it
+accidentally overlaps with an existing company/product name, and what
+Claude Code’s own pricing/terms are — this project does not guarantee
+any of that for you, so <strong>you</strong> need to check.</li>
+<li>⛔ <strong>What you should not do (or is risky)</strong>: presenting
+this tool’s analysis as real investment, legal, or tax advice; using the
+“SoDam AI Studio” / “business-counselor” names as if they implied an
+official partnership or endorsement.</li>
+</ul>
 <blockquote>
 <p>The following is general information, not legal advice. For actual
 commercial use, redistribution, or legal decisions, consulting a
@@ -1273,6 +1291,15 @@ them.</li>
 <li>If a <code>NOTICE</code> file exists, its contents must be included
 when redistributing.</li>
 </ul></li>
+<li><strong>NOTICE file</strong>: this repository does
+<strong>not</strong> include a separate <code>NOTICE</code> file.
+Apache-2.0 §4(d) requires passing one along only if the original work
+included one; this project is an original work from the start, not a
+fork/modification of another Apache-2.0 project, so we assessed that
+condition as not applicable (checked 2026-08-04). <em>This assessment is
+not a legal conclusion — if you plan to redistribute or use this
+commercially, please re-verify whether a NOTICE is needed, or consult
+legal counsel — [needs legal/expert review].</em></li>
 <li><strong>What is NOT provided</strong>:
 <ul>
 <li><strong>No warranty (“AS IS”)</strong>: the software is provided
@@ -1300,6 +1327,19 @@ it in a commercial decision, an investor pitch, or a business plan.</li>
 estimates; figures without a clear source are designed to be labeled
 “(estimated, unverified),” but this labeling is not guaranteed to be
 perfect.</li>
+<li><strong>Duty to review AI-generated content</strong>: this tool’s
+output (§1–§5 analysis, Lean Canvas, recommended-idea
+titles/descriptions, etc.) is AI-generated content. <strong>Before
+actually sharing it externally or using it commercially</strong> —
+e.g. in a business plan, investor materials, or a client deliverable —
+please verify yourself: (1) that no real company/product/trademark name
+was accidentally included, (2) that it isn’t suspiciously close to an
+existing business model, brand, or copyrighted work, and (3) that any
+statistics come from a genuinely reliable source. This project does not
+warrant that AI-generated output is free of third-party copyright or
+trademark infringement. [Needs legal/expert review — copyright ownership
+and infringement determinations for AI-generated content vary by
+jurisdiction and case law.]</li>
 </ul>
 <h3 id="disclaimer-of-legal-character-what-this-tool-is-not">17.3
 Disclaimer of legal character (what this tool is NOT)</h3>
@@ -1355,17 +1395,39 @@ product/service</td>
 changes)</td>
 </tr>
 <tr>
+<td>Copying/forking the code (including a GitHub Fork)</td>
+<td style="text-align: center;">Yes</td>
+<td>Explicitly permitted by Apache-2.0. Recommended to avoid naming your
+fork in a way that could be confused with the original project</td>
+</tr>
+<tr>
 <td>Using this tool’s business analysis output in a business plan or
 investor pitch</td>
 <td style="text-align: center;">Yes</td>
-<td>No accuracy guarantee — independent verification required</td>
+<td>No accuracy guarantee — independent verification required (see “Duty
+to review AI-generated content” in §17.2)</td>
 </tr>
 <tr>
-<td>Reselling this tool as a paid service</td>
+<td>Reselling this tool, or running it as a paid SaaS</td>
 <td style="text-align: center;">Yes</td>
-<td>Apache-2.0 does not prohibit resale. However, presenting it as if
-officially affiliated with or endorsed by “SoDam AI
-Studio”/“business-counselor” is not recommended</td>
+<td>Apache-2.0 does not prohibit resale or running it as a service.
+However, presenting it as if officially affiliated with or endorsed by
+“SoDam AI Studio”/“business-counselor” is not recommended</td>
+</tr>
+<tr>
+<td>Using this tool (code or output) as teaching/course material</td>
+<td style="text-align: center;">Yes</td>
+<td>Subject to Apache-2.0 conditions (license notice). Recommended to
+disclose that output used as course material is AI-generated</td>
+</tr>
+<tr>
+<td>Delivering this tool’s analysis output to a company/client as a
+deliverable</td>
+<td style="text-align: center;">Yes</td>
+<td>Ownership of the output belongs to the user (§17.2). Since
+accuracy/completeness is not guaranteed, independent verification before
+delivery and disclosing to the client that it is “AI-generated, for
+reference” is recommended</td>
 </tr>
 <tr>
 <td>Offering this tool’s analysis as actual investment or legal advisory
@@ -1376,6 +1438,33 @@ risky</strong></td>
 </tr>
 </tbody>
 </table>
+<h3 id="external-service-terms-you-must-check-separately">17.6 External
+service terms you must check separately</h3>
+<p>This plugin itself does not charge anything (see §2), but
+<strong>using Claude Code / the Claude model itself is governed by
+Anthropic’s own terms of service, usage policy, and pricing.</strong>
+This project (SoDam AI Studio) does not guarantee or summarize
+Anthropic’s terms on your behalf — you need to check the following
+directly through Anthropic’s official channels (the terms presented
+during Claude Code setup/login, or <a
+href="https://www.anthropic.com">anthropic.com</a>):</p>
+<ul>
+<li>Your Claude Code / Claude account’s pricing plan and usage
+limits</li>
+<li>Claude’s model Usage Policy — in particular, whether Anthropic
+places any conditions on commercially redistributing or reselling model
+output, if you plan to do that with this tool’s results</li>
+<li>Data retention / training-use policy (this applies broadly to
+anything you type into Claude Code, is Anthropic’s own policy, and is
+not something this plugin separately controls)</li>
+</ul>
+<p>This plugin does not bundle any external media assets — images,
+fonts, icons, video, or audio (confirmed by a full repository scan on
+2026-08-04: zero files under <code>assets</code>/<code>public</code> or
+with image/font extensions). So, as of the current version, there is no
+separate font/image license to check. If images or fonts are added in
+the future, their licenses will need to be reviewed separately at that
+time.</p>
 <hr />
 <p><a id="appendix"></a></p>
 <h2 id="appendix-glossary">18. Appendix (Glossary)</h2>
